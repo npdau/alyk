@@ -33,7 +33,7 @@ export default defineConfig({
   // Most modern hosts (Netlify, Vercel, Cloudflare) work with 'never'.
   // AWS S3 and some traditional hosts prefer 'always'.
   //
-  trailingSlash: 'never',
+  trailingSlash: 'always',
 
   // ============================================================
   // BUILD CONFIGURATION
@@ -43,7 +43,7 @@ export default defineConfig({
     // 'file'      → about.html (pairs with trailingSlash: 'never')
     // 'directory' → about/index.html (pairs with trailingSlash: 'always')
     // 'preserve'  → keeps your file structure as-is
-    format: 'file',
+    format: 'directory',
 
     // Output directory for compiled assets (CSS, JS)
     assets: '_astro',
