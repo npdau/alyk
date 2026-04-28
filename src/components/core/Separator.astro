@@ -1,0 +1,38 @@
+---
+/**
+ * Separator Component
+ *
+ * A visual divider between content sections.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Separator />
+ * <Separator orientation="vertical" />
+ * <Separator decorative={false} />
+ */
+
+interface Props {
+  /** Orientation of the separator */
+  orientation?: 'horizontal' | 'vertical';
+  /** Whether the separator is purely decorative */
+  decorative?: boolean;
+  /** Additional classes */
+  class?: string;
+}
+
+const { orientation = 'horizontal', decorative = true, class: className } = Astro.props;
+
+const baseStyles = 'shrink-0 bg-border';
+
+const orientationStyles = {
+  horizontal: 'h-px w-full',
+  vertical: 'h-full w-px',
+};
+---
+
+<div
+  role={decorative ? 'none' : 'separator'}
+  aria-orientation={decorative ? undefined : orientation}
+  class:list={[baseStyles, orientationStyles[orientation], className]}
+>
+</div>

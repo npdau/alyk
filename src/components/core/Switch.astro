@@ -1,0 +1,113 @@
+---
+/**
+ * Switch Component
+ *
+ * A toggle switch for binary on/off states.
+ * Perfect for dark mode toggles, settings, feature flags.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Switch id="notifications" label="Enable notifications" />
+ * <Switch id="dark-mode" label="Dark mode" checked size="lg" />
+ * <Switch id="theme" srLabel="Toggle dark mode" />
+ */
+
+interface Props {
+  /** Unique identifier (required for accessibility) */
+  id: string;
+  /** Visible label text */
+  label?: string;
+  /** Screen-reader only label (use when no visible label) */
+  srLabel?: string;
+  /** Name attribute for forms */
+  name?: string;
+  /** Whether the switch is on */
+  checked?: boolean;
+  /** Whether the switch is disabled */
+  disabled?: boolean;
+  /** Size variant */
+  size?: 'sm' | 'md' | 'lg';
+  /** Label position relative to switch */
+  labelPosition?: 'left' | 'right';
+  /** Additional classes for the container */
+  class?: string;
+}
+
+const {
+  id,
+  label,
+  srLabel,
+  name,
+  checked = false,
+  disabled = false,
+  size = 'md',
+  labelPosition = 'right',
+  class: className,
+} = Astro.props;
+
+const trackStyles = {
+  sm: 'h-5 w-9',
+  md: 'h-6 w-11',
+  lg: 'h-7 w-14',
+};
+
+const thumbStyles = {
+  sm: 'h-4 w-4',
+  md: 'h-5 w-5',
+  lg: 'h-6 w-6',
+};
+---
+
+<label
+  class:list={[
+    'group relative inline-flex cursor-pointer items-center gap-3',
+    disabled && 'cursor-not-allowed opacity-50',
+    className,
+  ]}
+>
+  {/* Label on left */}
+  {label && labelPosition === 'left' && <span>{label}</span>}
+
+  {/* Screen reader only label */}
+  {srLabel && !label && <span class="sr-only">{srLabel}</span>}
+
+  <input
+    type="checkbox"
+    id={id}
+    name={name}
+    checked={checked}
+    disabled={disabled}
+    class="peer sr-only"
+    role="switch"
+  />
+  <!-- Track -->
+  <span
+    class:list={[
+      'relative rounded-full transition-colors',
+      trackStyles[size],
+      'bg-input peer-checked:bg-primary',
+      'peer-focus-visible:ring-ring peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2',
+    ]}
+  >
+    <!-- Thumb -->
+    <span
+      class:list={[
+        'absolute top-0.5 left-0.5 block rounded-full bg-white shadow-sm transition-transform',
+        thumbStyles[size],
+        'peer-checked:translate-x-full',
+      ]}
+      data-switch-thumb
+    >
+    </span>
+  </span>
+
+  {/* Label on right */}
+  {label && labelPosition === 'right' && <span>{label}</span>}
+</label>
+
+<style>
+  /* Thumb position when checked - using CSS for reliability */
+  input:checked ~ span > span[data-switch-thumb] {
+    transform: translateX(100%);
+  }
+</style>

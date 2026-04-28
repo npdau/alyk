@@ -1,0 +1,63 @@
+---
+/**
+ * Spinner Component
+ *
+ * A loading indicator for async actions, button submits, etc.
+ * Pure CSS animation - no JavaScript required.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Spinner />
+ * <Spinner size="lg" />
+ * <Button disabled><Spinner size="sm" class="mr-2" /> Loading...</Button>
+ */
+
+interface Props {
+  /** Size variant */
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  /** Color variant */
+  variant?: 'default' | 'primary' | 'muted' | 'white';
+  /** Screen reader label */
+  label?: string;
+  /** Additional classes */
+  class?: string;
+}
+
+const { size = 'md', variant = 'default', label = 'Loading', class: className } = Astro.props;
+
+const sizeStyles = {
+  xs: 'h-3 w-3 border',
+  sm: 'h-4 w-4 border-2',
+  md: 'h-6 w-6 border-2',
+  lg: 'h-8 w-8 border-2',
+};
+
+const colorStyles = {
+  default: 'border-foreground/20 border-t-foreground',
+  primary: 'border-primary/20 border-t-primary',
+  muted: 'border-muted-foreground/20 border-t-muted-foreground',
+  white: 'border-white/20 border-t-white',
+};
+---
+
+<div
+  class:list={['animate-spin rounded-full', sizeStyles[size], colorStyles[variant], className]}
+  role="status"
+  aria-label={label}
+>
+  <span class="sr-only">{label}</span>
+</div>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+</style>

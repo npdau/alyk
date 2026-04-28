@@ -1,0 +1,75 @@
+---
+/**
+ * CTA Block
+ *
+ * A call-to-action section, typically used near the bottom of pages.
+ * Edit the content and styling directly for each project.
+ */
+import Section from '@/components/core/Section.astro';
+import Button from '@/components/core/Button.astro';
+
+interface Props {
+  /** CTA headline */
+  headline: string;
+  /** Supporting text */
+  description?: string;
+  /** Primary button */
+  primaryCTA: {
+    text: string;
+    href: string;
+  };
+  /** Secondary button */
+  secondaryCTA?: {
+    text: string;
+    href: string;
+  };
+  /** Background variant */
+  background?: 'default' | 'muted' | 'primary';
+}
+
+const { headline, description, primaryCTA, secondaryCTA, background = 'muted' } = Astro.props;
+
+const isPrimaryBg = background === 'primary';
+---
+
+<Section spacing="lg" background={background}>
+  <div class="mx-auto max-w-2xl text-center">
+    <h2
+      class:list={[
+        'text-3xl font-bold tracking-tight sm:text-4xl',
+        isPrimaryBg && 'text-primary-foreground',
+      ]}
+    >
+      {headline}
+    </h2>
+    {
+      description && (
+        <p
+          class:list={[
+            'mt-4 text-lg',
+            isPrimaryBg ? 'text-primary-foreground/80' : 'text-muted-foreground',
+          ]}
+        >
+          {description}
+        </p>
+      )
+    }
+    <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <Button href={primaryCTA.href} size="lg" variant={isPrimaryBg ? 'secondary' : 'primary'}>
+        {primaryCTA.text}
+      </Button>
+      {
+        secondaryCTA && (
+          <Button
+            href={secondaryCTA.href}
+            size="lg"
+            variant={isPrimaryBg ? 'ghost' : 'outline'}
+            class={isPrimaryBg ? 'text-primary-foreground hover:bg-primary-foreground/10' : ''}
+          >
+            {secondaryCTA.text}
+          </Button>
+        )
+      }
+    </div>
+  </div>
+</Section>

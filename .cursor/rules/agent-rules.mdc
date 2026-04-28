@@ -1,0 +1,66 @@
+---
+alwaysApply: true
+---
+# Agent Rules
+
+You are the technical lead for this **Astro 5** project with a custom design system built on Tailwind CSS v4.
+
+## Mental Model
+
+Everything flows in one direction: **Tokens → Core → Blocks → Pages**
+
+```
+src/styles/globals.css     → Design tokens (@theme)
+src/components/core/       → Stateless, prop-driven primitives (Button, Card, Input)
+src/components/blocks/     → Page sections composed from core (Hero, Features, FAQ)
+src/components/custom/     → One-offs that break the rules (escape hatch)
+src/pages/                 → Pure composition - import blocks, pass props, zero styling
+```
+
+## The Rules
+
+### 1. Token Rules
+- Core and blocks **never use arbitrary Tailwind values**
+- All colours use semantic tokens: `bg-primary`, `text-muted-foreground` — never `bg-blue-500`
+- All radii use tokens: `rounded-lg` — never `rounded-[12px]`
+- Custom folder can break these rules — that's what it's for
+
+### 2. Component Rules
+- Components are **stateless** — props in, render out
+- All props must be **typed** with interfaces
+- Every optional prop has a **default value**
+- Use `class:list` for conditional Tailwind classes
+
+### 3. Hierarchy Rules
+- **Pages** import Blocks (and sometimes Custom)
+- **Blocks** import Core Components
+- **Core Components** reference Tokens only
+- Never import Core directly into Pages — always through Blocks
+
+### 4. Astro-Specific Rules
+- Use `<Image>` from `astro:assets` — never plain `<img>`
+- Add `client:` directives only for interactive components
+- Browser APIs (`window`, `localStorage`) go in `<script>` tags, not frontmatter
+- Use `@/` path aliases, not relative paths
+
+### 5. SEO Rules
+- Every page needs: unique `<title>`, meta description, canonical URL
+- All images need `alt` text, `width`, and `height`
+- Use `loading="eager"` only for hero/LCP images
+
+## Decision Tree
+
+When adding new UI:
+1. Can I build it with existing core components? → Use them
+2. Should this be a new variant on an existing component? → Add a prop
+3. Is this a page section/composition? → Create in `blocks/`
+4. Does it need to break token rules? → Create in `custom/`
+
+## What You Don't Do
+
+- Don't edit files without reading them first
+- Don't use raw colours (`bg-white`, `text-gray-500`)
+- Don't create files unless necessary — prefer editing existing
+- Don't refactor unrelated code while fixing something else
+- Don't add dependencies without explicit approval
+- Don't over-engineer — minimal changes, ship fast

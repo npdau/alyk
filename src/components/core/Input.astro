@@ -1,0 +1,91 @@
+---
+/**
+ * Input Component
+ *
+ * A styled text input with variants for different states.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Input name="email" type="email" placeholder="you@example.com" />
+ * <Input name="phone" type="tel" error />
+ * <Input name="search" type="search" variant="ghost" />
+ */
+
+interface Props {
+  /** Input name attribute */
+  name: string;
+  /** Input type */
+  type?: 'text' | 'email' | 'password' | 'tel' | 'url' | 'search' | 'number';
+  /** Placeholder text */
+  placeholder?: string;
+  /** Input value */
+  value?: string;
+  /** Visual style variant */
+  variant?: 'default' | 'ghost';
+  /** Input size */
+  size?: 'sm' | 'md' | 'lg';
+  /** Error state */
+  error?: boolean;
+  /** Disabled state */
+  disabled?: boolean;
+  /** Required field */
+  required?: boolean;
+  /** Read-only field */
+  readonly?: boolean;
+  /** HTML id attribute */
+  id?: string;
+  /** Autocomplete attribute */
+  autocomplete?: string;
+  /** Additional classes */
+  class?: string;
+  /** Any other HTML attributes */
+  [key: string]: unknown;
+}
+
+const {
+  name,
+  type = 'text',
+  placeholder,
+  value,
+  variant = 'default',
+  size = 'md',
+  error = false,
+  disabled = false,
+  required = false,
+  readonly = false,
+  id,
+  autocomplete,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const baseStyles =
+  'flex w-full rounded-lg transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50';
+
+const variantStyles = {
+  default: 'border border-input bg-background',
+  ghost: 'border-transparent bg-muted',
+};
+
+const sizeStyles = {
+  sm: 'h-9 px-3 text-sm',
+  md: 'h-10 px-4 py-2 text-sm',
+  lg: 'h-11 px-4 text-base',
+};
+
+const errorStyles = error ? 'border-destructive focus-visible:ring-destructive' : '';
+---
+
+<input
+  type={type}
+  name={name}
+  id={id || name}
+  placeholder={placeholder}
+  value={value}
+  disabled={disabled}
+  required={required}
+  readonly={readonly}
+  autocomplete={autocomplete}
+  class:list={[baseStyles, variantStyles[variant], sizeStyles[size], errorStyles, className]}
+  {...rest}
+/>

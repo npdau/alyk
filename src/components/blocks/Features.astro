@@ -1,0 +1,61 @@
+---
+/**
+ * Features Block
+ *
+ * A grid of feature cards with icons.
+ * Edit the content and styling directly for each project.
+ */
+import Section from '@/components/core/Section.astro';
+import Card from '@/components/core/Card.astro';
+
+interface Feature {
+  /** Feature title */
+  title: string;
+  /** Feature description */
+  description: string;
+  /** Icon SVG string or emoji */
+  icon?: string;
+}
+
+interface Props {
+  /** Section headline */
+  headline?: string;
+  /** Section description */
+  description?: string;
+  /** Array of features */
+  features: Feature[];
+  /** Number of columns */
+  columns?: 2 | 3 | 4;
+}
+
+const { headline, description, features, columns = 3 } = Astro.props;
+
+const columnStyles = {
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-2 lg:grid-cols-3',
+  4: 'md:grid-cols-2 lg:grid-cols-4',
+};
+---
+
+<Section spacing="lg">
+  {
+    (headline || description) && (
+      <div class="mx-auto mb-12 max-w-2xl text-center">
+        {headline && <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{headline}</h2>}
+        {description && <p class="text-muted-foreground mt-4 text-lg">{description}</p>}
+      </div>
+    )
+  }
+
+  <div class:list={['grid gap-6', columnStyles[columns]]}>
+    {
+      features.map((feature) => (
+        <Card padding="lg">
+          {feature.icon && <div class="mb-4 text-3xl" set:html={feature.icon} />}
+          <h3 class="text-lg font-semibold">{feature.title}</h3>
+          <p class="text-muted-foreground mt-2">{feature.description}</p>
+        </Card>
+      ))
+    }
+  </div>
+</Section>

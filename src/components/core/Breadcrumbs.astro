@@ -1,0 +1,79 @@
+---
+/**
+ * Breadcrumbs Component
+ *
+ * Navigation breadcrumbs for showing page hierarchy.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Breadcrumbs items={[
+ *   { label: 'Home', href: '/' },
+ *   { label: 'Blog', href: '/blog' },
+ *   { label: 'Current Post' }
+ * ]} />
+ */
+
+interface BreadcrumbItem {
+  /** Display text */
+  label: string;
+  /** Link URL (omit for current page) */
+  href?: string;
+}
+
+interface Props {
+  /** Breadcrumb items in order */
+  items: BreadcrumbItem[];
+  /** Visual separator between items */
+  separator?: 'chevron' | 'slash' | 'dot';
+  /** Additional classes */
+  class?: string;
+}
+
+const { items, separator = 'chevron', class: className } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb" class:list={['text-sm', className]}>
+  <ol class="flex flex-wrap items-center gap-1.5">
+    {
+      items.map((item, index) => {
+        const isLast = index === items.length - 1;
+
+        return (
+          <li class="flex items-center gap-1.5">
+            {index > 0 && (
+              <span class="text-muted-foreground" aria-hidden="true">
+                {separator === 'chevron' && (
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                )}
+                {separator === 'slash' && <span>/</span>}
+                {separator === 'dot' && <span>·</span>}
+              </span>
+            )}
+            {item.href && !isLast ? (
+              <a
+                href={item.href}
+                class="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <span
+                class:list={[isLast ? 'text-foreground font-medium' : 'text-muted-foreground']}
+                aria-current={isLast ? 'page' : undefined}
+              >
+                {item.label}
+              </span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>

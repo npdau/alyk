@@ -1,0 +1,85 @@
+---
+/**
+ * Hero Block
+ *
+ * The main hero section for landing pages.
+ * Edit the content and layout directly for each project.
+ */
+import { Image } from 'astro:assets';
+import Section from '@/components/core/Section.astro';
+import Button from '@/components/core/Button.astro';
+
+interface Props {
+  /** Main headline */
+  headline: string;
+  /** Supporting text */
+  subheadline?: string;
+  /** Primary call-to-action */
+  primaryCTA?: {
+    text: string;
+    href: string;
+  };
+  /** Secondary call-to-action */
+  secondaryCTA?: {
+    text: string;
+    href: string;
+  };
+  /** Hero image - for remote images, provide width/height; for local imports, these are inferred */
+  image?: {
+    src: any;
+    alt: string;
+    width?: number;
+    height?: number;
+  };
+  /** Text alignment */
+  align?: 'left' | 'center';
+}
+
+const { headline, subheadline, primaryCTA, secondaryCTA, image, align = 'center' } = Astro.props;
+---
+
+<Section spacing="xl">
+  <div class:list={['grid items-center gap-12', image ? 'lg:grid-cols-2' : 'mx-auto max-w-3xl']}>
+    <div class:list={[align === 'center' && !image && 'text-center']}>
+      <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+        {headline}
+      </h1>
+      {subheadline && <p class="text-muted-foreground mt-6 text-lg sm:text-xl">{subheadline}</p>}
+      {
+        (primaryCTA || secondaryCTA) && (
+          <div
+            class:list={[
+              'mt-8 flex flex-wrap gap-4',
+              align === 'center' && !image && 'justify-center',
+            ]}
+          >
+            {primaryCTA && (
+              <Button href={primaryCTA.href} size="lg">
+                {primaryCTA.text}
+              </Button>
+            )}
+            {secondaryCTA && (
+              <Button href={secondaryCTA.href} variant="outline" size="lg">
+                {secondaryCTA.text}
+              </Button>
+            )}
+          </div>
+        )
+      }
+    </div>
+    {
+      image && (
+        <div>
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            class="rounded-lg shadow-lg"
+            inferSize={typeof image.src !== 'string'}
+          />
+        </div>
+      )
+    }
+  </div>
+</Section>

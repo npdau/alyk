@@ -1,0 +1,33 @@
+---
+/**
+ * Label Component
+ *
+ * An accessible form label.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Label for="email">Email address</Label>
+ * <Label for="name" required>Full name</Label>
+ */
+
+interface Props {
+  /** ID of the associated form element */
+  for: string;
+  /** Show required indicator */
+  required?: boolean;
+  /** Disabled styling */
+  disabled?: boolean;
+  /** Additional classes */
+  class?: string;
+}
+
+const { for: htmlFor, required = false, disabled = false, class: className } = Astro.props;
+
+const baseStyles = 'text-sm font-medium leading-none';
+const disabledStyles = disabled ? 'cursor-not-allowed opacity-70' : '';
+---
+
+<label for={htmlFor} class:list={[baseStyles, disabledStyles, className]}>
+  <slot />
+  {required && <span class="text-destructive ml-1">*</span>}
+</label>

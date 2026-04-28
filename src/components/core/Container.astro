@@ -1,0 +1,36 @@
+---
+/**
+ * Container Component
+ *
+ * A max-width wrapper with responsive padding.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Container>Centered content</Container>
+ * <Container size="sm">Narrow content</Container>
+ * <Container size="full">Full width</Container>
+ */
+
+interface Props {
+  /** Max-width size */
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  /** Additional classes */
+  class?: string;
+}
+
+const { size = 'lg', class: className } = Astro.props;
+
+const baseStyles = 'mx-auto w-full px-4 sm:px-6 lg:px-8';
+
+const sizes = {
+  sm: 'max-w-2xl',
+  md: 'max-w-4xl',
+  lg: 'max-w-6xl',
+  xl: 'max-w-7xl',
+  full: 'max-w-none',
+};
+---
+
+<div class:list={[baseStyles, sizes[size], className]}>
+  <slot />
+</div>

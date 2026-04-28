@@ -1,0 +1,114 @@
+# =============================================================================
+# NETLIFY CONFIGURATION
+# =============================================================================
+# Documentation: https://docs.netlify.com/configure-builds/file-based-configuration/
+
+# =============================================================================
+# BUILD SETTINGS
+# =============================================================================
+
+[build]
+  # Build command
+  command = "pnpm build"
+  
+  # Directory to publish (Astro's default output)
+  publish = "dist"
+  
+  # Directory where Netlify looks for the build command
+  # base = ""
+
+# =============================================================================
+# BUILD ENVIRONMENT
+# =============================================================================
+
+[build.environment]
+  # Node.js version (matches .nvmrc)
+  NODE_VERSION = "20"
+  
+  # Enable pnpm
+  PNPM_VERSION = "9"
+
+# =============================================================================
+# HEADERS
+# =============================================================================
+# Security and caching headers for all pages
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    
+    # Content Security Policy - adjust as needed for your integrations
+    # Uncomment and customize when you know what external resources you need
+    # Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com"
+
+# Static assets - long cache (Astro uses hashed filenames)
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Favicon and other root static assets
+[[headers]]
+  for = "/favicon.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# =============================================================================
+# REDIRECTS
+# =============================================================================
+# Add redirects here as needed
+# Format: [[redirects]]
+#         from = "/old-path"
+#         to = "/new-path"
+#         status = 301
+
+# Example: Redirect www to non-www (if using custom domain)
+# [[redirects]]
+#   from = "https://www.example.com/*"
+#   to = "https://example.com/:splat"
+#   status = 301
+#   force = true
+
+# =============================================================================
+# PLUGINS
+# =============================================================================
+# Netlify plugins to enhance the build
+
+# Lighthouse CI (optional - uncomment to enable)
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
+
+# =============================================================================
+# CONTEXT-SPECIFIC OVERRIDES
+# =============================================================================
+
+# Production-specific settings
+[context.production]
+  command = "pnpm build"
+
+# Deploy preview settings (PRs)
+[context.deploy-preview]
+  command = "pnpm build"
+
+# Branch deploy settings
+[context.branch-deploy]
+  command = "pnpm build"
+
+# Development settings (for Netlify Dev)
+[dev]
+  command = "pnpm dev"
+  port = 4321
+  targetPort = 4321
+  autoLaunch = false
+

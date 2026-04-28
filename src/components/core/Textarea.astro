@@ -1,0 +1,65 @@
+---
+/**
+ * Textarea Component
+ *
+ * A styled multi-line text input.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Textarea name="message" placeholder="Your message..." />
+ * <Textarea name="bio" rows={6} />
+ */
+
+interface Props {
+  /** Textarea name attribute */
+  name: string;
+  /** Placeholder text */
+  placeholder?: string;
+  /** Number of visible rows */
+  rows?: number;
+  /** Error state */
+  error?: boolean;
+  /** Disabled state */
+  disabled?: boolean;
+  /** Required field */
+  required?: boolean;
+  /** Read-only field */
+  readonly?: boolean;
+  /** HTML id attribute */
+  id?: string;
+  /** Additional classes */
+  class?: string;
+  /** Any other HTML attributes */
+  [key: string]: unknown;
+}
+
+const {
+  name,
+  placeholder,
+  rows = 4,
+  error = false,
+  disabled = false,
+  required = false,
+  readonly = false,
+  id,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const baseStyles =
+  'flex w-full rounded-lg border border-input bg-background px-4 py-3 text-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-y min-h-20';
+
+const errorStyles = error ? 'border-destructive focus-visible:ring-destructive' : '';
+---
+
+<textarea
+  name={name}
+  id={id || name}
+  placeholder={placeholder}
+  rows={rows}
+  disabled={disabled}
+  required={required}
+  readonly={readonly}
+  class:list={[baseStyles, errorStyles, className]}
+  {...rest}><slot /></textarea
+>

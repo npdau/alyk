@@ -1,0 +1,66 @@
+---
+/**
+ * Section Component
+ *
+ * A full-width page section with consistent vertical spacing.
+ * Perfect for hero sections, feature blocks, CTAs, etc.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Section>Content with default padding</Section>
+ * <Section spacing="lg" background="muted">Large muted section</Section>
+ * <Section spacing="none" background="primary">Custom hero</Section>
+ */
+import Container from './Container.astro';
+
+interface Props {
+  /** Vertical padding size */
+  spacing?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+  /** Background color */
+  background?: 'default' | 'muted' | 'primary' | 'secondary';
+  /** Container size (set to 'full' for no container) */
+  container?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  /** HTML element to render */
+  as?: 'section' | 'div' | 'article' | 'aside';
+  /** HTML id attribute */
+  id?: string;
+  /** Additional classes */
+  class?: string;
+}
+
+const {
+  spacing = 'lg',
+  background = 'default',
+  container = 'lg',
+  as: Element = 'section',
+  id,
+  class: className,
+} = Astro.props as Props;
+
+const spacingStyles = {
+  none: '',
+  sm: 'py-8',
+  md: 'py-12',
+  lg: 'py-16 md:py-20',
+  xl: 'py-20 md:py-28',
+};
+
+const backgroundStyles = {
+  default: 'bg-background',
+  muted: 'bg-muted',
+  primary: 'bg-primary text-primary-foreground',
+  secondary: 'bg-secondary text-secondary-foreground',
+};
+---
+
+<Element id={id} class:list={[spacingStyles[spacing], backgroundStyles[background], className]}>
+  {
+    container === 'full' ? (
+      <slot />
+    ) : (
+      <Container size={container}>
+        <slot />
+      </Container>
+    )
+  }
+</Element>

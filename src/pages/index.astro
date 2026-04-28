@@ -1,0 +1,109 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import Hero from '@/components/blocks/Hero.astro';
+import Features from '@/components/blocks/Features.astro';
+import ImageText from '@/components/blocks/ImageText.astro';
+import CTA from '@/components/blocks/CTA.astro';
+import ContactForm from '@/components/blocks/ContactForm.astro';
+import FAQ from '@/components/blocks/FAQ.astro';
+---
+
+<PageLayout
+  title="Welcome - Your Business Name"
+  description="Your business tagline or brief description goes here."
+  fullWidth
+>
+  <!-- Hero -->
+  <Hero
+    headline="Your Business Name"
+    subheadline="A compelling tagline that describes what your business does and the value you provide to customers."
+    primaryCTA={{ text: 'Get Started', href: '#contact' }}
+    secondaryCTA={{ text: 'Learn More', href: '#features' }}
+  />
+
+  <!-- Features -->
+  <Features
+    headline="Why Choose Us"
+    description="Everything you need to succeed, all in one place."
+    features={[
+      {
+        icon: '⚡',
+        title: 'Feature One',
+        description: 'A brief description of this amazing feature and the value it provides.',
+      },
+      {
+        icon: '🛡️',
+        title: 'Feature Two',
+        description: 'A brief description of this amazing feature and the value it provides.',
+      },
+      {
+        icon: '🚀',
+        title: 'Feature Three',
+        description: 'A brief description of this amazing feature and the value it provides.',
+      },
+    ]}
+  />
+
+  <!-- Image + Text (image right) -->
+  <ImageText
+    headline="About Our Company"
+    body="<p>We've been helping businesses succeed for over a decade. Our team of experts is dedicated to providing the best solutions for your needs.</p><p>Whether you're a small startup or an established enterprise, we have the tools and expertise to help you grow.</p>"
+    image={{ src: 'https://placehold.co/600x400', alt: 'About us' }}
+    cta={{ text: 'Learn More', href: '/about' }}
+    background="muted"
+  />
+
+  <!-- Image + Text (image left) -->
+  <ImageText
+    headline="Our Services"
+    body="<p>From consulting to implementation, we offer a full range of services to meet your business needs.</p><p>Our proven methodology ensures successful outcomes every time.</p>"
+    image={{ src: 'https://placehold.co/600x400', alt: 'Our services' }}
+    imagePosition="left"
+    cta={{ text: 'View Services', href: '/services' }}
+  />
+
+  <!-- FAQ -->
+  <FAQ
+    headline="Frequently Asked Questions"
+    description="Got questions? We've got answers."
+    items={[
+      {
+        question: 'What services do you offer?',
+        answer:
+          '<p>We offer a comprehensive range of services including consulting, implementation, and ongoing support. Our team works closely with you to understand your needs and deliver tailored solutions.</p>',
+      },
+      {
+        question: 'How much does it cost?',
+        answer:
+          '<p>Our pricing varies based on the scope and complexity of your project. Contact us for a free consultation and custom quote tailored to your specific needs.</p>',
+      },
+      {
+        question: 'How long does a typical project take?',
+        answer:
+          "<p>Project timelines depend on the scope of work. Small projects may take a few weeks, while larger implementations can take several months. We'll provide a detailed timeline during our initial consultation.</p>",
+      },
+      {
+        question: 'Do you offer ongoing support?',
+        answer:
+          '<p>Yes! We offer various support packages to ensure your continued success. From basic maintenance to comprehensive managed services, we have options to fit your needs.</p>',
+      },
+    ]}
+    background="muted"
+  />
+
+  <!-- CTA -->
+  <CTA
+    headline="Ready to get started?"
+    description="Contact us today to learn how we can help your business grow."
+    primaryCTA={{ text: 'Get Started', href: '#contact' }}
+    secondaryCTA={{ text: 'Schedule a Call', href: '/contact' }}
+    background="primary"
+  />
+
+  <!-- Contact Form -->
+  <ContactForm
+    headline="Get in Touch"
+    description="Have a question or ready to start your project? Fill out the form below and we'll get back to you within 24 hours."
+    submitText="Send Message"
+  />
+</PageLayout>

@@ -1,0 +1,55 @@
+---
+/**
+ * PageLayout
+ *
+ * Standard page layout with TopNav and Footer.
+ * Use this for all public-facing pages.
+ *
+ * Props flow through to BaseLayout for SEO handling.
+ */
+import BaseLayout from './BaseLayout.astro';
+import TopNav from '@/components/blocks/TopNav.astro';
+import Footer from '@/components/blocks/Footer.astro';
+import Container from '@/components/core/Container.astro';
+
+interface Props {
+  /** Page title (required for SEO) */
+  title: string;
+  /** Meta description */
+  description?: string;
+  /** Open Graph image */
+  image?: string;
+  /** Page type for Open Graph */
+  type?: 'website' | 'article';
+  /** Hide from search engines */
+  noIndex?: boolean;
+  /** Full-width layout (no container padding) */
+  fullWidth?: boolean;
+}
+
+const { fullWidth = false, ...layoutProps } = Astro.props;
+---
+
+<BaseLayout {...layoutProps}>
+  <slot name="head" slot="head" />
+
+  <div class="flex min-h-screen flex-col">
+    <TopNav />
+
+    <main id="main-content" class="flex-1">
+      {
+        fullWidth ? (
+          <slot />
+        ) : (
+          <Container class="py-8">
+            <slot />
+          </Container>
+        )
+      }
+    </main>
+
+    <Footer />
+  </div>
+
+  <slot name="scripts" slot="scripts" />
+</BaseLayout>

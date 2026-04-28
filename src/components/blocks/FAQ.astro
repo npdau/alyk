@@ -1,0 +1,62 @@
+---
+/**
+ * FAQ Block
+ *
+ * A frequently asked questions section with accordion.
+ * Edit the content directly for each project.
+ */
+import Section from '@/components/core/Section.astro';
+import Accordion from '@/components/core/Accordion.astro';
+
+interface FAQItem {
+  /** Question text */
+  question: string;
+  /** Answer text (HTML allowed) */
+  answer: string;
+}
+
+interface Props {
+  /** Section headline */
+  headline?: string;
+  /** Section description */
+  description?: string;
+  /** Array of FAQ items */
+  items: FAQItem[];
+  /** Allow multiple items open */
+  allowMultiple?: boolean;
+  /** Background variant */
+  background?: 'default' | 'muted';
+}
+
+const {
+  headline = 'Frequently asked questions',
+  description,
+  items,
+  allowMultiple = false,
+  background = 'default',
+} = Astro.props;
+
+// Transform FAQ items to Accordion format
+const accordionItems = items.map((item, index) => ({
+  id: `faq-${index}`,
+  title: item.question,
+  content: item.answer,
+}));
+---
+
+<Section spacing="lg" background={background}>
+  <div class="mx-auto max-w-3xl">
+    <div class="mb-12 text-center">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+        {headline}
+      </h2>
+      {description && <p class="text-muted-foreground mt-4 text-lg">{description}</p>}
+    </div>
+
+    <Accordion
+      items={accordionItems}
+      type={allowMultiple ? 'multiple' : 'single'}
+      variant="separated"
+    />
+  </div>
+</Section>

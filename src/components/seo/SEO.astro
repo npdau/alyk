@@ -1,0 +1,100 @@
+---
+/**
+ * SEO Component
+ *
+ * Handles meta tags, Open Graph, and Twitter Cards.
+ * Used internally by BaseLayout - you don't need to import this directly.
+ *
+ * Configure site-wide defaults in this file:
+ * - SITE_NAME: Your site/business name
+ * - TWITTER_HANDLE: Your Twitter handle (optional)
+ */
+import { SEO as AstroSEO } from 'astro-seo';
+
+// ============================================
+// CONFIGURE THESE FOR YOUR SITE
+// ============================================
+const SITE_NAME = 'Your Site Name';
+const TWITTER_HANDLE = ''; // e.g., '@yourhandle' - leave empty to omit
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  author?: string;
+  tags?: string[];
+  noindex?: boolean;
+  nofollow?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/og-image.png',
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
+  tags = [],
+  noindex = false,
+  nofollow = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageURL = new URL(image, Astro.site).href;
+
+// Build article-specific Open Graph extensions
+const articleExtensions =
+  type === 'article'
+    ? {
+        article: {
+          publishedTime: publishedTime?.toISOString(),
+          modifiedTime: modifiedTime?.toISOString(),
+          authors: author ? [author] : undefined,
+          tags: tags.length > 0 ? tags : undefined,
+        },
+      }
+    : {};
+
+// Only include Twitter config if handle is set
+const twitterConfig = TWITTER_HANDLE
+  ? {
+      card: 'summary_large_image' as const,
+      site: TWITTER_HANDLE,
+      creator: TWITTER_HANDLE,
+      title: title,
+      description: description,
+      image: imageURL,
+    }
+  : {
+      card: 'summary_large_image' as const,
+      title: title,
+      description: description,
+      image: imageURL,
+    };
+---
+
+<AstroSEO
+  title={title}
+  description={description}
+  canonical={canonicalURL.href}
+  noindex={noindex}
+  nofollow={nofollow}
+  openGraph={{
+    basic: {
+      title: title,
+      type: type,
+      image: imageURL,
+      url: canonicalURL.href,
+    },
+    optional: {
+      description: description,
+      siteName: SITE_NAME,
+    },
+    ...articleExtensions,
+  }}
+  twitter={twitterConfig}
+/>

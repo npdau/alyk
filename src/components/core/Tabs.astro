@@ -1,0 +1,220 @@
+---
+/**
+ * Tabs Component
+ *
+ * A tabbed interface for organizing content into panels.
+ * Accessible and keyboard navigable.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Tabs tabs={[
+ *   { id: 'features', label: 'Features', content: '<p>Features content...</p>' },
+ *   { id: 'pricing', label: 'Pricing', content: '<p>Pricing content...</p>' },
+ *   { id: 'faq', label: 'FAQ', content: '<p>FAQ content...</p>' },
+ * ]} />
+ *
+ * Or use with slots for complex content:
+ * <Tabs tabs={[{ id: 'tab1', label: 'Tab 1' }, { id: 'tab2', label: 'Tab 2' }]}>
+ *   <div slot="tab1">Complex content for tab 1</div>
+ *   <div slot="tab2">Complex content for tab 2</div>
+ * </Tabs>
+ */
+
+interface Tab {
+  /** Unique identifier for the tab */
+  id: string;
+  /** Label shown in the tab button */
+  label: string;
+  /** HTML content (optional if using slots) */
+  content?: string;
+}
+
+interface Props {
+  /** Array of tab definitions */
+  tabs: Tab[];
+  /** Initially active tab id */
+  defaultTab?: string;
+  /** Visual style variant */
+  variant?: 'default' | 'pills' | 'underline';
+  /** Full width tabs */
+  fullWidth?: boolean;
+  /** HTML id attribute */
+  id?: string;
+  /** Additional classes */
+  class?: string;
+}
+
+const {
+  tabs,
+  defaultTab,
+  variant = 'default',
+  fullWidth = false,
+  id,
+  class: className,
+} = Astro.props;
+
+const tabsId = id || `tabs-${Math.random().toString(36).slice(2, 9)}`;
+const activeTab = defaultTab || tabs[0]?.id;
+
+const tabListStyles = {
+  default: 'bg-muted rounded-lg p-1',
+  pills: 'gap-2',
+  underline: 'border-b border-border gap-4',
+};
+
+const tabButtonStyles = {
+  default: 'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+  pills: 'rounded-full px-4 py-2 text-sm font-medium transition-colors',
+  underline: 'pb-3 text-sm font-medium transition-colors border-b-2 -mb-px',
+};
+
+const tabButtonActiveStyles = {
+  default: 'bg-background text-foreground shadow-sm',
+  pills: 'bg-primary text-primary-foreground',
+  underline: 'border-primary text-foreground',
+};
+
+const tabButtonInactiveStyles = {
+  default: 'text-muted-foreground hover:text-foreground',
+  pills: 'text-muted-foreground hover:text-foreground hover:bg-muted',
+  underline: 'border-transparent text-muted-foreground hover:text-foreground',
+};
+---
+
+<div class:list={['w-full', className]} id={tabsId} data-tabs>
+  {/* Tab list */}
+  <div
+    class:list={['flex', tabListStyles[variant], fullWidth && 'w-full']}
+    role="tablist"
+    aria-orientation="horizontal"
+  >
+    {
+      tabs.map((tab) => (
+        <button
+          type="button"
+          role="tab"
+          id={`${tabsId}-tab-${tab.id}`}
+          aria-controls={`${tabsId}-panel-${tab.id}`}
+          aria-selected={tab.id === activeTab ? 'true' : 'false'}
+          tabindex={tab.id === activeTab ? 0 : -1}
+          class:list={[
+            tabButtonStyles[variant],
+            tab.id === activeTab
+              ? tabButtonActiveStyles[variant]
+              : tabButtonInactiveStyles[variant],
+            fullWidth && 'flex-1',
+          ]}
+          data-tab-button
+          data-tab-id={tab.id}
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </div>
+
+  {/* Tab panels */}
+  <div class="mt-4">
+    {
+      tabs.map((tab) => (
+        <div
+          role="tabpanel"
+          id={`${tabsId}-panel-${tab.id}`}
+          aria-labelledby={`${tabsId}-tab-${tab.id}`}
+          class:list={[tab.id !== activeTab && 'hidden']}
+          data-tab-panel
+          data-tab-id={tab.id}
+          tabindex="0"
+        >
+          {tab.content ? <Fragment set:html={tab.content} /> : <slot name={tab.id} />}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script define:vars={{ tabsId }} is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById(tabsId);
+    if (!container) return;
+
+    const buttons = container.querySelectorAll('[data-tab-button]');
+    const panels = container.querySelectorAll('[data-tab-panel]');
+
+    function activateTab(tabId) {
+      // Update buttons
+      buttons.forEach((btn) => {
+        const isActive = btn.dataset.tabId === tabId;
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
+
+        // Update visual styles
+        const variant = btn.classList.contains('rounded-full')
+          ? 'pills'
+          : btn.classList.contains('border-b-2')
+            ? 'underline'
+            : 'default';
+
+        if (variant === 'default') {
+          btn.classList.toggle('bg-background', isActive);
+          btn.classList.toggle('text-foreground', isActive);
+          btn.classList.toggle('shadow-sm', isActive);
+          btn.classList.toggle('text-muted-foreground', !isActive);
+        } else if (variant === 'pills') {
+          btn.classList.toggle('bg-primary', isActive);
+          btn.classList.toggle('text-primary-foreground', isActive);
+          btn.classList.toggle('text-muted-foreground', !isActive);
+        } else {
+          btn.classList.toggle('border-primary', isActive);
+          btn.classList.toggle('text-foreground', isActive);
+          btn.classList.toggle('border-transparent', !isActive);
+          btn.classList.toggle('text-muted-foreground', !isActive);
+        }
+      });
+
+      // Update panels
+      panels.forEach((panel) => {
+        panel.classList.toggle('hidden', panel.dataset.tabId !== tabId);
+      });
+    }
+
+    // Click handler
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activateTab(btn.dataset.tabId);
+      });
+    });
+
+    // Keyboard navigation
+    container.addEventListener('keydown', (e) => {
+      const target = e.target;
+      if (!target.hasAttribute('data-tab-button')) return;
+
+      const buttonArray = Array.from(buttons);
+      const currentIndex = buttonArray.indexOf(target);
+
+      let newIndex;
+      switch (e.key) {
+        case 'ArrowLeft':
+          newIndex = currentIndex === 0 ? buttonArray.length - 1 : currentIndex - 1;
+          break;
+        case 'ArrowRight':
+          newIndex = currentIndex === buttonArray.length - 1 ? 0 : currentIndex + 1;
+          break;
+        case 'Home':
+          newIndex = 0;
+          break;
+        case 'End':
+          newIndex = buttonArray.length - 1;
+          break;
+        default:
+          return;
+      }
+
+      e.preventDefault();
+      const newButton = buttonArray[newIndex];
+      newButton.focus();
+      activateTab(newButton.dataset.tabId);
+    });
+  });
+</script>

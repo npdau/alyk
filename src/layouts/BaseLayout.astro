@@ -1,0 +1,67 @@
+---
+/**
+ * BaseLayout
+ *
+ * The root HTML document. Handles:
+ * - Document structure (html, head, body)
+ * - Global styles import
+ * - SEO meta tags (via SEO component)
+ * - Accessibility (skip link)
+ *
+ * Don't use this directly - use PageLayout instead.
+ */
+import '../styles/globals.css';
+import SEO from '@/components/seo/SEO.astro';
+
+interface Props {
+  /** Page title - appears in browser tab and search results */
+  title: string;
+  /** Meta description - appears in search results */
+  description?: string;
+  /** Open Graph image path */
+  image?: string;
+  /** Page type for Open Graph */
+  type?: 'website' | 'article';
+  /** Hide page from search engines */
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/og-image.png',
+  type = 'website',
+  noIndex = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <SEO title={title} description={description} image={image} type={type} noindex={noIndex} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Additional head content -->
+    <slot name="head" />
+  </head>
+  <body class="bg-background text-foreground min-h-screen font-sans antialiased">
+    <!-- Skip link for accessibility -->
+    <a
+      href="#main-content"
+      class="focus:bg-primary focus:text-primary-foreground sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:px-4 focus:py-2"
+    >
+      Skip to main content
+    </a>
+
+    <slot />
+
+    <slot name="scripts" />
+  </body>
+</html>

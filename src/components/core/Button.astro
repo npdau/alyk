@@ -1,0 +1,109 @@
+---
+/**
+ * Button Component
+ *
+ * A versatile button/link component with variant and size options.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Button>Click me</Button>
+ * <Button variant="outline" size="lg">Large outline</Button>
+ * <Button href="/about">Link button</Button>
+ * <Button variant="ghost" iconOnly aria-label="Menu"><MenuIcon /></Button>
+ */
+
+interface Props {
+  /** Visual style variant */
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+  /** Size variant */
+  size?: 'sm' | 'md' | 'lg';
+  /** If provided, renders as an anchor tag */
+  href?: string;
+  /** Button type (ignored if href is provided) */
+  type?: 'button' | 'submit' | 'reset';
+  /** Disabled state */
+  disabled?: boolean;
+  /** Full width button */
+  fullWidth?: boolean;
+  /** Icon-only button (square padding) */
+  iconOnly?: boolean;
+  /** Additional classes */
+  class?: string;
+  /** HTML id attribute */
+  id?: string;
+  /** Accessible label for icon-only buttons */
+  'aria-label'?: string;
+  /** Any other HTML attributes */
+  [key: string]: unknown;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  disabled = false,
+  fullWidth = false,
+  iconOnly = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const baseStyles =
+  'inline-flex items-center justify-center gap-2 font-medium whitespace-nowrap no-underline transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer';
+
+const variantStyles = {
+  primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+  secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+  outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+  ghost: 'hover:bg-accent hover:text-accent-foreground',
+  destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+};
+
+const sizeStyles = {
+  sm: 'h-9 px-3 text-sm rounded-md',
+  md: 'h-10 px-4 py-2 text-sm rounded-lg',
+  lg: 'h-11 px-6 text-base rounded-lg',
+};
+
+const iconOnlySizeStyles = {
+  sm: 'h-9 w-9 rounded-md',
+  md: 'h-10 w-10 rounded-lg',
+  lg: 'h-11 w-11 rounded-lg',
+};
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      aria-disabled={disabled ? 'true' : undefined}
+      class:list={[
+        baseStyles,
+        variantStyles[variant],
+        iconOnly ? iconOnlySizeStyles[size] : sizeStyles[size],
+        fullWidth && 'w-full',
+        disabled && 'pointer-events-none opacity-50',
+        className,
+      ]}
+      {...rest}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button
+      type={type}
+      disabled={disabled}
+      class:list={[
+        baseStyles,
+        variantStyles[variant],
+        iconOnly ? iconOnlySizeStyles[size] : sizeStyles[size],
+        fullWidth && 'w-full',
+        className,
+      ]}
+      {...rest}
+    >
+      <slot />
+    </button>
+  )
+}

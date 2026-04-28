@@ -1,0 +1,93 @@
+---
+/**
+ * ContactForm Block
+ *
+ * A contact form section with headline and form fields.
+ * Edit the fields and styling directly for each project.
+ * Note: Form handling (action, method) should be customized per project.
+ */
+import Section from '@/components/core/Section.astro';
+import Card from '@/components/core/Card.astro';
+import Input from '@/components/core/Input.astro';
+import Textarea from '@/components/core/Textarea.astro';
+import Label from '@/components/core/Label.astro';
+import Button from '@/components/core/Button.astro';
+
+interface Props {
+  /** Section headline */
+  headline?: string;
+  /** Section description */
+  description?: string;
+  /** Form action URL */
+  action?: string;
+  /** Form method */
+  method?: 'GET' | 'POST';
+  /** Submit button text */
+  submitText?: string;
+  /** Background variant */
+  background?: 'default' | 'muted';
+}
+
+const {
+  headline = 'Get in touch',
+  description = "We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.",
+  action = '#',
+  method = 'POST',
+  submitText = 'Send message',
+  background = 'default',
+} = Astro.props;
+---
+
+<Section spacing="lg" background={background}>
+  <div class="grid gap-12 lg:grid-cols-2">
+    <div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+        {headline}
+      </h2>
+      <p class="text-muted-foreground mt-4 text-lg">
+        {description}
+      </p>
+      <slot name="sidebar" />
+    </div>
+
+    <Card padding="lg">
+      <form action={action} method={method} class="space-y-6">
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <Label for="firstName" required>First name</Label>
+            <Input name="firstName" placeholder="John" required class="mt-2" />
+          </div>
+          <div>
+            <Label for="lastName" required>Last name</Label>
+            <Input name="lastName" placeholder="Doe" required class="mt-2" />
+          </div>
+        </div>
+
+        <div>
+          <Label for="email" required>Email</Label>
+          <Input name="email" type="email" placeholder="john@example.com" required class="mt-2" />
+        </div>
+
+        <div>
+          <Label for="phone">Phone (optional)</Label>
+          <Input name="phone" type="tel" placeholder="+1 (555) 000-0000" class="mt-2" />
+        </div>
+
+        <div>
+          <Label for="message" required>Message</Label>
+          <Textarea
+            name="message"
+            placeholder="How can we help you?"
+            rows={5}
+            required
+            class="mt-2"
+          />
+        </div>
+
+        <Button type="submit" fullWidth>
+          {submitText}
+        </Button>
+      </form>
+    </Card>
+  </div>
+</Section>

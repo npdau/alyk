@@ -1,0 +1,28 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+.astro
+
+# Lock files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Coverage
+coverage
+
+# Cache
+.cache
+.turbo
+
+# IDE
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Misc
+*.min.js
+*.min.css

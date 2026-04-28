@@ -1,0 +1,43 @@
+---
+/**
+ * Badge Component
+ *
+ * A small label for status, categories, or highlights.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Badge>New</Badge>
+ * <Badge variant="secondary">Popular</Badge>
+ * <Badge variant="outline">Category</Badge>
+ */
+
+interface Props {
+  /** Visual style variant */
+  variant?: 'default' | 'secondary' | 'outline' | 'destructive';
+  /** Size variant */
+  size?: 'sm' | 'md';
+  /** Additional classes */
+  class?: string;
+}
+
+const { variant = 'default', size = 'md', class: className } = Astro.props;
+
+const baseStyles =
+  'inline-flex items-center font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2';
+
+const variantStyles = {
+  default: 'bg-primary text-primary-foreground',
+  secondary: 'bg-secondary text-secondary-foreground',
+  outline: 'border border-input text-foreground',
+  destructive: 'bg-destructive text-destructive-foreground',
+};
+
+const sizeStyles = {
+  sm: 'px-2 py-0.5 text-xs rounded',
+  md: 'px-2.5 py-0.5 text-xs rounded-md',
+};
+---
+
+<span class:list={[baseStyles, variantStyles[variant], sizeStyles[size], className]}>
+  <slot />
+</span>

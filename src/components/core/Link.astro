@@ -1,0 +1,50 @@
+---
+/**
+ * Link Component
+ *
+ * A styled link component with variants for different contexts.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Link href="/about">About us</Link>
+ * <Link href="/pricing" variant="nav">Pricing</Link>
+ * <Link href="/privacy" variant="muted">Privacy Policy</Link>
+ */
+
+interface Props {
+  /** Link destination */
+  href: string;
+  /** Visual style variant */
+  variant?: 'default' | 'nav' | 'muted';
+  /** Whether link is currently active (for nav variant) */
+  active?: boolean;
+  /** Open in new tab */
+  external?: boolean;
+  /** Additional classes */
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'default',
+  active = false,
+  external = false,
+  class: className,
+} = Astro.props;
+
+const baseStyles = 'transition-colors duration-200';
+
+const variantStyles = {
+  default: 'text-primary underline-offset-4 hover:underline',
+  nav: active
+    ? 'text-foreground text-sm font-medium'
+    : 'text-muted-foreground hover:text-foreground text-sm font-medium',
+  muted: 'text-muted-foreground hover:text-foreground text-sm',
+};
+
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<a href={href} class:list={[baseStyles, variantStyles[variant], className]} {...externalAttrs}>
+  <slot />
+</a>

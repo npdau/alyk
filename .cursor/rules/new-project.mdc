@@ -1,0 +1,81 @@
+---
+alwaysApply: false
+description: "Workflow for starting a new project from this starter"
+---
+# Starting a New Project
+
+## Step 1: Clone and Setup
+```bash
+git clone [this-repo] new-project
+cd new-project
+pnpm install
+```
+
+## Step 2: Extract Tokens from Design
+
+Open `src/styles/globals.css` and update the `@theme` block:
+
+1. **Colours** — Extract from design: primary, secondary, accent, backgrounds
+2. **Typography** — Font families (update in both CSS and `<link>` in BaseLayout)
+3. **Radii** — Border radius values from the design
+4. **Shadows** — Shadow styles if custom ones are needed
+
+```css
+@theme {
+  --color-primary: oklch(...);
+  --color-secondary: oklch(...);
+  --font-sans: 'Your Font', system-ui, sans-serif;
+  --radius-lg: 0.75rem;
+}
+```
+
+## Step 3: Review Core Components
+
+Check `src/components/core/` — do any need:
+- New variants? → Add to the variant object
+- Different defaults? → Update default props
+- New components entirely? → Create following the pattern
+
+## Step 4: Build Blocks from Design
+
+Each major section of the design becomes a block in `src/components/blocks/`:
+
+1. Look at the design section
+2. Create a new `.astro` file
+3. Import core components
+4. Define props interface for the content
+5. Compose using core components
+
+## Step 5: Compose Pages
+
+Pages in `src/pages/` are pure composition:
+
+```astro
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import Hero from '@/components/blocks/Hero.astro';
+import Features from '@/components/blocks/Features.astro';
+---
+
+<PageLayout title="Home" description="...">
+  <Hero headline="..." subheadline="..." />
+  <Features features={[...]} />
+</PageLayout>
+```
+
+## Step 6: Handle One-Offs
+
+If something can't fit the token system:
+1. Create it in `src/components/custom/`
+2. It can use arbitrary Tailwind values
+3. Still make it prop-driven and reusable
+4. Import into pages alongside blocks
+
+## Checklist Before Shipping
+
+- [ ] All pages have unique titles and descriptions
+- [ ] All images use `<Image>` from `astro:assets`
+- [ ] All images have `alt`, `width`, `height`
+- [ ] No raw colours in core/blocks (only in custom)
+- [ ] `pnpm build` passes without errors
+- [ ] Test in browser at multiple breakpoints
