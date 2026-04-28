@@ -63,7 +63,7 @@ const { headline, body, image, imagePosition = 'right', cta, background = 'defau
         width={image.width}
         height={image.height}
         class="rounded-lg shadow-lg"
-        inferSize={typeof image.src !== 'string'}
+        inferSize={!image.width || !image.height}
       />
     </div>
   </div>
