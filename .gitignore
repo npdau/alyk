@@ -31,6 +31,9 @@ pnpm-debug.log*
 # Test coverage
 coverage/
 
+# Design references (large image files)
+design-reference/
+
 # Misc
 *.local
 .cache/
