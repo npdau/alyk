@@ -1,0 +1,87 @@
+---
+/**
+ * ProjectShowcase Block
+ *
+ * Featured project grid with images and tags.
+ */
+import { Image } from 'astro:assets';
+import Section from '@/components/core/Section.astro';
+import Badge from '@/components/core/Badge.astro';
+import Button from '@/components/core/Button.astro';
+
+interface Project {
+  title: string;
+  tag: string;
+  image: { src: any; alt: string };
+  href: string;
+}
+
+interface Props {
+  heading: string;
+  description?: string;
+  projects: Project[];
+  cta?: { text: string; href: string };
+}
+
+const { heading, description, projects, cta } = Astro.props;
+---
+
+<Section spacing="lg">
+  <div class="mb-10">
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+      {heading}
+    </h2>
+    {description && <p class="mt-4 max-w-xl text-base leading-relaxed">{description}</p>}
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    {
+      projects.map((project) => (
+        <a
+          href={project.href}
+          class="group relative block aspect-[4/3] overflow-hidden rounded-lg border-0 no-underline"
+        >
+          <Image
+            src={project.image.src}
+            alt={project.image.alt}
+            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            widths={[400, 600, 800]}
+            sizes="(min-width: 640px) 50vw, 100vw"
+            inferSize
+          />
+          <div class="from-navy-900/70 absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
+          <div class="absolute bottom-0 left-0 p-5">
+            <p class="text-lg font-semibold text-stone-50">{project.title}</p>
+            <Badge
+              variant="secondary"
+              size="sm"
+              class="mt-2 bg-white/15 text-stone-50 backdrop-blur-sm"
+            >
+              {project.tag}
+            </Badge>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+
+  {
+    cta && (
+      <div class="mt-8">
+        <Button href={cta.href} variant="white" size="lg" pill class="!pr-2 !pl-5">
+          {cta.text}
+          <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
+            <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </span>
+        </Button>
+      </div>
+    )
+  }
+</Section>

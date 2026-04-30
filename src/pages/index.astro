@@ -1,109 +1,102 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro';
-import Hero from '@/components/blocks/Hero.astro';
-import Features from '@/components/blocks/Features.astro';
-import ImageText from '@/components/blocks/ImageText.astro';
-import CTA from '@/components/blocks/CTA.astro';
-import ContactForm from '@/components/blocks/ContactForm.astro';
-import FAQ from '@/components/blocks/FAQ.astro';
+import HeroHome from '@/components/blocks/HeroHome.astro';
+import IntroBlock from '@/components/blocks/IntroBlock.astro';
+import ServicesSnapshot from '@/components/blocks/ServicesSnapshot.astro';
+import ProjectShowcase from '@/components/blocks/ProjectShowcase.astro';
+import Testimonial from '@/components/blocks/Testimonial.astro';
+import ConsultationCTA from '@/components/blocks/ConsultationCTA.astro';
+
+import heroImage from '@/assets/images/projects/cabarita beach i - build/cabarita beach i - build - 01.webp';
+import projectCabaritaI from '@/assets/images/projects/cabarita beach i - build/cabarita beach i - build - 05.webp';
+import projectCabaritaII from '@/assets/images/projects/cabarita beach ii - build/cabarita beach ii - build - 01.webp';
+import projectCasuarinaBuild from '@/assets/images/projects/casuarina i - build/casuarina i - build - 01.webp';
+import projectCasuarinaReno from '@/assets/images/projects/casuarina i - renovation/casuarina i - renovation - 01.webp';
 ---
 
 <PageLayout
-  title="Welcome - Your Business Name"
-  description="Your business tagline or brief description goes here."
+  title="ALYK Building — Architectural Homes & Renovations, Tweed Coast"
+  description="ALYK Building specialise in architectural homes and renovations between Fingal Head and New Brighton — built in close collaboration with the architects who design them."
   fullWidth
+  transparentNav
 >
-  <!-- Hero -->
-  <Hero
-    headline="Your Business Name"
-    subheadline="A compelling tagline that describes what your business does and the value you provide to customers."
-    primaryCTA={{ text: 'Get Started', href: '#contact' }}
-    secondaryCTA={{ text: 'Learn More', href: '#features' }}
+  <HeroHome
+    headline="Architectural homes on the Tweed Coast."
+    subheadline="ALYK Building specialise in architectural homes and renovations between Fingal Head and New Brighton — built in close collaboration with the architects who design them."
+    cta={{ text: 'Begin a project', href: '/contact/' }}
+    image={{ src: heroImage, alt: 'Architectural home by ALYK Building on the Tweed Coast' }}
   />
 
-  <!-- Features -->
-  <Features
-    headline="Why Choose Us"
-    description="Everything you need to succeed, all in one place."
-    features={[
+  <IntroBlock
+    heading="Built for the place we live in."
+    body="ALYK Building specialises in architectural homes and major renovations between Fingal Head and New Brighton. We work to architects' drawings, with buildability input as early as it helps. We don't build outside the Tweed Coast, and we don't take on more work than we can run well."
+  />
+
+  <ServicesSnapshot
+    services={[
       {
-        icon: '⚡',
-        title: 'Feature One',
-        description: 'A brief description of this amazing feature and the value it provides.',
+        title: 'Architectural homes',
+        description:
+          "New custom builds on coastal sites. We work to your architect's drawings, with buildability input as early as it's useful.",
+        link: { text: 'More on new builds', href: '/services/builds/' },
       },
       {
-        icon: '🛡️',
-        title: 'Feature Two',
-        description: 'A brief description of this amazing feature and the value it provides.',
-      },
-      {
-        icon: '🚀',
-        title: 'Feature Three',
-        description: 'A brief description of this amazing feature and the value it provides.',
+        title: 'Renovations',
+        description:
+          'Major renovations and extensions on existing homes. The same standard, same care, same architectural-grade detail as a new build.',
+        link: { text: 'More on renovations', href: '/services/renovations/' },
       },
     ]}
   />
 
-  <!-- Image + Text (image right) -->
-  <ImageText
-    headline="About Our Company"
-    body="<p>We've been helping businesses succeed for over a decade. Our team of experts is dedicated to providing the best solutions for your needs.</p><p>Whether you're a small startup or an established enterprise, we have the tools and expertise to help you grow.</p>"
-    image={{ src: 'https://placehold.co/600x400', alt: 'About us', width: 600, height: 400 }}
-    cta={{ text: 'Learn More', href: '/about' }}
-    background="muted"
-  />
-
-  <!-- Image + Text (image left) -->
-  <ImageText
-    headline="Our Services"
-    body="<p>From consulting to implementation, we offer a full range of services to meet your business needs.</p><p>Our proven methodology ensures successful outcomes every time.</p>"
-    image={{ src: 'https://placehold.co/600x400', alt: 'Our services', width: 600, height: 400 }}
-    imagePosition="left"
-    cta={{ text: 'View Services', href: '/services' }}
-  />
-
-  <!-- FAQ -->
-  <FAQ
-    headline="Frequently Asked Questions"
-    description="Got questions? We've got answers."
-    items={[
+  <ProjectShowcase
+    heading="Recent work."
+    description="A selection of homes we've built and renovated on the Tweed Coast. Each project page includes the brief, the site, the architect, and a full gallery."
+    projects={[
       {
-        question: 'What services do you offer?',
-        answer:
-          '<p>We offer a comprehensive range of services including consulting, implementation, and ongoing support. Our team works closely with you to understand your needs and deliver tailored solutions.</p>',
+        title: 'Cabarita Beach',
+        tag: 'NEW BUILD',
+        image: { src: projectCabaritaI, alt: 'Cabarita Beach new build by ALYK Building' },
+        href: '/projects/cabarita-beach/',
       },
       {
-        question: 'How much does it cost?',
-        answer:
-          '<p>Our pricing varies based on the scope and complexity of your project. Contact us for a free consultation and custom quote tailored to your specific needs.</p>',
+        title: 'Casuarina',
+        tag: 'NEW BUILD',
+        image: { src: projectCasuarinaBuild, alt: 'Casuarina new build by ALYK Building' },
+        href: '/projects/casuarina/',
       },
       {
-        question: 'How long does a typical project take?',
-        answer:
-          "<p>Project timelines depend on the scope of work. Small projects may take a few weeks, while larger implementations can take several months. We'll provide a detailed timeline during our initial consultation.</p>",
+        title: 'Cabarita Beach II',
+        tag: 'NEW BUILD',
+        image: { src: projectCabaritaII, alt: 'Cabarita Beach II new build by ALYK Building' },
+        href: '/projects/cabarita-beach-2/',
       },
       {
-        question: 'Do you offer ongoing support?',
-        answer:
-          '<p>Yes! We offer various support packages to ensure your continued success. From basic maintenance to comprehensive managed services, we have options to fit your needs.</p>',
+        title: 'Casuarina',
+        tag: 'RENOVATION',
+        image: { src: projectCasuarinaReno, alt: 'Casuarina renovation by ALYK Building' },
+        href: '/projects/casuarina-renovation/',
       },
     ]}
+    cta={{ text: 'View all projects', href: '/projects/' }}
+  />
+
+  <IntroBlock
+    heading="Aaron Lee and Yarran Kerr — Tweed locals."
+    body="ALYK is the work of Aaron Lee and Yarran Kerr — two locals running a custom building practice on the strip of coast they grew up on. The two of them are on every site we run."
+    link={{ text: 'More about ALYK', href: '/about/' }}
+  />
+
+  <Testimonial
+    quote="We chose ALYK to build our home as we have known Aaron and Yarran since they were young and they did their apprenticeships with an award-winning builder, known to us. The quality of their workmanship is exceptional, and they were very open to listening to our ideas and provided us with great input. They were very easy to communicate with and helped us to build the home we envisaged. We are very happy with the award-winning home they have built for us."
+    name="Ellis & Rosemary"
+    location="Bogangar"
     background="muted"
   />
 
-  <!-- CTA -->
-  <CTA
-    headline="Ready to get started?"
-    description="Contact us today to learn how we can help your business grow."
-    primaryCTA={{ text: 'Get Started', href: '#contact' }}
-    secondaryCTA={{ text: 'Schedule a Call', href: '/contact' }}
-    background="primary"
-  />
-
-  <!-- Contact Form -->
-  <ContactForm
-    headline="Get in Touch"
-    description="Have a question or ready to start your project? Fill out the form below and we'll get back to you within 24 hours."
-    submitText="Send Message"
+  <ConsultationCTA
+    heading="Schedule a free consultation."
+    body="Send us a brief — even a thumbnail of what you've drawn, the site, and a rough programme. We'll come back to you within a couple of business days, and we'll be honest about whether the project's a fit."
+    cta={{ text: 'Begin an enquiry', href: '/contact/' }}
   />
 </PageLayout>

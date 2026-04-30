@@ -1,0 +1,61 @@
+---
+/**
+ * FAQTeaser Block
+ *
+ * Subset of FAQ questions with accordion, heading, and link to full FAQ.
+ */
+import Section from '@/components/core/Section.astro';
+import Accordion from '@/components/core/Accordion.astro';
+import Button from '@/components/core/Button.astro';
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  heading: string;
+  leadIn?: string;
+  items: FAQItem[];
+  cta?: { text: string; href: string };
+  secondaryCta?: { text: string; href: string };
+}
+
+const { heading, leadIn, items, cta, secondaryCta } = Astro.props;
+
+const accordionItems = items.map((item, i) => ({
+  id: `faq-teaser-${i}`,
+  title: item.question,
+  content: `<p>${item.answer}</p>`,
+}));
+---
+
+<Section spacing="lg">
+  <div class="mx-auto max-w-3xl">
+    <div class="mb-10">
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+        {heading}
+      </h2>
+      {leadIn && <p class="mt-3 text-base">{leadIn}</p>}
+    </div>
+
+    <Accordion items={accordionItems} type="single" variant="default" />
+
+    {
+      (cta || secondaryCta) && (
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          {cta && (
+            <Button href={cta.href} variant="outline" pill>
+              {cta.text} &rarr;
+            </Button>
+          )}
+          {secondaryCta && (
+            <Button href={secondaryCta.href} variant="ghost" pill>
+              {secondaryCta.text}
+            </Button>
+          )}
+        </div>
+      )
+    }
+  </div>
+</Section>

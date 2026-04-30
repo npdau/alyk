@@ -4,158 +4,145 @@
  * ============================================================
  * DARK MODE VARIANT
  * ============================================================
- * Enables dark mode via .dark class on html/body
  */
 @custom-variant dark (&:is(.dark *));
 
 /*
  * ============================================================
- * DESIGN TOKENS
+ * ALYK BUILDING — DESIGN TOKENS
  * ============================================================
  *
- * This is where your brand lives. All visual decisions are made here.
- * Change these values to match your design system.
+ * Premium residential builder, Tweed Coast NSW.
+ * Photography-led, editorial, quiet, confident.
  *
- * These tokens automatically generate:
- * - Tailwind utility classes (bg-primary, text-muted, rounded-lg, etc.)
- * - CSS custom properties (var(--color-primary), var(--radius-lg), etc.)
- *
- * Token Namespaces:
- * - --color-*    → Color utilities (bg-*, text-*, border-*)
- * - --font-*     → Font family utilities (font-sans, font-mono)
- * - --radius-*   → Border radius utilities (rounded-sm, rounded-lg)
- * - --shadow-*   → Box shadow utilities (shadow-sm, shadow-lg)
- * - --spacing-*  → Spacing utilities (p-*, m-*, gap-*)
- * - --animate-*  → Animation utilities (animate-fade-in)
- *
- * Color Format: Using oklch() for wider gamut and better color mixing
- * https://oklch.com - Use this tool to pick colors
+ * Palette: Navy brand, warm stone surfaces, stone body text.
+ * Type: Jost variable. Radii: Restrained. Shadows: Warm-tinted.
  */
 
 @theme {
   /* ========================================
-   * COLORS - Brand & Semantic
-   * ========================================
-   *
-   * Primary: Your main brand color
-   * Secondary: Supporting color for less prominent actions
-   * Accent: Highlight color for special elements
-   * Destructive: Error states, delete actions
-   * Muted: Subtle backgrounds and disabled states
-   */
-
-  /* --- Primary --- */
-  --color-primary: oklch(0.205 0.034 265.75);
-  --color-primary-foreground: oklch(0.985 0.002 247.84);
-
-  /* --- Secondary --- */
-  --color-secondary: oklch(0.965 0.005 264.54);
-  --color-secondary-foreground: oklch(0.205 0.034 265.75);
-
-  /* --- Accent --- */
-  --color-accent: oklch(0.965 0.005 264.54);
-  --color-accent-foreground: oklch(0.205 0.034 265.75);
-
-  /* --- Destructive (errors, delete actions) --- */
-  --color-destructive: oklch(0.577 0.245 27.33);
-  --color-destructive-foreground: oklch(0.985 0.002 247.84);
-
-  /* --- Muted (subtle, disabled) --- */
-  --color-muted: oklch(0.965 0.005 264.54);
-  --color-muted-foreground: oklch(0.556 0.022 264.36);
-
-  /* ========================================
-   * COLORS - Surfaces & Backgrounds
+   * COLORS — Brand & Semantic
    * ======================================== */
 
-  /* --- Base background & text --- */
-  --color-background: oklch(1 0 0);
-  --color-foreground: oklch(0.145 0.028 264.44);
+  /* --- Primary (navy-800) --- */
+  --color-primary: oklch(0.305 0.055 252);
+  --color-primary-foreground: oklch(0.985 0.001 108);
 
-  /* --- Card surfaces --- */
+  /* --- Secondary (stone-100) --- */
+  --color-secondary: oklch(0.97 0.001 108);
+  --color-secondary-foreground: oklch(0.225 0.045 253);
+
+  /* --- Accent (stone-200 — hover fills) --- */
+  --color-accent: oklch(0.923 0.002 48);
+  --color-accent-foreground: oklch(0.225 0.045 253);
+
+  /* --- Destructive (warm red — #9A3B2C) --- */
+  --color-destructive: oklch(0.425 0.13 28);
+  --color-destructive-foreground: oklch(0.985 0.001 108);
+
+  /* --- Muted (stone-100 — subtle backgrounds) --- */
+  --color-muted: oklch(0.97 0.001 108);
+  --color-muted-foreground: oklch(0.553 0.012 58);
+
+  /* ========================================
+   * COLORS — Surfaces & Backgrounds
+   * ======================================== */
+
+  /* --- Base (stone-50) --- */
+  --color-background: oklch(0.985 0.001 108);
+  --color-foreground: oklch(0.225 0.045 253);
+
+  /* --- Card (white — raised surfaces) --- */
   --color-card: oklch(1 0 0);
-  --color-card-foreground: oklch(0.145 0.028 264.44);
+  --color-card-foreground: oklch(0.225 0.045 253);
 
-  /* --- Popover/dropdown surfaces --- */
+  /* --- Popover --- */
   --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.028 264.44);
+  --color-popover-foreground: oklch(0.225 0.045 253);
 
   /* ========================================
-   * COLORS - UI Elements
+   * COLORS — UI Elements
    * ======================================== */
 
-  /* --- Borders --- */
-  --color-border: oklch(0.922 0.007 264.53);
+  /* --- Borders (stone-200) --- */
+  --color-border: oklch(0.923 0.002 48);
 
-  /* --- Form inputs --- */
-  --color-input: oklch(0.922 0.007 264.53);
+  /* --- Inputs (stone-300) --- */
+  --color-input: oklch(0.869 0.004 56);
 
-  /* --- Focus rings --- */
-  --color-ring: oklch(0.205 0.034 265.75);
+  /* --- Focus ring (navy-700) --- */
+  --color-ring: oklch(0.374 0.065 254);
 
   /* ========================================
-   * COLORS - Data Visualization
+   * COLORS — Extended palette (non-semantic)
    * ========================================
-   * Use these for charts, graphs, status indicators
+   * Available as bg-navy-700, text-stone-500, bg-masonry-100, etc.
    */
-  --color-chart-1: oklch(0.646 0.222 41.12);
-  --color-chart-2: oklch(0.6 0.118 184.71);
-  --color-chart-3: oklch(0.398 0.07 227.39);
-  --color-chart-4: oklch(0.828 0.189 84.43);
-  --color-chart-5: oklch(0.769 0.188 70.08);
+  --color-navy-900: oklch(0.225 0.045 253);
+  --color-navy-800: oklch(0.305 0.055 252);
+  --color-navy-700: oklch(0.374 0.065 254);
+  --color-navy-600: oklch(0.488 0.065 248);
+  --color-navy-500: oklch(0.608 0.05 240);
+  --color-navy-300: oklch(0.796 0.03 240);
+  --color-navy-100: oklch(0.92 0.014 240);
+  --color-stone-50: oklch(0.985 0.001 108);
+  --color-stone-100: oklch(0.97 0.001 108);
+  --color-stone-200: oklch(0.923 0.002 48);
+  --color-stone-300: oklch(0.869 0.004 56);
+  --color-stone-400: oklch(0.716 0.009 56);
+  --color-stone-500: oklch(0.553 0.012 58);
+  --color-stone-700: oklch(0.374 0.009 68);
+  --color-stone-900: oklch(0.216 0.006 56);
+  --color-masonry-100: oklch(0.907 0.004 198);
+  --color-masonry-300: oklch(0.788 0.007 220);
+  --color-masonry-500: oklch(0.608 0.013 232);
+  --color-masonry-700: oklch(0.436 0.014 232);
+
+  /* ========================================
+   * COLORS — Feedback
+   * ======================================== */
+  --color-positive: oklch(0.524 0.085 145);
+  --color-caution: oklch(0.637 0.12 75);
 
   /* ========================================
    * TYPOGRAPHY
-   * ========================================
-   * Define your font stacks here
-   */
-  --font-sans:
-    ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji';
+   * ======================================== */
+  --font-sans: 'Jost', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
-  --font-mono:
-    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
-
-  /* Heading font - defaults to sans, override for display fonts */
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --font-heading: var(--font-sans);
 
   /* ========================================
-   * BORDER RADIUS
-   * ========================================
-   * Consistent rounding across the UI
-   */
-  --radius-xs: 0.125rem;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --radius-3xl: 1.5rem;
+   * BORDER RADIUS — restrained, architectural
+   * ======================================== */
+  --radius-xs: 0px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
+  --radius-3xl: 16px;
   --radius-full: 9999px;
 
   /* ========================================
-   * SHADOWS
-   * ========================================
-   * Elevation system for depth
-   */
-  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+   * SHADOWS — warm navy tint, soft
+   * ======================================== */
+  --shadow-xs: 0 1px 2px rgba(19, 37, 58, 0.04), 0 1px 1px rgba(19, 37, 58, 0.03);
+  --shadow-sm: 0 1px 3px rgba(19, 37, 58, 0.04), 0 1px 2px rgba(19, 37, 58, 0.03);
+  --shadow-md: 0 2px 4px rgba(19, 37, 58, 0.05), 0 6px 16px -6px rgba(19, 37, 58, 0.08);
+  --shadow-lg: 0 4px 10px rgba(19, 37, 58, 0.06), 0 20px 40px -12px rgba(19, 37, 58, 0.14);
+  --shadow-xl: 0 8px 20px rgba(19, 37, 58, 0.08), 0 30px 60px -16px rgba(19, 37, 58, 0.18);
+  --shadow-2xl: 0 25px 50px -12px rgba(19, 37, 58, 0.25);
+  --shadow-inner: inset 0 0 0 1px oklch(0.923 0.002 48);
 
   /* ========================================
-   * ANIMATIONS
-   * ========================================
-   * Common animation presets
-   */
-  --animate-fade-in: fade-in 0.2s ease-out;
-  --animate-fade-out: fade-out 0.2s ease-out;
-  --animate-slide-in-up: slide-in-up 0.3s ease-out;
-  --animate-slide-in-down: slide-in-down 0.3s ease-out;
-  --animate-scale-in: scale-in 0.2s ease-out;
+   * ANIMATIONS — quiet, considered
+   * ======================================== */
+  --animate-fade-in: fade-in 0.26s cubic-bezier(0.22, 0.61, 0.36, 1);
+  --animate-fade-out: fade-out 0.26s cubic-bezier(0.22, 0.61, 0.36, 1);
+  --animate-slide-in-up: slide-in-up 0.36s cubic-bezier(0.22, 0.61, 0.36, 1);
+  --animate-slide-in-down: slide-in-down 0.36s cubic-bezier(0.22, 0.61, 0.36, 1);
+  --animate-scale-in: scale-in 0.26s cubic-bezier(0.22, 0.61, 0.36, 1);
 
   @keyframes fade-in {
     from {
@@ -200,7 +187,7 @@
   @keyframes scale-in {
     from {
       opacity: 0;
-      transform: scale(0.95);
+      transform: scale(0.97);
     }
     to {
       opacity: 1;
@@ -211,49 +198,13 @@
 
 /*
  * ============================================================
- * DARK MODE TOKENS
+ * DARK MODE
  * ============================================================
- * Override light mode values for dark theme
+ * This site uses explicit inverse sections (bg-navy-800/900)
+ * rather than system dark mode. @theme dark is intentionally
+ * omitted to prevent prefers-color-scheme from overriding the
+ * warm stone palette.
  */
-@theme dark {
-  /* --- Brand colors --- */
-  --color-primary: oklch(0.985 0.002 247.84);
-  --color-primary-foreground: oklch(0.205 0.034 265.75);
-
-  --color-secondary: oklch(0.269 0.032 264.05);
-  --color-secondary-foreground: oklch(0.985 0.002 247.84);
-
-  --color-accent: oklch(0.269 0.032 264.05);
-  --color-accent-foreground: oklch(0.985 0.002 247.84);
-
-  --color-destructive: oklch(0.396 0.141 25.72);
-  --color-destructive-foreground: oklch(0.985 0.002 247.84);
-
-  --color-muted: oklch(0.269 0.032 264.05);
-  --color-muted-foreground: oklch(0.707 0.022 261.1);
-
-  /* --- Surfaces --- */
-  --color-background: oklch(0.145 0.028 264.44);
-  --color-foreground: oklch(0.985 0.002 247.84);
-
-  --color-card: oklch(0.145 0.028 264.44);
-  --color-card-foreground: oklch(0.985 0.002 247.84);
-
-  --color-popover: oklch(0.145 0.028 264.44);
-  --color-popover-foreground: oklch(0.985 0.002 247.84);
-
-  /* --- UI elements --- */
-  --color-border: oklch(0.269 0.032 264.05);
-  --color-input: oklch(0.269 0.032 264.05);
-  --color-ring: oklch(0.556 0.248 262.88);
-
-  /* --- Charts (darker variants) --- */
-  --color-chart-1: oklch(0.488 0.243 264.05);
-  --color-chart-2: oklch(0.696 0.17 162.48);
-  --color-chart-3: oklch(0.769 0.188 70.08);
-  --color-chart-4: oklch(0.627 0.265 303.9);
-  --color-chart-5: oklch(0.645 0.246 16.44);
-}
 
 /*
  * ============================================================
@@ -262,35 +213,27 @@
  */
 
 @layer base {
-  /* Apply theme colors to base elements */
   * {
     @apply border-border;
   }
 
   html {
-    /* Prevent layout shift when scrollbar appears */
     scrollbar-gutter: stable;
   }
 
   body {
     @apply bg-background text-foreground;
-
-    /* OpenType features */
     font-feature-settings:
       'rlig' 1,
       'calt' 1;
-
-    /* Smooth scrolling */
     scroll-behavior: smooth;
-
-    /* Better text rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
   /* ========================================
-   * TYPOGRAPHY DEFAULTS
+   * TYPOGRAPHY — editorial, tight headings
    * ======================================== */
   h1,
   h2,
@@ -298,43 +241,63 @@
   h4,
   h5,
   h6 {
-    @apply font-heading font-semibold tracking-tight;
+    @apply font-heading font-semibold;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    text-wrap: balance;
   }
 
   h1 {
     @apply text-4xl md:text-5xl lg:text-6xl;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
   }
 
   h2 {
     @apply text-3xl md:text-4xl;
+    font-weight: 600;
   }
 
   h3 {
     @apply text-2xl md:text-3xl;
+    font-weight: 600;
   }
 
   h4 {
     @apply text-xl md:text-2xl;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 
   p {
     @apply leading-relaxed;
+    text-wrap: pretty;
+    color: oklch(0.553 0.012 58);
   }
 
   a {
-    @apply text-primary underline-offset-4 hover:underline;
+    @apply text-foreground no-underline;
+    border-bottom: 1px solid oklch(0.869 0.004 56);
+    transition:
+      border-color 0.14s cubic-bezier(0.22, 0.61, 0.36, 1),
+      color 0.14s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
-  /* ========================================
-   * FOCUS STYLES
-   * ======================================== */
+  a:hover {
+    border-color: oklch(0.374 0.065 254);
+    color: oklch(0.374 0.065 254);
+  }
+
+  hr {
+    @apply border-border border-t;
+    margin: 3rem 0;
+  }
+
   :focus-visible {
     @apply ring-ring ring-offset-background ring-2 ring-offset-2 outline-none;
   }
 
-  /* ========================================
-   * SELECTION STYLES
-   * ======================================== */
   ::selection {
     @apply bg-primary text-primary-foreground;
   }
@@ -347,7 +310,6 @@
  */
 
 @layer components {
-  /* Screen reader only - accessible hidden content */
   .sr-only {
     position: absolute;
     width: 1px;
@@ -360,83 +322,50 @@
     border-width: 0;
   }
 
-  /* Container with responsive padding */
   .container {
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
   }
 
-  /* Prose styles for markdown/rich content */
+  /* Eyebrow — editorial label, all caps, tracked */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: oklch(0.553 0.012 58);
+  }
+
   .prose {
     @apply max-w-prose;
 
     & h2 {
       @apply mt-8 mb-4;
     }
-
     & h3 {
       @apply mt-6 mb-3;
     }
-
     & p {
       @apply mb-4;
     }
-
     & ul,
     & ol {
       @apply mb-4 ml-6;
     }
-
     & li {
       @apply mb-2;
     }
-
     & pre {
       @apply bg-muted mb-4 overflow-x-auto rounded-lg p-4;
     }
-
     & code {
       @apply bg-muted rounded-md px-1.5 py-0.5 text-sm;
     }
-
     & pre code {
       @apply bg-transparent p-0;
     }
-
     & blockquote {
       @apply border-border text-muted-foreground border-l-4 pl-4 italic;
     }
   }
 }
-
-/*
- * ============================================================
- * CUSTOMIZATION GUIDE
- * ============================================================
- *
- * To customize this theme for your brand:
- *
- * 1. COLORS: Update the oklch values in @theme block
- *    - Use https://oklch.com to pick colors
- *    - Primary: Your main brand color
- *    - Keep foreground colors for good contrast
- *
- * 2. TYPOGRAPHY: Change --font-sans and --font-heading
- *    - Import your fonts in BaseLayout.astro
- *    - Update the font stacks here
- *
- * 3. BORDER RADIUS: Adjust --radius-* for sharper/rounder UI
- *    - Smaller values = more corporate
- *    - Larger values = more friendly
- *
- * 4. SHADOWS: Modify --shadow-* for depth perception
- *    - Subtle shadows = flat design
- *    - Stronger shadows = more depth
- *
- * 5. DARK MODE: Update values in @theme dark block
- *    - Ensure sufficient contrast ratios
- *    - Test with accessibility tools
- *
- * Usage in components:
- * - Tailwind classes: bg-primary, text-muted-foreground, rounded-lg
- * - CSS variables: var(--color-primary), var(--radius-lg)
- */

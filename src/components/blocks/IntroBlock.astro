@@ -1,0 +1,39 @@
+---
+/**
+ * IntroBlock
+ *
+ * Short value proposition with heading, body, and inline link.
+ */
+import Section from '@/components/core/Section.astro';
+
+interface Props {
+  heading: string;
+  body: string;
+  link?: { text: string; href: string };
+}
+
+const { heading, body, link } = Astro.props;
+---
+
+<Section spacing="lg" background="muted">
+  <div class="mx-auto max-w-2xl">
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+      {heading}
+    </h2>
+    <p class="mt-6 text-base leading-relaxed sm:text-lg" style="line-height: 1.55;">
+      {body}
+    </p>
+    {
+      link && (
+        <p class="mt-6">
+          <a
+            href={link.href}
+            class="text-foreground hover:border-navy-700 hover:text-navy-700 border-b border-stone-300 text-sm font-medium no-underline transition-colors"
+          >
+            {link.text} &rarr;
+          </a>
+        </p>
+      )
+    }
+  </div>
+</Section>

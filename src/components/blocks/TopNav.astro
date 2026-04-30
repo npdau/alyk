@@ -2,18 +2,22 @@
 /**
  * TopNav Block
  *
- * Site header with logo, navigation, and mobile menu.
- * Edit the navItems array and logo directly in this file.
+ * Three-column header: logo mark left, frosted nav pill center, CTA right.
+ * Transparent over hero imagery, solid on scroll.
  */
-import Container from '@/components/core/Container.astro';
-import Link from '@/components/core/Link.astro';
 import Button from '@/components/core/Button.astro';
 
-// Edit these navigation items for your site
+interface Props {
+  transparent?: boolean;
+}
+
+const { transparent = false } = Astro.props;
+
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/about/', label: 'About' },
-  { href: '/blog/', label: 'Blog' },
+  { href: '/services/', label: 'Services' },
+  { href: '/projects/', label: 'Projects' },
   { href: '/contact/', label: 'Contact' },
 ];
 
@@ -21,63 +25,116 @@ const currentPath = Astro.url.pathname;
 ---
 
 <header
-  class="bg-background/95 supports-[backdrop-filter]:bg-background/60 border-border sticky top-0 z-50 w-full border-b backdrop-blur"
+  class="absolute top-0 z-50 w-full"
+  id="site-header"
+  data-transparent={transparent ? 'true' : 'false'}
 >
-  <Container>
-    <div class="flex h-16 items-center justify-between">
-      <!-- Logo -->
-      <a href="/" class="flex items-center space-x-2 text-xl font-bold no-underline">
-        <span>Your Logo</span>
-      </a>
-
-      <!-- Desktop Navigation -->
-      <nav class="hidden items-center gap-6 md:flex">
-        {
-          navItems.map((item) => (
-            <Link href={item.href} variant="nav" active={currentPath === item.href}>
-              {item.label}
-            </Link>
-          ))
-        }
-      </nav>
-
-      <!-- Mobile menu button -->
-      <Button
-        variant="ghost"
-        iconOnly
-        class="text-muted-foreground md:hidden"
-        aria-label="Toggle menu"
-        id="mobile-menu-button"
-      >
-        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"></path>
+  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12">
+    <!-- Logo mark + wordmark -->
+    <a
+      href="/"
+      class="flex items-center gap-2.5 border-0 no-underline transition-opacity hover:opacity-80"
+    >
+      <span class="bg-navy-900 inline-flex h-8 w-8 items-center justify-center rounded-full">
+        <svg class="h-4 w-4" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M64 24L24 88h28l12-24 12 24h28L64 24z" fill="#fff"></path>
         </svg>
+      </span>
+      <span
+        class:list={[
+          'text-[13px] font-medium tracking-[0.2em] uppercase',
+          transparent ? 'text-stone-50' : 'text-foreground',
+        ]}
+      >
+        ALYK Building
+      </span>
+    </a>
+
+    <!-- Centered frosted glass nav pill -->
+    <nav
+      class="absolute left-1/2 hidden h-13 -translate-x-1/2 items-center gap-1 rounded-full bg-white/10 px-3 ring-1 ring-white/20 backdrop-blur-xl lg:flex"
+    >
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'border-0 px-5 py-2.5 text-sm tracking-[0.01em] text-white no-underline transition-opacity',
+              currentPath === item.href
+                ? 'font-semibold opacity-100'
+                : 'font-medium opacity-75 hover:opacity-100',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- CTA button -->
+    <div class="hidden lg:block">
+      <Button href="/contact/" variant="white" size="lg" pill class="!pr-2 !pl-5">
+        Begin a project
+        <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
+          <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
+            ></path>
+          </svg>
+        </span>
       </Button>
     </div>
-  </Container>
 
-  <!-- Mobile Navigation -->
-  <nav class="border-border hidden border-t md:hidden" id="mobile-menu">
-    <Container>
-      <div class="space-y-3 py-4">
+    <!-- Mobile menu button -->
+    <button
+      type="button"
+      class:list={[
+        '-mr-2 p-2 transition-opacity hover:opacity-70 lg:hidden',
+        transparent ? 'text-stone-50' : 'text-foreground',
+      ]}
+      aria-label="Toggle menu"
+      id="mobile-menu-button"
+    >
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <nav
+    class="bg-background text-foreground border-border hidden border-t lg:hidden"
+    id="mobile-menu"
+  >
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="space-y-1 py-4">
         {
           navItems.map((item) => (
-            <Link href={item.href} variant="nav" active={currentPath === item.href} class="block">
+            <a
+              href={item.href}
+              class:list={[
+                'block border-0 py-2 text-sm font-medium no-underline',
+                currentPath === item.href ? 'text-foreground' : 'text-muted-foreground',
+              ]}
+            >
               {item.label}
-            </Link>
+            </a>
           ))
         }
+        <div class="pt-3">
+          <Button href="/contact/" variant="primary" size="sm" pill fullWidth>
+            Begin a project
+          </Button>
+        </div>
       </div>
-    </Container>
+    </div>
   </nav>
 </header>
 
 <script>
-  // Simple mobile menu toggle
   const button = document.getElementById('mobile-menu-button');
   const menu = document.getElementById('mobile-menu');
 

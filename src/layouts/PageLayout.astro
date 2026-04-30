@@ -25,16 +25,18 @@ interface Props {
   noIndex?: boolean;
   /** Full-width layout (no container padding) */
   fullWidth?: boolean;
+  /** Transparent header over hero imagery */
+  transparentNav?: boolean;
 }
 
-const { fullWidth = false, ...layoutProps } = Astro.props;
+const { fullWidth = false, transparentNav = false, ...layoutProps } = Astro.props;
 ---
 
 <BaseLayout {...layoutProps}>
   <slot name="head" slot="head" />
 
   <div class="flex min-h-screen flex-col">
-    <TopNav />
+    <TopNav transparent={transparentNav} />
 
     <main id="main-content" class="flex-1">
       {

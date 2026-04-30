@@ -17,7 +17,7 @@ interface Props {
   /** Vertical padding size */
   spacing?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   /** Background color */
-  background?: 'default' | 'muted' | 'primary' | 'secondary';
+  background?: 'default' | 'muted' | 'primary' | 'secondary' | 'inverse' | 'inverse-deep';
   /** Container size (set to 'full' for no container) */
   container?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   /** HTML element to render */
@@ -50,6 +50,8 @@ const backgroundStyles = {
   muted: 'bg-muted',
   primary: 'bg-primary text-primary-foreground',
   secondary: 'bg-secondary text-secondary-foreground',
+  inverse: 'bg-navy-800 text-stone-50',
+  'inverse-deep': 'bg-navy-900 text-stone-50',
 };
 ---
 

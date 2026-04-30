@@ -1,0 +1,96 @@
+---
+/**
+ * HeroHome Block
+ *
+ * Full-bleed hero with background image, headline overlay, and CTA.
+ * Used only on the homepage.
+ */
+import { Image } from 'astro:assets';
+import Button from '@/components/core/Button.astro';
+
+interface Props {
+  headline: string;
+  subheadline?: string;
+  cta?: { text: string; href: string };
+  image: { src: any; alt: string };
+}
+
+const { headline, subheadline, cta, image } = Astro.props;
+---
+
+<section class="bg-navy-900 relative flex min-h-[90vh] items-end overflow-hidden">
+  <Image
+    src={image.src}
+    alt={image.alt}
+    class="absolute inset-0 h-full w-full object-cover"
+    widths={[800, 1200, 1800, 2400]}
+    sizes="100vw"
+    loading="eager"
+    inferSize
+  />
+
+  <div
+    class="absolute inset-0"
+    style="background: linear-gradient(180deg, color-mix(in oklch, var(--color-navy-900) 45%, transparent) 0%, color-mix(in oklch, var(--color-navy-900) 10%, transparent) 30%, color-mix(in oklch, var(--color-navy-900) 85%, transparent) 100%);"
+  >
+  </div>
+
+  <!-- Frame lines — equal 80px inset at xl+, pull toward edges on smaller screens -->
+  <div class="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+    <div class="absolute top-0 bottom-0 left-3 w-px bg-white/50 sm:left-4 lg:left-6 xl:left-20">
+    </div>
+    <div class="absolute top-0 right-3 bottom-0 w-px bg-white/50 sm:right-4 lg:right-6 xl:right-20">
+    </div>
+    <div class="absolute top-20 right-0 left-0 h-px bg-white/50"></div>
+    <div
+      class="absolute right-0 bottom-3 left-0 h-px bg-white/50 sm:bottom-4 lg:bottom-6 xl:bottom-20"
+    >
+    </div>
+  </div>
+
+  <!-- Hero content -->
+  <div class="relative z-10 w-full pt-32 pb-32 md:pb-40">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+      <h1
+        class="max-w-2xl text-4xl font-semibold tracking-tight text-stone-50 sm:text-5xl lg:text-6xl"
+        style="line-height: 1.05; letter-spacing: -0.025em;"
+      >
+        {headline}
+      </h1>
+      {
+        subheadline && (
+          <p
+            class="mt-6 max-w-lg text-base text-stone-50/80 sm:text-lg"
+            style="color: rgba(250,250,249,0.75);"
+          >
+            {subheadline}
+          </p>
+        )
+      }
+      {
+        cta && (
+          <div class="mt-8">
+            <Button href={cta.href} variant="white" size="lg" pill class="!pr-2 !pl-5">
+              {cta.text}
+              <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
+                <svg
+                  class="h-3 w-3 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </span>
+            </Button>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
