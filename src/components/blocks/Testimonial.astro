@@ -2,8 +2,9 @@
 /**
  * Testimonial Block
  *
- * Single featured quote with attribution.
+ * Single featured quote with attribution and optional side image.
  */
+import { Image } from 'astro:assets';
 import Section from '@/components/core/Section.astro';
 
 interface Props {
@@ -11,27 +12,58 @@ interface Props {
   name: string;
   location?: string;
   background?: 'default' | 'muted';
+  image?: { src: ImageMetadata; alt: string };
 }
 
-const { quote, name, location, background = 'default' } = Astro.props;
+const { quote, name, location, background = 'default', image } = Astro.props;
 ---
 
-<Section spacing="lg" background={background}>
-  <div class="mx-auto max-w-3xl text-center">
-    <svg class="mx-auto mb-6 h-8 w-8 text-stone-300" fill="currentColor" viewBox="0 0 24 24">
-      <path
-        d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
-      ></path>
-    </svg>
-    <blockquote
-      class="text-foreground text-lg leading-relaxed font-normal sm:text-xl"
-      style="font-style: italic; line-height: 1.6;"
-    >
-      &ldquo;{quote}&rdquo;
-    </blockquote>
-    <p class="text-foreground mt-6 text-sm font-medium">
-      {name}
-      {location && <span class="text-muted-foreground">, {location}</span>}
-    </p>
-  </div>
+<Section spacing="none" background={background} class="pt-16 pb-24 md:pt-20 md:pb-32">
+  {
+    image ? (
+      <div class="grid items-center gap-12 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-16 lg:gap-20">
+        <div>
+          <svg class="mb-6 h-8 w-8 text-stone-300" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+          <blockquote
+            class="text-foreground text-lg leading-relaxed font-normal sm:text-xl"
+            style="font-style: italic; line-height: 1.6;"
+          >
+            &ldquo;{quote}&rdquo;
+          </blockquote>
+          <p class="text-foreground mt-6 text-sm font-medium">
+            {name}
+            {location && <span class="text-muted-foreground">, {location}</span>}
+          </p>
+        </div>
+        <div class="overflow-hidden rounded-lg">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={480}
+            height={480}
+            class="h-auto w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    ) : (
+      <div class="mx-auto max-w-3xl text-center">
+        <svg class="mx-auto mb-6 h-8 w-8 text-stone-300" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+        </svg>
+        <blockquote
+          class="text-foreground text-lg leading-relaxed font-normal sm:text-xl"
+          style="font-style: italic; line-height: 1.6;"
+        >
+          &ldquo;{quote}&rdquo;
+        </blockquote>
+        <p class="text-foreground mt-6 text-sm font-medium">
+          {name}
+          {location && <span class="text-muted-foreground">, {location}</span>}
+        </p>
+      </div>
+    )
+  }
 </Section>

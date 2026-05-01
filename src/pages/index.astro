@@ -4,6 +4,7 @@ import HeroHome from '@/components/blocks/HeroHome.astro';
 import IntroBlock from '@/components/blocks/IntroBlock.astro';
 import ServicesSnapshot from '@/components/blocks/ServicesSnapshot.astro';
 import ProjectShowcase from '@/components/blocks/ProjectShowcase.astro';
+import AboutSummary from '@/components/blocks/AboutSummary.astro';
 import Testimonial from '@/components/blocks/Testimonial.astro';
 import ConsultationCTA from '@/components/blocks/ConsultationCTA.astro';
 
@@ -12,17 +13,18 @@ import projectCabaritaI from '@/assets/images/projects/cabarita beach i - build/
 import projectCabaritaII from '@/assets/images/projects/cabarita beach ii - build/cabarita beach ii - build - 01.webp';
 import projectCasuarinaBuild from '@/assets/images/projects/casuarina i - build/casuarina i - build - 01.webp';
 import projectCasuarinaReno from '@/assets/images/projects/casuarina i - renovation/casuarina i - renovation - 01.webp';
+import aboutPhoto from '@/assets/images/team/aaron-and-yarran.webp';
 ---
 
 <PageLayout
-  title="ALYK Building — Architectural Homes & Renovations, Tweed Coast"
-  description="ALYK Building specialise in architectural homes and renovations between Fingal Head and New Brighton — built in close collaboration with the architects who design them."
+  title="ALYK Building - Architectural Homes & Renovations, Tweed Coast"
+  description="ALYK Building specialise in architectural homes and renovations between Fingal Head and New Brighton - built in close collaboration with the architects who design them."
   fullWidth
   transparentNav
 >
   <HeroHome
     headline="Architectural homes on the Tweed Coast."
-    subheadline="ALYK Building specialise in architectural homes and renovations between Fingal Head and New Brighton — built in close collaboration with the architects who design them."
+    subheadline="ALYK Building specialise in architectural homes and renovations between Fingal Head and New Brighton - built in close collaboration with the architects who design them."
     cta={{ text: 'Begin a project', href: '/contact/' }}
     image={{ src: heroImage, alt: 'Architectural home by ALYK Building on the Tweed Coast' }}
   />
@@ -81,9 +83,27 @@ import projectCasuarinaReno from '@/assets/images/projects/casuarina i - renovat
     cta={{ text: 'View all projects', href: '/projects/' }}
   />
 
-  <IntroBlock
-    heading="Aaron Lee and Yarran Kerr — Tweed locals."
-    body="ALYK is the work of Aaron Lee and Yarran Kerr — two locals running a custom building practice on the strip of coast they grew up on. The two of them are on every site we run."
+  <AboutSummary
+    heading="Aaron Lee and Yarran Kerr, Tweed locals."
+    body="ALYK is the work of Aaron Lee and Yarran Kerr - two locals running a custom building practice on the strip of coast they grew up on. The two of them are on every site we run."
+    image={{ src: aboutPhoto, alt: 'Aaron Lee and Yarran Kerr, founders of ALYK Building' }}
+    stats={[
+      {
+        value: '10+',
+        label: 'Years Experience',
+        description: 'Over a decade building architectural homes on the Tweed Coast.',
+      },
+      {
+        value: 'A+',
+        label: 'High Quality Builds',
+        description: 'Custom builds and major renovations delivered to architect-grade standards.',
+      },
+      {
+        value: '100%',
+        label: 'Owner Operated',
+        description: 'Aaron and Yarran are on every site, no project managers, no hand-offs.',
+      },
+    ]}
     link={{ text: 'More about ALYK', href: '/about/' }}
   />
 
@@ -92,11 +112,12 @@ import projectCasuarinaReno from '@/assets/images/projects/casuarina i - renovat
     name="Ellis & Rosemary"
     location="Bogangar"
     background="muted"
+    image={{ src: projectCabaritaI, alt: 'Cabarita Beach home built by ALYK Building' }}
   />
 
   <ConsultationCTA
     heading="Schedule a free consultation."
-    body="Send us a brief — even a thumbnail of what you've drawn, the site, and a rough programme. We'll come back to you within a couple of business days, and we'll be honest about whether the project's a fit."
+    body="Send us a brief - even a thumbnail of what you've drawn, the site, and a rough programme. We'll come back to you within a couple of business days, and we'll be honest about whether the project's a fit."
     cta={{ text: 'Begin an enquiry', href: '/contact/' }}
   />
 </PageLayout>

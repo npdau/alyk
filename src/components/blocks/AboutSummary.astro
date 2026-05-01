@@ -1,0 +1,82 @@
+---
+/**
+ * AboutSummary
+ *
+ * Two-column about block with portrait photo, heading, body copy,
+ * optional stat cards, and a link to the full About page.
+ */
+import { Image } from 'astro:assets';
+import Section from '@/components/core/Section.astro';
+import Card from '@/components/core/Card.astro';
+
+interface Stat {
+  value: string;
+  label: string;
+  description: string;
+}
+
+interface Props {
+  heading: string;
+  body: string;
+  image: { src: ImageMetadata; alt: string };
+  stats?: Stat[];
+  link?: { text: string; href: string };
+}
+
+const { heading, body, image, stats = [], link } = Astro.props;
+---
+
+<Section spacing="lg" background="muted">
+  <div
+    class="grid items-center gap-12 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-16 lg:gap-20"
+  >
+    <div class="overflow-hidden rounded-lg">
+      <Image
+        src={image.src}
+        alt={image.alt}
+        width={480}
+        height={480}
+        class="h-auto w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <p class="eyebrow mb-4">About ALYK</p>
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
+        {heading}
+      </h2>
+      <p class="mt-6 text-base leading-relaxed sm:text-lg" style="line-height: 1.55;">
+        {body}
+      </p>
+      {
+        link && (
+          <p class="mt-8">
+            <a
+              href={link.href}
+              class="text-foreground hover:border-navy-700 hover:text-navy-700 border-b border-stone-300 text-sm font-medium no-underline transition-colors"
+            >
+              {link.text} &rarr;
+            </a>
+          </p>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    stats.length > 0 && (
+      <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {stats.map((stat) => (
+          <Card variant="elevated" padding="lg">
+            <div class="bg-primary mb-4 inline-flex items-center justify-center rounded-lg px-3 py-2">
+              <span class="text-primary-foreground text-lg font-semibold">{stat.value}</span>
+            </div>
+            <h3 class="text-lg font-semibold">{stat.label}</h3>
+            <p class="mt-2 text-sm leading-relaxed">{stat.description}</p>
+          </Card>
+        ))}
+      </div>
+    )
+  }
+</Section>
