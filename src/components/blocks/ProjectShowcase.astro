@@ -2,17 +2,23 @@
 /**
  * ProjectShowcase Block
  *
- * Featured project grid with images and tags.
+ * Featured project grid with auto-scrolling image carousels.
  */
 import { Image } from 'astro:assets';
+import { Swiper, SwiperWrapper, SwiperSlide, SwiperPagination } from 'astro-swiper';
 import Section from '@/components/core/Section.astro';
 import Badge from '@/components/core/Badge.astro';
 import Button from '@/components/core/Button.astro';
 
+interface ProjectImage {
+  src: any;
+  alt: string;
+}
+
 interface Project {
   title: string;
   tag: string;
-  image: { src: any; alt: string };
+  images: ProjectImage[];
   href: string;
 }
 
@@ -64,18 +70,48 @@ const { heading, description, projects, cta } = Astro.props;
       projects.map((project) => (
         <a
           href={project.href}
-          class="group relative block aspect-[4/3] overflow-hidden rounded-lg border-0 no-underline"
+          class="project-card group relative block aspect-[4/3] overflow-hidden rounded-lg border-0 no-underline shadow-md"
         >
-          <Image
-            src={project.image.src}
-            alt={project.image.alt}
-            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            widths={[400, 600, 800]}
-            sizes="(min-width: 640px) 50vw, 100vw"
-            inferSize
-          />
-          <div class="from-navy-900/70 absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
-          <div class="absolute bottom-0 left-0 p-5">
+          <Swiper
+            options={{
+              loop: true,
+              speed: 800,
+              autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+              },
+              pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+              },
+              astro: {
+                useCustomElement: false,
+                intersectionObserver: {
+                  controlAutoplay: true,
+                },
+              },
+            }}
+            class="h-full w-full"
+          >
+            <SwiperWrapper>
+              {project.images.map((img) => (
+                <SwiperSlide>
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    class="h-full w-full object-cover"
+                    widths={[400, 600, 800]}
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    inferSize
+                  />
+                </SwiperSlide>
+              ))}
+            </SwiperWrapper>
+            <SwiperPagination />
+          </Swiper>
+
+          <div class="from-navy-900/70 pointer-events-none absolute inset-0 z-10 bg-gradient-to-t via-transparent to-transparent" />
+          <div class="pointer-events-none absolute bottom-0 left-0 z-10 p-5">
             <p class="text-lg font-semibold text-stone-50">{project.title}</p>
             <Badge
               variant="secondary"
@@ -110,3 +146,35 @@ const { heading, description, projects, cta } = Astro.props;
     )
   }
 </Section>
+
+<style is:global>
+  .project-card .swiper {
+    height: 100%;
+  }
+
+  .project-card .swiper-slide {
+    overflow: hidden;
+  }
+
+  .project-card .swiper-pagination {
+    z-index: 20;
+    bottom: 12px !important;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .project-card .swiper-pagination-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.4);
+    opacity: 1;
+    transition: all 0.3s ease;
+  }
+
+  .project-card .swiper-pagination-bullet-active {
+    width: 20px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+</style>

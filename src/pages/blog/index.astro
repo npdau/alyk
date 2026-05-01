@@ -35,7 +35,7 @@ const posts = (await getCollection('blog'))
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <a href={`/blog/${post.id}`} class="group block no-underline">
-            <Card class="h-full transition-shadow hover:shadow-lg">
+            <Card class="h-full transition-shadow hover:shadow-md">
               {post.data.image && (
                 <Image
                   src={post.data.image}

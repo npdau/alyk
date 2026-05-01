@@ -29,6 +29,9 @@ importers:
       astro-seo:
         specifier: ^1.1.0
         version: 1.1.0(prettier-plugin-astro@0.14.1)(prettier@3.8.3)(typescript@5.9.3)
+      astro-swiper:
+        specifier: ^2.6.0
+        version: 2.6.0
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -1240,6 +1243,10 @@ packages:
 
   astro-seo@1.1.0:
     resolution: {integrity: sha512-G6LDNDyga30o+52v58jU7C35n3cORUzk7RSuY+xf/ZRbW6JiNplyaOO1VoYVKO+xzYNaBcxqNln2RFRR/wgJNQ==}
+
+  astro-swiper@2.6.0:
+    resolution: {integrity: sha512-X3xARd1sIvYA0z+QQ2MQpazlUaBYgrkqCp6vBFNMcdCJkTUXIJ9KzWtOYgUOFEt7UQ2FGe/CeF5RtKrVYhJF1Q==}
+    engines: {node: '>=18', npm: '>=9.6.5', pnpm: '>=7.1.0'}
 
   astro@6.1.10:
     resolution: {integrity: sha512-jQAIki6c862oxRr7OXXC+h3n4wg1EpmKgCH3vv1FtXM9VFmD2iTjlaxrfb0I6eQCwtUjSBxfJBFBDSXHu7Wing==}
@@ -3296,6 +3303,10 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
+  swiper@12.1.4:
+    resolution: {integrity: sha512-bihiwoKMOQwW8FfdUbo1DgkVH25E+4ZELIq0oopL1KTKBteLuaTMi/wwFjMxtlhTkk45k3XQ89D1Fvv0spSqBA==}
+    engines: {node: '>= 4.7.0'}
+
   synckit@0.11.11:
     resolution: {integrity: sha512-MeQTA1r0litLUf0Rp/iisCaL8761lKAZHaimlbGK4j0HysC4PLfqygQj9srcs0m2RdtDYnF8UuYyKpbjHYp7Jw==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -5020,6 +5031,10 @@ snapshots:
       - prettier
       - prettier-plugin-astro
       - typescript
+
+  astro-swiper@2.6.0:
+    dependencies:
+      swiper: 12.1.4
 
   astro@6.1.10(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.54.0)(typescript@5.9.3)(yaml@2.8.2):
     dependencies:
@@ -7771,6 +7786,8 @@ snapshots:
       csso: 5.0.5
       picocolors: 1.1.1
       sax: 1.6.0
+
+  swiper@12.1.4: {}
 
   synckit@0.11.11:
     dependencies:

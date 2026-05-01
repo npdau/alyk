@@ -37,7 +37,7 @@ const { quote, name, location, background = 'default', image } = Astro.props;
             {location && <span class="text-muted-foreground">, {location}</span>}
           </p>
         </div>
-        <div class="overflow-hidden rounded-lg">
+        <div class="overflow-hidden rounded-lg shadow-md">
           <Image
             src={image.src}
             alt={image.alt}
