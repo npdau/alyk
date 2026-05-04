@@ -37,7 +37,7 @@ const { heading, description, projects, cta } = Astro.props;
     <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
       {heading}
     </h2>
-    <div class="sm:flex sm:items-end sm:justify-between sm:gap-6">
+    <div class="md:flex md:items-end md:justify-between md:gap-6">
       {description && <p class="mt-4 max-w-xl text-base leading-relaxed">{description}</p>}
       {
         cta && (
@@ -46,7 +46,7 @@ const { heading, description, projects, cta } = Astro.props;
             variant="white"
             size="lg"
             pill
-            class="hidden shrink-0 !pr-2 !pl-5 sm:inline-flex"
+            class="hidden shrink-0 !pr-2 !pl-5 md:inline-flex"
           >
             {cta.text}
             <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
@@ -128,7 +128,7 @@ const { heading, description, projects, cta } = Astro.props;
 
   {
     cta && (
-      <div class="mt-8 sm:hidden">
+      <div class="mt-8 md:hidden">
         <Button href={cta.href} variant="white" size="lg" pill class="!pr-2 !pl-5">
           {cta.text}
           <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
