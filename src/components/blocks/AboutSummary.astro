@@ -16,14 +16,18 @@ interface Stat {
 }
 
 interface Props {
-  heading: string;
-  body: string;
+  /** Optional headline. Omit when copy ships with eyebrow + body only. */
+  heading?: string;
+  body: string | string[];
   image: { src: ImageMetadata; alt: string };
   stats?: Stat[];
   link?: { text: string; href: string };
+  /** Editorial eyebrow above the heading. Pass null to hide. */
+  eyebrow?: string | null;
 }
 
-const { heading, body, image, stats = [], link } = Astro.props;
+const { heading, body, image, stats = [], link, eyebrow = 'About ALYK' } = Astro.props;
+const paragraphs = Array.isArray(body) ? body : [body];
 ---
 
 <Section spacing="lg" background="muted">
@@ -42,13 +46,14 @@ const { heading, body, image, stats = [], link } = Astro.props;
     </div>
 
     <div class="flex flex-col justify-center">
-      <p class="eyebrow mb-4">About ALYK</p>
-      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
-        {heading}
-      </h2>
-      <p class="mt-6 text-base leading-relaxed sm:text-lg" style="line-height: 1.55;">
-        {body}
-      </p>
+      {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
+      {heading && <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{heading}</h2>}
+      <div
+        class:list={['space-y-5 text-base leading-relaxed sm:text-lg', heading ? 'mt-6' : 'mt-0']}
+        style="line-height: 1.55;"
+      >
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
       {
         link && (
           <p class="mt-8">

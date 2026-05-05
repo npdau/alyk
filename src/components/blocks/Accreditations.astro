@@ -1,0 +1,48 @@
+---
+/**
+ * Accreditations Block
+ *
+ * Compact strip of licence numbers, memberships and insurance lines.
+ * Renders as labelled rows in a responsive grid — quiet and editorial,
+ * not corporate logo soup.
+ */
+import Section from '@/components/core/Section.astro';
+
+interface Item {
+  /** Short label, eg. "NSW Builder Licence" */
+  label: string;
+  /** Value or detail, eg. "374055C" or "Master Builders Association" */
+  value: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  items: Item[];
+  background?: 'default' | 'muted';
+}
+
+const { eyebrow = 'Licence & accreditations', heading, items, background = 'muted' } = Astro.props;
+---
+
+<Section spacing="lg" background={background}>
+  <div class="mx-auto max-w-4xl">
+    <div class="mb-10 text-center">
+      {eyebrow && <p class="eyebrow mb-3">{eyebrow}</p>}
+      {heading && <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{heading}</h2>}
+    </div>
+
+    <dl
+      class="border-border grid grid-cols-1 gap-px overflow-hidden rounded-lg border bg-stone-200 sm:grid-cols-3"
+    >
+      {
+        items.map((item) => (
+          <div class="bg-card flex flex-col items-center justify-center gap-2 p-6 text-center">
+            <dt class="eyebrow">{item.label}</dt>
+            <dd class="text-foreground text-base font-medium">{item.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</Section>

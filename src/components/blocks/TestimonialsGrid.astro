@@ -1,0 +1,88 @@
+---
+/**
+ * TestimonialsGrid Block
+ *
+ * Three-column quote grid. Each quote can be marked `placeholder` to show
+ * a muted "client quote coming soon" slot — useful while quotes are being
+ * gathered without leaving an empty section on the page.
+ */
+import Section from '@/components/core/Section.astro';
+
+interface Testimonial {
+  quote: string;
+  name: string;
+  location?: string;
+  /** When true, the quote is rendered as a muted placeholder card. */
+  placeholder?: boolean;
+}
+
+interface Props {
+  heading: string;
+  eyebrow?: string;
+  leadIn?: string;
+  testimonials: Testimonial[];
+  background?: 'default' | 'muted';
+}
+
+const { heading, eyebrow, leadIn, testimonials, background = 'default' } = Astro.props;
+---
+
+<Section spacing="lg" background={background}>
+  <div class="mx-auto mb-12 max-w-2xl text-center">
+    {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+      {heading}
+    </h2>
+    {leadIn && <p class="mt-4 text-base leading-relaxed">{leadIn}</p>}
+  </div>
+
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+    {
+      testimonials.map((t) =>
+        t.placeholder ? (
+          <figure class="border-border bg-card flex h-full flex-col rounded-lg border border-dashed p-8">
+            <svg
+              class="mb-6 h-8 w-8 text-stone-300"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+            <blockquote
+              class="text-muted-foreground flex-1 text-base leading-relaxed"
+              style="font-style: italic; line-height: 1.6;"
+            >
+              {t.quote}
+            </blockquote>
+            <figcaption class="text-muted-foreground mt-6 text-sm font-medium">
+              {t.name}
+              {t.location && <span>, {t.location}</span>}
+            </figcaption>
+          </figure>
+        ) : (
+          <figure class="border-border bg-card flex h-full flex-col rounded-lg border p-8 shadow-sm">
+            <svg
+              class="mb-6 h-8 w-8 text-stone-300"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+            <blockquote
+              class="text-foreground flex-1 text-base leading-relaxed"
+              style="font-style: italic; line-height: 1.6;"
+            >
+              &ldquo;{t.quote}&rdquo;
+            </blockquote>
+            <figcaption class="text-foreground mt-6 text-sm font-medium">
+              {t.name}
+              {t.location && <span class="text-muted-foreground">, {t.location}</span>}
+            </figcaption>
+          </figure>
+        )
+      )
+    }
+  </div>
+</Section>
