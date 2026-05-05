@@ -56,6 +56,12 @@ When adding new UI:
 3. Is this a page section/composition? → Create in `blocks/`
 4. Does it need to break token rules? → Create in `custom/`
 
+## Dev Server
+
+- **Always** run `npx astro dev` with `required_permissions: ["all"]` to disable the sandbox — the sandbox blocks Vite's file watcher and prevents HMR/hot reload
+- Only run one dev server at a time on port `4321`
+- Kill any existing server before starting a new one
+
 ## What You Don't Do
 
 - Don't edit files without reading them first
