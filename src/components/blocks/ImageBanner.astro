@@ -1,0 +1,33 @@
+---
+/**
+ * ImageBanner Block
+ *
+ * Full-bleed image strip cropped to a banner aspect ratio with a
+ * gradient overlay that keeps it visually consistent with the hero.
+ */
+import { Image } from 'astro:assets';
+
+interface Props {
+  image: { src: any; alt: string };
+}
+
+const { image } = Astro.props;
+---
+
+<div class="relative w-full">
+  <Image
+    src={image.src}
+    alt={image.alt}
+    class="block w-full"
+    widths={[800, 1200, 1800, 2400]}
+    sizes="100vw"
+    loading="lazy"
+    inferSize
+  />
+
+  <div
+    class="absolute inset-0"
+    style="background: linear-gradient(180deg, color-mix(in oklch, var(--color-navy-900) 50%, transparent) 0%, color-mix(in oklch, var(--color-navy-900) 8%, transparent) 40%, color-mix(in oklch, var(--color-navy-900) 50%, transparent) 100%);"
+  >
+  </div>
+</div>

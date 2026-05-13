@@ -9,6 +9,7 @@
  * <Button>Click me</Button>
  * <Button variant="outline" size="lg">Large outline</Button>
  * <Button href="/about">Link button</Button>
+ * <Button variant="white" size="lg" pill arrow href="/contact/">Begin a project</Button>
  * <Button variant="ghost" iconOnly aria-label="Menu"><MenuIcon /></Button>
  */
 
@@ -19,6 +20,8 @@ interface Props {
   size?: 'sm' | 'md' | 'lg';
   /** Pill shape (rounded-full) */
   pill?: boolean;
+  /** Appends a circular arrow icon after the label */
+  arrow?: boolean;
   /** If provided, renders as an anchor tag */
   href?: string;
   /** Button type (ignored if href is provided) */
@@ -43,6 +46,7 @@ const {
   variant = 'primary',
   size = 'md',
   pill = false,
+  arrow = false,
   href,
   type = 'button',
   disabled = false,
@@ -66,6 +70,8 @@ const variantStyles = {
 };
 
 const radiusStyle = pill ? 'rounded-full' : 'rounded-md';
+
+const arrowPadding = arrow ? '!pr-2 !pl-5' : '';
 
 const sizeStyles = {
   sm: `h-9 px-4 text-sm tracking-[0.02em] ${radiusStyle}`,
@@ -91,11 +97,24 @@ const iconOnlySizeStyles = {
         iconOnly ? iconOnlySizeStyles[size] : sizeStyles[size],
         fullWidth && 'w-full',
         disabled && 'pointer-events-none opacity-50',
+        arrowPadding,
         className,
       ]}
       {...rest}
     >
       <slot />
+      {arrow && (
+        <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
+          <svg class="h-3.5 w-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+              d="M5 12h14M13 5l6 7-6 7"
+            />
+          </svg>
+        </span>
+      )}
     </a>
   ) : (
     <button
@@ -106,11 +125,24 @@ const iconOnlySizeStyles = {
         variantStyles[variant],
         iconOnly ? iconOnlySizeStyles[size] : sizeStyles[size],
         fullWidth && 'w-full',
+        arrowPadding,
         className,
       ]}
       {...rest}
     >
       <slot />
+      {arrow && (
+        <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
+          <svg class="h-3.5 w-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+              d="M5 12h14M13 5l6 7-6 7"
+            />
+          </svg>
+        </span>
+      )}
     </button>
   )
 }

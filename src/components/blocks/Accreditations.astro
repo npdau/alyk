@@ -3,16 +3,18 @@
  * Accreditations Block
  *
  * Compact strip of licence numbers, memberships and insurance lines.
- * Renders as labelled rows in a responsive grid — quiet and editorial,
- * not corporate logo soup.
+ * Renders as labelled rows in a responsive grid with optional logos.
  */
+import { Image } from 'astro:assets';
 import Section from '@/components/core/Section.astro';
 
 interface Item {
   /** Short label, eg. "NSW Builder Licence" */
   label: string;
   /** Value or detail, eg. "374055C" or "Master Builders Association" */
-  value: string;
+  value?: string;
+  /** Optional logo displayed below the text */
+  logo?: { src: any; alt: string };
 }
 
 interface Props {
@@ -39,7 +41,16 @@ const { eyebrow = 'Licence & accreditations', heading, items, background = 'mute
         items.map((item) => (
           <div class="bg-card flex flex-col items-center justify-center gap-2 p-6 text-center">
             <dt class="eyebrow">{item.label}</dt>
-            <dd class="text-foreground text-base font-medium">{item.value}</dd>
+            {item.value && <dd class="text-foreground text-base font-medium">{item.value}</dd>}
+            {item.logo && (
+              <Image
+                src={item.logo.src}
+                alt={item.logo.alt}
+                class="mt-3 w-5/6 object-contain"
+                loading="lazy"
+                inferSize
+              />
+            )}
           </div>
         ))
       }

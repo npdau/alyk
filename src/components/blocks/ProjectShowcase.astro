@@ -46,19 +46,10 @@ const { heading, description, projects, cta } = Astro.props;
             variant="white"
             size="lg"
             pill
-            class="hidden shrink-0 !pr-2 !pl-5 md:inline-flex"
+            arrow
+            class="hidden shrink-0 md:inline-flex"
           >
             {cta.text}
-            <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
-              <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </span>
           </Button>
         )
       }
@@ -99,7 +90,7 @@ const { heading, description, projects, cta } = Astro.props;
                   <Image
                     src={img.src}
                     alt={img.alt}
-                    class="h-full w-full object-cover"
+                    class="h-full w-full object-cover brightness-115"
                     widths={[400, 600, 800]}
                     sizes="(min-width: 640px) 50vw, 100vw"
                     inferSize
@@ -110,7 +101,7 @@ const { heading, description, projects, cta } = Astro.props;
             <SwiperPagination />
           </Swiper>
 
-          <div class="from-navy-900/70 pointer-events-none absolute inset-0 z-10 bg-gradient-to-t via-transparent to-transparent" />
+          <div class="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1/3 bg-gradient-to-t from-black/50 via-black/20 via-40% to-black/0" />
           <div class="pointer-events-none absolute bottom-0 left-0 z-10 p-5">
             <p class="text-lg font-semibold text-stone-50">{project.title}</p>
             <Badge
@@ -129,18 +120,8 @@ const { heading, description, projects, cta } = Astro.props;
   {
     cta && (
       <div class="mt-8 md:hidden">
-        <Button href={cta.href} variant="white" size="lg" pill class="!pr-2 !pl-5">
+        <Button href={cta.href} variant="white" size="lg" pill arrow>
           {cta.text}
-          <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
-            <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </span>
         </Button>
       </div>
     )

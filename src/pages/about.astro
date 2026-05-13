@@ -7,9 +7,12 @@ import TestimonialsGrid from '@/components/blocks/TestimonialsGrid.astro';
 import PlaceStatement from '@/components/blocks/PlaceStatement.astro';
 import Accreditations from '@/components/blocks/Accreditations.astro';
 import ConsultationCTA from '@/components/blocks/ConsultationCTA.astro';
-
 import heroImage from '@/assets/images/projects/cabarita beach i - build/cabarita beach i - build - 29.webp';
 import aboutPhoto from '@/assets/images/team/aaron-and-yarran.webp';
+import coastalPhoto from '@/assets/images/scenic/coastal-caba-1.webp';
+import logoFairTrade from '@/assets/images/memberships/fair-trade-mono.webp';
+import logoMasterBuilder from '@/assets/images/memberships/master-builder.webp';
+import logoInsurance from '@/assets/images/memberships/insurance-mono.webp';
 ---
 
 <PageLayout
@@ -80,22 +83,30 @@ import aboutPhoto from '@/assets/images/team/aaron-and-yarran.webp';
     description={[
       'The Tweed Coast - Fingal Head, Kingscliff, Casuarina, Cabarita Beach, Hastings Point, Pottsville, Wooyung, New Brighton.',
       'Building only on this stretch means a few things in practice. We know how the coast behaves, salt, wind, sun, sand, and we build for it. The supplier and trade relationships we rely on are ones we\u2019ve built up over years on local jobs. And the work we do stays in the community we\u2019re part of.',
-      "We don't build outside this stretch, and we don't run remote project management. Aaron or Yarran is on every site we run.",
     ]}
+    image={{
+      src: coastalPhoto,
+      alt: 'Coastal view of Cabarita Beach on the Tweed Coast',
+    }}
   />
 
   <Accreditations
     items={[
-      { label: 'NSW Builder Licence', value: '374055C' },
-      { label: 'Member of', value: 'Master Builders Association' },
-      { label: 'Insured by', value: 'Master Builders Insurance Brokers' },
+      { label: 'NSW LIC #374055C', logo: { src: logoFairTrade, alt: 'NSW Fair Trading logo' } },
+      {
+        label: 'Member of',
+        logo: { src: logoMasterBuilder, alt: 'Master Builders Association logo' },
+      },
+      {
+        label: 'Insured by',
+        logo: { src: logoInsurance, alt: 'Master Builders Insurance Brokers logo' },
+      },
     ]}
   />
 
   <ConsultationCTA
-    heading="Start a conversation"
-    body="Tell us about the project - the site, your architect, where you're up to. We'll come back to you within a couple of business days, and we'll be honest about whether it's a fit."
+    heading="Schedule a free consultation"
+    body="Send us a brief - even a thumbnail of what you've drawn, the site, and a rough programme. We'll come back to you within a couple of business days, and we'll be honest about whether the project's a fit."
     cta={{ text: 'Begin an enquiry', href: '/contact/' }}
-    secondaryCta={{ text: 'View our projects \u2192', href: '/projects/' }}
   />
 </PageLayout>
