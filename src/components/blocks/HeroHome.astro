@@ -35,22 +35,27 @@ const { headline, subheadline, cta, image } = Astro.props;
   >
   </div>
 
-  <!-- Frame lines — equal 80px inset at xl+, pull toward edges on smaller screens -->
+  <!-- Frame lines — equal 80px inset at xl+, step in gradually so they sit
+       comfortably outside the nav content at every breakpoint. -->
   <div class="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
-    <div class="absolute top-0 bottom-0 left-3 w-px bg-white/50 sm:left-4 lg:left-6 xl:left-20">
+    <div
+      class="absolute top-0 bottom-0 left-3 w-px bg-white/50 sm:left-4 md:left-6 lg:left-10 xl:left-20"
+    >
     </div>
-    <div class="absolute top-0 right-3 bottom-0 w-px bg-white/50 sm:right-4 lg:right-6 xl:right-20">
+    <div
+      class="absolute top-0 right-3 bottom-0 w-px bg-white/50 sm:right-4 md:right-6 lg:right-10 xl:right-20"
+    >
     </div>
     <div class="absolute top-24 right-0 left-0 h-px bg-white/50"></div>
     <div
-      class="absolute right-0 bottom-3 left-0 h-px bg-white/50 sm:bottom-4 lg:bottom-6 xl:bottom-20"
+      class="absolute right-0 bottom-3 left-0 h-px bg-white/50 sm:bottom-4 md:bottom-6 lg:bottom-10 xl:bottom-20"
     >
     </div>
   </div>
 
   <!-- Hero content -->
   <div class="relative z-10 w-full pt-32 pb-32 md:pb-40">
-    <div class="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+    <div class="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 lg:px-16 xl:px-28 2xl:px-8">
       <h1
         class="max-w-2xl text-4xl font-semibold tracking-tight text-stone-50 sm:text-5xl lg:text-6xl"
         style="line-height: 1.05; letter-spacing: -0.025em;"

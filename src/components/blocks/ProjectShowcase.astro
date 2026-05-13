@@ -41,16 +41,11 @@ const { heading, description, projects, cta } = Astro.props;
       {description && <p class="mt-4 max-w-xl text-base leading-relaxed">{description}</p>}
       {
         cta && (
-          <Button
-            href={cta.href}
-            variant="white"
-            size="lg"
-            pill
-            arrow
-            class="hidden shrink-0 md:inline-flex"
-          >
-            {cta.text}
-          </Button>
+          <div class="hidden shrink-0 md:block">
+            <Button href={cta.href} variant="white" size="lg" pill arrow>
+              {cta.text}
+            </Button>
+          </div>
         )
       }
     </div>

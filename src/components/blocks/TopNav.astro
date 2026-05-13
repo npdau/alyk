@@ -30,7 +30,7 @@ const currentPath = Astro.url.pathname;
   data-transparent={transparent ? 'true' : 'false'}
 >
   <div
-    class="relative z-10 mx-auto flex h-24 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12"
+    class="relative z-10 mx-auto flex h-24 max-w-7xl items-center justify-between px-6 sm:px-8 md:px-10 lg:px-16 xl:px-28 2xl:px-8"
   >
     <!-- Logo mark + wordmark -->
     <a
@@ -135,7 +135,7 @@ const currentPath = Astro.url.pathname;
 
     <!-- Centered frosted glass nav pill -->
     <nav
-      class="absolute left-1/2 hidden h-13 -translate-x-1/2 items-center gap-1 rounded-full bg-white/10 px-3 ring-1 ring-white/20 backdrop-blur-xl lg:flex"
+      class="absolute left-1/2 hidden h-13 -translate-x-1/2 items-center gap-1 rounded-full bg-white/10 px-3 ring-1 ring-stone-400/50 backdrop-blur-xl lg:flex"
     >
       {
         navItems.map((item) => (
