@@ -29,7 +29,9 @@ const currentPath = Astro.url.pathname;
   id="site-header"
   data-transparent={transparent ? 'true' : 'false'}
 >
-  <div class="mx-auto flex h-24 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12">
+  <div
+    class="relative z-10 mx-auto flex h-24 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12"
+  >
     <!-- Logo mark + wordmark -->
     <a
       href="/"
@@ -161,57 +163,175 @@ const currentPath = Astro.url.pathname;
     <button
       type="button"
       class:list={[
-        '-mr-2 p-2 transition-opacity hover:opacity-70 lg:hidden',
+        '-mr-2 p-2 transition-colors duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] lg:hidden',
         transparent ? 'text-stone-50' : 'text-foreground',
       ]}
       aria-label="Toggle menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
       id="mobile-menu-button"
     >
-      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
-          d="M4 6h16M4 12h16M4 18h16"></path>
-      </svg>
+      <span class="hamburger" aria-hidden="true">
+        <span class="hb-line"></span>
+        <span class="hb-line"></span>
+        <span class="hb-line"></span>
+      </span>
     </button>
   </div>
 
-  <!-- Mobile menu -->
+  <!-- Mobile menu - sits behind the logo bar, anchored to top:0 so the
+       whole navy area collapses as a single block back to the page top. -->
   <nav
-    class="bg-background text-foreground border-border hidden border-t lg:hidden"
+    class="bg-primary/85 mobile-menu absolute inset-x-0 top-0 grid grid-rows-[0fr] backdrop-blur-2xl backdrop-saturate-150 transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] lg:hidden"
     id="mobile-menu"
   >
-    <div class="mx-auto max-w-7xl px-5 sm:px-8">
-      <div class="space-y-1 py-4">
-        {
-          navItems.map((item) => (
-            <a
-              href={item.href}
-              class:list={[
-                'block border-0 py-2 text-sm font-medium no-underline',
-                currentPath === item.href ? 'text-foreground' : 'text-muted-foreground',
-              ]}
-            >
-              {item.label}
-            </a>
-          ))
-        }
-        <div class="pt-3">
-          <Button href="/contact/" variant="primary" size="sm" pill fullWidth>
-            Begin a project
-          </Button>
+    <div class="min-h-0 overflow-hidden">
+      <div class="mx-auto max-w-7xl px-5 pt-24 pb-10 sm:px-8">
+        <!-- Primary nav - large editorial type with index numbers -->
+        <ul>
+          {
+            navItems.map((item, i) => (
+              <li class="menu-item border-b border-white/10" style={`--i: ${i}`}>
+                <a
+                  href={item.href}
+                  class:list={[
+                    'flex items-baseline justify-between border-0 py-4 no-underline transition-opacity',
+                    currentPath === item.href ? 'opacity-100' : 'opacity-90 hover:opacity-100',
+                  ]}
+                >
+                  <span class="font-heading text-2xl font-light tracking-tight text-white sm:text-3xl">
+                    {item.label}
+                  </span>
+                  <span class="text-[0.6875rem] font-medium tracking-[0.2em] text-white/40 tabular-nums">
+                    0{i + 1}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <!-- Direct contact -->
+        <div class="menu-item mt-8" style="--i: 5">
+          <p class="mb-3 text-[0.6875rem] font-medium tracking-[0.18em] text-white/40 uppercase">
+            Call
+          </p>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="tel:0401023458"
+                class="border-0 text-base text-white no-underline transition-opacity hover:opacity-70"
+              >
+                <span class="text-white/80">Aaron</span>
+                <span class="ml-3 tabular-nums">0401 023 458</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="tel:0432363124"
+                class="border-0 text-base text-white no-underline transition-opacity hover:opacity-70"
+              >
+                <span class="text-white/80">Yarran</span>
+                <span class="ml-3 tabular-nums">0432 363 124</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CTA -->
+        <div class="menu-item mt-8" style="--i: 6">
+          <Button href="/contact/" variant="white" size="lg" pill arrow> Begin a project </Button>
         </div>
       </div>
     </div>
   </nav>
 </header>
 
+<style>
+  /* Long-short-long hamburger that morphs to an X */
+  .hamburger {
+    position: relative;
+    display: block;
+    width: 22px;
+    height: 13px;
+  }
+
+  .hb-line {
+    position: absolute;
+    height: 1.5px;
+    background-color: currentColor;
+    border-radius: 1px;
+    transform-origin: center;
+    transition:
+      transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+      top 0.3s cubic-bezier(0.22, 0.61, 0.36, 1) 0.1s,
+      width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 0.2s ease;
+  }
+
+  .hb-line:nth-child(1) {
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .hb-line:nth-child(2) {
+    top: 6px;
+    right: 0;
+    width: 55%;
+  }
+  .hb-line:nth-child(3) {
+    top: 12px;
+    left: 0;
+    width: 100%;
+  }
+
+  [aria-expanded='true'] .hb-line {
+    transition:
+      transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.15s,
+      top 0.2s cubic-bezier(0.22, 0.61, 0.36, 1),
+      width 0.2s cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 0.15s ease;
+  }
+  [aria-expanded='true'] .hb-line:nth-child(1) {
+    top: 6px;
+    transform: rotate(45deg);
+  }
+  [aria-expanded='true'] .hb-line:nth-child(2) {
+    width: 0;
+    opacity: 0;
+  }
+  [aria-expanded='true'] .hb-line:nth-child(3) {
+    top: 6px;
+    transform: rotate(-45deg);
+  }
+
+  /* Staggered reveal of menu rows */
+  .menu-item {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .mobile-menu.is-open .menu-item {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(var(--i, 0) * 60ms + 120ms);
+  }
+</style>
+
 <script>
   const button = document.getElementById('mobile-menu-button');
   const menu = document.getElementById('mobile-menu');
+  let open = false;
 
   button?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
+    open = !open;
+    button.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu?.classList.toggle('grid-rows-[1fr]', open);
+    menu?.classList.toggle('grid-rows-[0fr]', !open);
+    menu?.classList.toggle('is-open', open);
+    button?.classList.toggle('!text-white', open);
   });
 </script>

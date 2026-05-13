@@ -368,4 +368,20 @@
       @apply border-border text-muted-foreground border-l-4 pl-4 italic;
     }
   }
+
+  .prose-legal {
+    @apply max-w-4xl;
+
+    & h2 {
+      @apply mt-10 mb-4 text-lg font-semibold sm:text-xl;
+    }
+
+    & ul {
+      @apply list-disc;
+    }
+
+    & ol {
+      @apply list-decimal;
+    }
+  }
 }

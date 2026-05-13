@@ -5,24 +5,34 @@
  * A visual divider between content sections.
  * Uses only theme tokens - no arbitrary values.
  *
+ * The `arrow` variant draws a horizontal rule capped at each end with a small
+ * inward-pointing chevron, matching the architectural divider used in the
+ * site footer. Strokes use currentColor so the parent controls the colour
+ * via text-* utilities (defaults to text-stone-300).
+ *
  * @example
  * <Separator />
  * <Separator orientation="vertical" />
- * <Separator decorative={false} />
+ * <Separator variant="arrow" class="text-stone-300" />
  */
 
 interface Props {
-  /** Orientation of the separator */
+  /** Orientation of the separator (ignored for `arrow` variant). */
   orientation?: 'horizontal' | 'vertical';
-  /** Whether the separator is purely decorative */
+  /** Visual style. `plain` is a simple line; `arrow` adds chevron end caps. */
+  variant?: 'plain' | 'arrow';
+  /** Whether the separator is purely decorative. */
   decorative?: boolean;
-  /** Additional classes */
+  /** Additional classes. */
   class?: string;
 }
 
-const { orientation = 'horizontal', decorative = true, class: className } = Astro.props;
-
-const baseStyles = 'shrink-0 bg-border';
+const {
+  orientation = 'horizontal',
+  variant = 'plain',
+  decorative = true,
+  class: className,
+} = Astro.props;
 
 const orientationStyles = {
   horizontal: 'h-px w-full',
@@ -30,9 +40,42 @@ const orientationStyles = {
 };
 ---
 
-<div
-  role={decorative ? 'none' : 'separator'}
-  aria-orientation={decorative ? undefined : orientation}
-  class:list={[baseStyles, orientationStyles[orientation], className]}
->
-</div>
+{
+  variant === 'arrow' ? (
+    <div
+      role={decorative ? 'none' : 'separator'}
+      aria-orientation={decorative ? undefined : 'horizontal'}
+      class:list={['relative text-stone-300', className]}
+    >
+      <div class="h-px w-full bg-current" />
+      <svg
+        class="absolute -top-2 left-0 h-[17px] w-[20px]"
+        viewBox="0 0 20 17"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1"
+        aria-hidden="true"
+      >
+        <line x1="0.5" y1="0" x2="0.5" y2="17" />
+        <path d="M1 8.5L9 3M1 8.5L9 14" />
+      </svg>
+      <svg
+        class="absolute -top-2 right-0 h-[17px] w-[20px]"
+        viewBox="0 0 20 17"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1"
+        aria-hidden="true"
+      >
+        <line x1="19.5" y1="0" x2="19.5" y2="17" />
+        <path d="M19 8.5L11 3M19 8.5L11 14" />
+      </svg>
+    </div>
+  ) : (
+    <div
+      role={decorative ? 'none' : 'separator'}
+      aria-orientation={decorative ? undefined : orientation}
+      class:list={['bg-border shrink-0', orientationStyles[orientation], className]}
+    />
+  )
+}

@@ -43,7 +43,11 @@ src/pages/                 → Pure composition - import blocks, pass props, zer
 - Browser APIs (`window`, `localStorage`) go in `<script>` tags, not frontmatter
 - Use `@/` path aliases, not relative paths
 
-### 5. SEO Rules
+### 5. Copy & Voice Rules
+- Use short dashes `-` everywhere — never em dashes `—` or en dashes `–`
+- Keep copy lean and unpadded — no filler, no corporate speak
+
+### 6. SEO Rules
 - Every page needs: unique `<title>`, meta description, canonical URL
 - All images need `alt` text, `width`, and `height`
 - Use `loading="eager"` only for hero/LCP images

@@ -1,0 +1,126 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import HeroHome from '@/components/blocks/HeroHome.astro';
+import ContactForm from '@/components/blocks/ContactForm.astro';
+import Card from '@/components/core/Card.astro';
+
+import heroImage from '@/assets/images/scenic/coastal-caba-1.webp';
+---
+
+<PageLayout
+  title="Contact ALYK Building - Architectural Builders, Tweed Coast"
+  description="Get in touch with ALYK Building. Tell us about your project - the site, a rough schedule, and what you have in mind. We reply within two business days."
+  fullWidth
+  transparentNav
+>
+  <HeroHome
+    headline="Get in touch"
+    subheadline="Tell us about your project - the site, a rough schedule, and what you have in mind. We'll come back to you within a couple of business days, and we'll be honest about whether it's a fit for the work we run."
+    image={{
+      src: heroImage,
+      alt: 'Coastal view of Cabarita Beach on the Tweed Coast',
+    }}
+  />
+
+  <ContactForm background="default">
+    <div slot="details" class="flex flex-col gap-6 lg:flex-1 lg:justify-between">
+      <!-- Tile 1 - Active contact channels. Elevated white to peer with the form. -->
+      <Card variant="elevated" padding="lg" class="md:p-8">
+        <p class="eyebrow mb-2">Talk to us</p>
+        <h3 class="text-lg font-semibold tracking-tight">Reach Aaron or Yarran directly</h3>
+
+        <div class="mt-6 space-y-5">
+          <div>
+            <p
+              class="text-muted-foreground mb-2 text-[0.6875rem] font-medium tracking-[0.18em] uppercase"
+            >
+              Phone
+            </p>
+            <ul class="space-y-1.5">
+              <li class="flex items-baseline justify-between gap-4">
+                <span class="text-foreground text-base">Aaron Lee</span>
+                <a
+                  href="tel:0401023458"
+                  class="text-foreground hover:border-navy-700 hover:text-navy-700 border-b border-stone-300 text-base tabular-nums no-underline transition-colors"
+                >
+                  0401 023 458
+                </a>
+              </li>
+              <li class="flex items-baseline justify-between gap-4">
+                <span class="text-foreground text-base">Yarran Kerr</span>
+                <a
+                  href="tel:0432363124"
+                  class="text-foreground hover:border-navy-700 hover:text-navy-700 border-b border-stone-300 text-base tabular-nums no-underline transition-colors"
+                >
+                  0432 363 124
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="border-border border-t pt-5">
+            <p
+              class="text-muted-foreground mb-1.5 text-[0.6875rem] font-medium tracking-[0.18em] uppercase"
+            >
+              Email
+            </p>
+            <a
+              href="mailto:alykbuilding.invoice@gmail.com"
+              class="text-foreground hover:border-navy-700 hover:text-navy-700 inline-block border-b border-stone-300 text-base break-all no-underline transition-colors"
+            >
+              alykbuilding@gmail.com
+            </a>
+          </div>
+        </div>
+      </Card>
+
+      <!-- Tile 2 - Place + presence. Warm stone tint for bento contrast. -->
+      <Card variant="elevated" padding="lg" class="bg-stone-100 md:p-8">
+        <p class="eyebrow mb-2">On the coast</p>
+        <h3 class="text-lg font-semibold tracking-tight">Where to find us</h3>
+
+        <div class="mt-6 space-y-5">
+          <div>
+            <p
+              class="text-muted-foreground mb-1.5 text-[0.6875rem] font-medium tracking-[0.18em] uppercase"
+            >
+              Studio
+            </p>
+            <p class="text-foreground text-base">Cabarita Beach, NSW</p>
+            <p class="text-muted-foreground text-sm">By appointment only</p>
+          </div>
+
+          <div class="border-t border-stone-300/70 pt-5">
+            <p
+              class="text-muted-foreground mb-1.5 text-[0.6875rem] font-medium tracking-[0.18em] uppercase"
+            >
+              Service area
+            </p>
+            <p class="text-base leading-relaxed">Fingal Head to New Brighton.</p>
+          </div>
+
+          <div class="border-t border-stone-300/70 pt-5">
+            <p
+              class="text-muted-foreground mb-2 text-[0.6875rem] font-medium tracking-[0.18em] uppercase"
+            >
+              Follow
+            </p>
+            <a
+              href="https://instagram.com/alykbuilding"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-foreground hover:border-navy-700 hover:text-navy-700 inline-flex items-center gap-2 border-b border-stone-300 text-base no-underline transition-colors"
+            >
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
+                ></path>
+              </svg>
+              @alykbuilding
+            </a>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </ContactForm>
+</PageLayout>

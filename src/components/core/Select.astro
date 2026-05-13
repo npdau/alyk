@@ -1,0 +1,127 @@
+---
+/**
+ * Select Component
+ *
+ * A styled native select that mirrors the Input component.
+ * Pass options as a prop, or slot in custom <option> elements.
+ * Uses only theme tokens - no arbitrary values.
+ *
+ * @example
+ * <Select name="projectType" placeholder="Select one…" options={[
+ *   { value: 'new-build', label: 'New build' },
+ *   { value: 'renovation', label: 'Renovation' },
+ * ]} required />
+ */
+
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  /** Select name attribute */
+  name: string;
+  /** Selected value */
+  value?: string;
+  /** Placeholder option label (rendered as a disabled, empty-value option when set) */
+  placeholder?: string;
+  /** Options to render. Omit to slot in custom <option> elements. */
+  options?: Option[];
+  /** Visual style variant */
+  variant?: 'default' | 'ghost';
+  /** Select size */
+  size?: 'sm' | 'md' | 'lg';
+  /** Error state */
+  error?: boolean;
+  /** Disabled state */
+  disabled?: boolean;
+  /** Required field */
+  required?: boolean;
+  /** HTML id attribute */
+  id?: string;
+  /** Additional classes */
+  class?: string;
+  /** Any other HTML attributes */
+  [key: string]: unknown;
+}
+
+const {
+  name,
+  value,
+  placeholder,
+  options,
+  variant = 'default',
+  size = 'md',
+  error = false,
+  disabled = false,
+  required = false,
+  id,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const baseStyles =
+  'flex w-full appearance-none rounded-lg pr-10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 bg-no-repeat';
+
+const variantStyles = {
+  default: 'border border-input bg-background',
+  ghost: 'border-transparent bg-muted',
+};
+
+const sizeStyles = {
+  sm: 'h-9 pl-3 text-sm',
+  md: 'h-10 pl-4 py-2 text-sm',
+  lg: 'h-11 pl-4 text-base',
+};
+
+const errorStyles = error ? 'border-destructive focus-visible:ring-destructive' : '';
+
+// Show placeholder text in muted colour until a real option is selected.
+const placeholderStyles = placeholder && !value ? 'text-muted-foreground' : 'text-foreground';
+---
+
+<div class="relative">
+  <select
+    name={name}
+    id={id || name}
+    disabled={disabled}
+    required={required}
+    class:list={[
+      baseStyles,
+      variantStyles[variant],
+      sizeStyles[size],
+      errorStyles,
+      placeholderStyles,
+      className,
+    ]}
+    {...rest}
+  >
+    {
+      placeholder && (
+        <option value="" disabled selected={!value} hidden>
+          {placeholder}
+        </option>
+      )
+    }
+    {
+      options
+        ? options.map((option) => (
+            <option value={option.value} selected={value === option.value}>
+              {option.label}
+            </option>
+          ))
+        : null
+    }
+    <slot />
+  </select>
+
+  <span
+    class="text-muted-foreground pointer-events-none absolute inset-y-0 right-3 flex items-center"
+    aria-hidden="true"
+  >
+    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+      <path d="M6 8l4 4 4-4" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+      ></path>
+    </svg>
+  </span>
+</div>
