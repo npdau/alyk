@@ -16,26 +16,49 @@ interface Props {
   heading: string;
   leadIn?: string;
   steps: Step[];
+  /** Number of columns at large breakpoint. Defaults to 4. */
+  columns?: 3 | 4 | 5;
+  /** Editorial eyebrow above the heading. */
+  eyebrow?: string;
+  /** Background variant */
+  background?: 'default' | 'muted';
 }
 
-const { heading, leadIn, steps } = Astro.props;
+const { heading, leadIn, steps, columns = 4, eyebrow, background = 'default' } = Astro.props;
+
+const columnStyles = {
+  3: 'lg:grid-cols-3',
+  4: 'lg:grid-cols-4',
+  5: 'lg:grid-cols-5',
+};
 ---
 
-<Section spacing="lg">
-  <div class="mb-10">
+<Section spacing="lg" background={background}>
+  <div class="mb-10 max-w-2xl">
+    {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
     <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
       {heading}
     </h2>
-    {leadIn && <p class="mt-3 text-base">{leadIn}</p>}
+    {
+      leadIn && (
+        <p class="mt-6 text-base leading-relaxed sm:text-lg" style="line-height: 1.55;">
+          {leadIn}
+        </p>
+      )
+    }
   </div>
 
-  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+  <div class:list={['grid gap-8 sm:grid-cols-2', columnStyles[columns]]}>
     {
       steps.map((step) => (
         <div class="border-border border-t pt-6">
-          <p class="eyebrow mb-3">{step.number}</p>
-          <h3 class="text-lg font-semibold">{step.title}</h3>
-          <p class="mt-2 text-sm leading-relaxed">{step.description}</p>
+          <p class="text-muted-foreground mb-3 text-[0.6875rem] font-medium tracking-[0.18em] uppercase tabular-nums">
+            {step.number}
+          </p>
+          <h3 class="text-foreground text-lg font-semibold tracking-tight">{step.title}</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed" style="line-height: 1.6;">
+            {step.description}
+          </p>
         </div>
       ))
     }

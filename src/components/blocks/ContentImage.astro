@@ -1,0 +1,83 @@
+---
+/**
+ * ContentImage Block
+ *
+ * Two-column layout with heading + body on one side, image on the other.
+ * Image position flips between left and right. On mobile the image
+ * always sits below the text.
+ */
+import { Image } from 'astro:assets';
+import Section from '@/components/core/Section.astro';
+
+interface Props {
+  heading: string;
+  body: string | string[];
+  image: { src: ImageMetadata; alt: string };
+  /** Which side the image sits on at desktop. Defaults to 'left'. */
+  imagePosition?: 'left' | 'right';
+  /** Editorial eyebrow above the heading. */
+  eyebrow?: string;
+  /** Background variant */
+  background?: 'default' | 'muted';
+  link?: { text: string; href: string };
+}
+
+const {
+  heading,
+  body,
+  image,
+  imagePosition = 'left',
+  eyebrow,
+  background = 'default',
+  link,
+} = Astro.props;
+
+const paragraphs = Array.isArray(body) ? body : [body];
+---
+
+<Section spacing="lg" background={background}>
+  <div
+    class:list={[
+      'grid items-center gap-10 md:grid-cols-2 md:gap-16 lg:gap-20',
+      imagePosition === 'right' && 'md:[direction:rtl]',
+    ]}
+  >
+    <div class="order-2 overflow-hidden rounded-lg shadow-md md:order-none">
+      <Image
+        src={image.src}
+        alt={image.alt}
+        width={640}
+        height={480}
+        class="h-auto w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+
+    <div
+      class:list={[
+        'order-1 flex flex-col justify-center md:order-none',
+        imagePosition === 'right' && 'md:[direction:ltr]',
+      ]}
+    >
+      {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+        {heading}
+      </h2>
+      <div class="mt-6 space-y-5 text-base leading-relaxed sm:text-lg" style="line-height: 1.55;">
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+      {
+        link && (
+          <p class="mt-8">
+            <a
+              href={link.href}
+              class="text-foreground hover:border-navy-700 hover:text-navy-700 border-b border-stone-300 text-sm font-medium no-underline transition-colors"
+            >
+              {link.text} &rarr;
+            </a>
+          </p>
+        )
+      }
+    </div>
+  </div>
+</Section>

@@ -27,9 +27,16 @@ interface Props {
   description?: string;
   projects: Project[];
   cta?: { text: string; href: string };
+  /** Number of columns at the largest breakpoint. Defaults to 2. */
+  columns?: 2 | 3;
 }
 
-const { heading, description, projects, cta } = Astro.props;
+const { heading, description, projects, cta, columns = 2 } = Astro.props;
+
+const columnStyles = {
+  2: 'sm:grid-cols-2',
+  3: 'md:grid-cols-3',
+};
 ---
 
 <Section spacing="lg">
@@ -51,7 +58,7 @@ const { heading, description, projects, cta } = Astro.props;
     </div>
   </div>
 
-  <div class="grid gap-6 sm:grid-cols-2 sm:gap-8">
+  <div class:list={['grid gap-6 sm:gap-8', columnStyles[columns]]}>
     {
       projects.map((project) => (
         <a

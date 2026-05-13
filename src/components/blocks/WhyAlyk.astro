@@ -1,0 +1,60 @@
+---
+/**
+ * WhyAlyk Block
+ *
+ * Editorial 4-up grid of principles/traits. Each item has a tabular
+ * index, a short trait title, and a descriptive paragraph - separated
+ * by a subtle top border to keep the architectural feel.
+ */
+import Section from '@/components/core/Section.astro';
+
+interface Principle {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  leadIn?: string;
+  principles: Principle[];
+  background?: 'default' | 'muted';
+}
+
+const { eyebrow, heading, leadIn, principles, background = 'muted' } = Astro.props;
+---
+
+<Section spacing="lg" background={background}>
+  <div class="mb-12 max-w-2xl md:mb-16">
+    {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+      {heading}
+    </h2>
+    {
+      leadIn && (
+        <p
+          class="text-foreground mt-6 text-base leading-relaxed sm:text-lg"
+          style="line-height: 1.55;"
+        >
+          {leadIn}
+        </p>
+      )
+    }
+  </div>
+
+  <ul class="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4">
+    {
+      principles.map((principle, i) => (
+        <li class="border-border border-t pt-6">
+          <p class="text-muted-foreground mb-3 text-[0.6875rem] font-medium tracking-[0.18em] uppercase tabular-nums">
+            0{i + 1}
+          </p>
+          <h3 class="text-foreground text-lg font-semibold tracking-tight">{principle.title}</h3>
+          <p class="text-muted-foreground mt-3 text-sm leading-relaxed" style="line-height: 1.6;">
+            {principle.description}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

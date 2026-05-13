@@ -1,0 +1,154 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import HeroHome from '@/components/blocks/HeroHome.astro';
+import ContentImage from '@/components/blocks/ContentImage.astro';
+import ProcessSteps from '@/components/blocks/ProcessSteps.astro';
+import ProjectShowcase from '@/components/blocks/ProjectShowcase.astro';
+import ConsultationCTA from '@/components/blocks/ConsultationCTA.astro';
+
+import heroImage from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-01.webp';
+import teamPhoto from '@/assets/images/team/aaron-and-yarran.webp';
+import architectPhoto from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-17.webp';
+
+import cabII06 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-06.webp';
+import cabII12 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-12.webp';
+import cabII23 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-23.webp';
+import cabII26 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-26.webp';
+import cabII38 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-38.webp';
+import cabII50 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-50.webp';
+
+import cas05 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-05.webp';
+import cas09 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-09.webp';
+import cas14 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-14.webp';
+import cas20 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-20.webp';
+import cas26 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-26.webp';
+import cas32 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-32.webp';
+---
+
+<PageLayout
+  title="New Architectural Homes - Tweed Coast Builds | ALYK Building"
+  description="ALYK Building takes on custom architectural homes on Tweed Coast sites - built to your architect's drawings, made for the coast they sit on."
+  fullWidth
+  transparentNav
+>
+  <HeroHome
+    headline="New architectural homes for the Tweed Coast"
+    subheadline="Custom architectural homes on Tweed Coast sites. Built to your architect's drawings, made for the coast they sit on."
+    image={{
+      src: heroImage,
+      alt: 'New architectural home built by ALYK Building at Casuarina',
+    }}
+  />
+
+  <ContentImage
+    heading="What goes into a build"
+    background="default"
+    imagePosition="left"
+    image={{
+      src: teamPhoto,
+      alt: 'Aaron Lee and Yarran Kerr on site',
+    }}
+    body={[
+      'Every build is architect-led and delivered by our experienced team. We work alongside a selection of highly-skilled local trades and suppliers we trust to deliver exceptional results.',
+      'The standard is set by the drawing and held all the way through from foundations to handover.',
+    ]}
+  />
+
+  <ContentImage
+    heading="Working with your architect"
+    background="muted"
+    imagePosition="right"
+    image={{
+      src: architectPhoto,
+      alt: 'Architectural home built by ALYK Building',
+    }}
+    body={[
+      "Most clients come to us with an architect already engaged, and many with plans well underway. If you don't have one yet, we can recommend architects we've worked with before.",
+      "Where it helps, we'll join the conversation early to talk through buildability, materials and schedule while drawings are still flexible.",
+    ]}
+  />
+
+  <ProcessSteps
+    heading="How a build comes together"
+    leadIn="The same shape on every project - the detail changes with the site and the drawings."
+    columns={3}
+    steps={[
+      {
+        number: '01',
+        title: 'Site visit and brief',
+        description:
+          "We walk the site with you, look over the drawings if they exist, and talk through scope, materials and where you're at.",
+      },
+      {
+        number: '02',
+        title: 'Estimate against drawings',
+        description:
+          'Itemised pricing against the documentation, with allowances called out clearly and unknowns flagged upfront.',
+      },
+      {
+        number: '03',
+        title: 'Contract and pre-construction',
+        description:
+          'Contracts signed, key trades and suppliers locked in, schedule mapped before site work starts.',
+      },
+      {
+        number: '04',
+        title: 'Construction',
+        description:
+          "The build runs to the agreed plan, with regular site updates and variations written and signed before they're done.",
+      },
+      {
+        number: '05',
+        title: 'Handover and defects',
+        description:
+          'Walk-through with you on completion, snag list worked through, and the handover pack provided.',
+      },
+      {
+        number: '06',
+        title: 'Statutory builder warranty',
+        description:
+          "Statutory builder warranty in place from handover. We're contactable through the warranty period and beyond.",
+      },
+    ]}
+  />
+
+  <ProjectShowcase
+    heading="Featured builds"
+    description="A selection of new homes we've built on the Tweed Coast. Each project page includes the brief, the site, the architect, and a full gallery."
+    projects={[
+      {
+        title: 'Cabarita Beach II',
+        tag: 'NEW BUILD',
+        images: [
+          { src: cabII06, alt: 'Cabarita Beach II exterior' },
+          { src: cabII12, alt: 'Cabarita Beach II facade detail' },
+          { src: cabII23, alt: 'Cabarita Beach II living area' },
+          { src: cabII26, alt: 'Cabarita Beach II kitchen' },
+          { src: cabII38, alt: 'Cabarita Beach II interior detail' },
+          { src: cabII50, alt: 'Cabarita Beach II exterior at dusk' },
+        ],
+        href: '/projects/cabarita-beach-2/',
+      },
+      {
+        title: 'Casuarina',
+        tag: 'NEW BUILD',
+        images: [
+          { src: cas05, alt: 'Casuarina new build exterior' },
+          { src: cas09, alt: 'Casuarina new build facade detail' },
+          { src: cas14, alt: 'Casuarina new build living area' },
+          { src: cas20, alt: 'Casuarina new build kitchen' },
+          { src: cas26, alt: 'Casuarina new build interior detail' },
+          { src: cas32, alt: 'Casuarina new build exterior at dusk' },
+        ],
+        href: '/projects/casuarina/',
+      },
+    ]}
+    cta={{ text: 'View all projects', href: '/projects/' }}
+  />
+
+  <ConsultationCTA
+    heading="Start a build"
+    body="Send us your brief - drawings if you have them, the site, and a rough programme. We'll come back within a couple of business days, and we'll be honest about whether the project's a fit."
+    cta={{ text: 'Begin an enquiry', href: '/contact/' }}
+  />
+</PageLayout>

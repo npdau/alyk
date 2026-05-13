@@ -1,0 +1,114 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import HeroHome from '@/components/blocks/HeroHome.astro';
+import ServicesPair from '@/components/blocks/ServicesPair.astro';
+import WhyAlyk from '@/components/blocks/WhyAlyk.astro';
+import TestimonialsGrid from '@/components/blocks/TestimonialsGrid.astro';
+import ConsultationCTA from '@/components/blocks/ConsultationCTA.astro';
+
+import heroImage from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-01.webp';
+import buildsImage from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-04.webp';
+import renovationsImage from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-01.webp';
+---
+
+<PageLayout
+  title="Services - Architectural Homes & Renovations | ALYK Building"
+  description="ALYK Building specialise in architectural homes and major renovations on the Tweed Coast - new builds and renovations run side by side, by the same small team."
+  fullWidth
+  transparentNav
+>
+  <HeroHome
+    headline="Specialising in architectural homes and renovations"
+    subheadline="ALYK Building works between Fingal Head and New Brighton, building new architectural homes and major renovations in close collaboration with the architects who design them."
+    image={{
+      src: heroImage,
+      alt: 'Architectural home built by ALYK Building on the Tweed Coast',
+    }}
+  />
+
+  <ServicesPair
+    leadIn="ALYK runs two kinds of work on the Tweed Coast - new architectural homes and major renovations. Both built to architects' drawings, run with the same care from initial detailing through to handover."
+    services={[
+      {
+        eyebrow: 'New builds',
+        title: 'Architectural homes',
+        body: 'Custom builds on coastal sites, working closely with your architect from initial detailing through to handover. Aaron and Yarran lead every build, keeping the work on site true to the drawings.',
+        link: { text: 'More on new builds', href: '/services/builds/' },
+        image: {
+          src: buildsImage,
+          alt: 'Architectural new build by ALYK Building at Cabarita Beach',
+        },
+      },
+      {
+        eyebrow: 'Renovations',
+        title: 'Renovations and extensions',
+        body: 'Major architectural renovations and extensions on existing homes. The same detail, finish and care as a new build, applied to a home that already has a story.',
+        link: { text: 'More on renovations', href: '/services/renovations/' },
+        image: {
+          src: renovationsImage,
+          alt: 'Architectural renovation by ALYK Building at Casuarina',
+        },
+      },
+    ]}
+  />
+
+  <WhyAlyk
+    eyebrow="Why ALYK"
+    heading="How we run a project"
+    leadIn="A few things that shape the way we work, and the projects we take on."
+    principles={[
+      {
+        title: 'Tweed Coast locals',
+        description:
+          'We know how the salt, the wind and the sand behave around here. The materials, the detailing and the trades we rely on all reflect that.',
+      },
+      {
+        title: 'Architect-led',
+        description:
+          "We work to your architect's drawings, with buildability input where it helps. The design intent comes first.",
+      },
+      {
+        title: 'Project-by-project',
+        description:
+          "We don't run more work than we can run well. A small project load is how we keep the standard up.",
+      },
+      {
+        title: 'One point of contact',
+        description:
+          'Aaron or Yarran lead every build, from brief through to handover. The people you meet at the start are the people on site.',
+      },
+    ]}
+  />
+
+  <TestimonialsGrid
+    eyebrow="Clients"
+    heading="What clients have said"
+    background="default"
+    testimonials={[
+      {
+        quote:
+          'We chose ALYK to build our home as we have known Aaron and Yarran since they were young and they did their apprenticeships with an award-winning builder, known to us. The quality of their workmanship is exceptional, and they were very open to listening to our ideas and provided us with great input. They were very easy to communicate with and helped us to build the home we envisaged. We are very happy with the award-winning home they have built for us.',
+        name: 'Ellis & Rosemary',
+        location: 'Bogangar',
+      },
+      {
+        quote: 'Client quote coming soon.',
+        name: 'Client name',
+        location: 'Suburb',
+        placeholder: true,
+      },
+      {
+        quote: 'Client quote coming soon.',
+        name: 'Client name',
+        location: 'Suburb',
+        placeholder: true,
+      },
+    ]}
+  />
+
+  <ConsultationCTA
+    heading="Tell us about your project"
+    body="Send us a brief - even a thumbnail of what you've drawn, the site, and a rough programme. We'll come back to you within a couple of business days, and we'll be honest about whether the project's a fit."
+    cta={{ text: 'Begin an enquiry', href: '/contact/' }}
+  />
+</PageLayout>
