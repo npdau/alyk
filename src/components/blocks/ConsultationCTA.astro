@@ -3,6 +3,8 @@
  * ConsultationCTA Block
  *
  * Dark navy band with heading, body text, and CTA pill.
+ * When `framed` is true (default), adds intersecting white frame lines matching
+ * the hero and a frosted-glass gradient for depth. Pass `framed={false}` for a plain band.
  */
 import Section from '@/components/core/Section.astro';
 import Button from '@/components/core/Button.astro';
@@ -13,13 +15,39 @@ interface Props {
   cta: { text: string; href: string };
   /** Optional secondary action rendered alongside the primary pill. */
   secondaryCta?: { text: string; href: string };
+  /** Set false to use a plain full-bleed band without the hero-style frame. */
+  framed?: boolean;
 }
 
-const { heading, body, cta, secondaryCta } = Astro.props;
+const { heading, body, cta, secondaryCta, framed = true } = Astro.props;
 ---
 
-<Section spacing="lg" background="inverse">
-  <div class="mx-auto max-w-3xl text-center">
+<Section
+  spacing={framed ? 'none' : 'lg'}
+  background="inverse"
+  class:list={['relative overflow-hidden', framed && 'py-28 md:py-36']}
+>
+  {
+    framed && (
+      <>
+        {/* Frosted glass gradient — Apple-style specular highlight */}
+        <div
+          class="absolute inset-0"
+          style="background: radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in oklch, white 8%, transparent) 0%, transparent 70%), linear-gradient(180deg, color-mix(in oklch, white 4%, transparent) 0%, transparent 40%, color-mix(in oklch, white 2%, transparent) 100%);"
+          aria-hidden="true"
+        />
+
+        {/* Intersecting frame lines — verticals full height, horizontals full width */}
+        <div class="pointer-events-none absolute inset-0 z-10" aria-hidden="true">
+          <div class="absolute top-0 bottom-0 left-3 w-px bg-white/15 sm:left-4 md:left-6 lg:left-10 xl:left-20" />
+          <div class="absolute top-0 right-3 bottom-0 w-px bg-white/15 sm:right-4 md:right-6 lg:right-10 xl:right-20" />
+          <div class="absolute top-3 right-0 left-0 h-px bg-white/15 sm:top-4 md:top-6 lg:top-10 xl:top-20" />
+          <div class="absolute right-0 bottom-3 left-0 h-px bg-white/15 sm:bottom-4 md:bottom-6 lg:bottom-10 xl:bottom-20" />
+        </div>
+      </>
+    )
+  }
+  <div class="relative z-20 mx-auto max-w-3xl text-center">
     <h2 class="text-2xl font-semibold tracking-tight text-stone-50 sm:text-3xl">
       {heading}
     </h2>
