@@ -17,11 +17,11 @@ interface Props {
 const { images, alt } = Astro.props;
 ---
 
-<Section spacing="lg" background="default" container="xl">
+<Section spacing="lg" background="default" container="xl" class="!pt-8 md:!pt-10">
   <div class="columns-1 gap-4 sm:columns-2 sm:gap-4">
     {
       images.map((img, i) => (
-        <div class="mb-4 break-inside-avoid">
+        <div class="mb-4 break-inside-avoid overflow-hidden rounded-lg">
           <Image
             src={img}
             alt={`${alt} - ${i + 1}`}
