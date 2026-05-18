@@ -1,0 +1,149 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import HeroHome from '@/components/blocks/HeroHome.astro';
+import ContentImage from '@/components/blocks/ContentImage.astro';
+import ProcessSteps from '@/components/blocks/ProcessSteps.astro';
+import ProjectShowcase from '@/components/blocks/ProjectShowcase.astro';
+import ConsultationCTA from '@/components/blocks/ConsultationCTA.astro';
+
+import heroImage from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-01.webp';
+import teamPhoto from '@/assets/images/team/aaron-and-yarran.webp';
+import architectPhoto from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-08.webp';
+import renoDetailPhoto from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-15.webp';
+
+import casReno02 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-02.webp';
+import casReno05 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-05.webp';
+import casReno10 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-10.webp';
+import casReno13 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-13.webp';
+import casReno18 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-18.webp';
+import casReno21 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-21.webp';
+---
+
+<PageLayout
+  title="Renovations and Extensions - Tweed Coast | ALYK Building"
+  description="Major renovations and extensions on existing Tweed Coast homes. Architectural-grade detail, applied to what's already there."
+  fullWidth
+  transparentNav
+>
+  <HeroHome
+    headline="Renovations and extensions"
+    subheadline="Major renovations and extensions on existing Tweed Coast homes. Architectural-grade detail, applied to what's already there."
+    image={{
+      src: heroImage,
+      alt: 'Renovation by ALYK Building at Casuarina on the Tweed Coast',
+    }}
+  />
+
+  <ContentImage
+    heading="What goes into a renovation"
+    background="default"
+    imagePosition="left"
+    image={{
+      src: teamPhoto,
+      alt: 'Aaron Lee and Yarran Kerr on site',
+    }}
+    body={[
+      'Every renovation is architect-led and delivered by our experienced team. We work alongside a selection of highly-skilled local trades and suppliers we trust to deliver exceptional results.',
+      'The standard is set by the drawing and held all the way through, from existing-conditions walk-through to handover.',
+    ]}
+  />
+
+  <ContentImage
+    heading="Working with your architect"
+    background="muted"
+    imagePosition="right"
+    image={{
+      src: architectPhoto,
+      alt: 'Renovation detail by ALYK Building at Casuarina',
+    }}
+    body={[
+      "Most clients come to us with an architect already engaged - yours, one we've worked with before, or one we can recommend if you don't have one yet.",
+      'We read the existing structure alongside the new drawings and flag anything that needs resolving early - so the build runs smoothly from day one.',
+    ]}
+  />
+
+  <ContentImage
+    heading="How a renovation runs differently"
+    background="default"
+    imagePosition="left"
+    image={{
+      src: renoDetailPhoto,
+      alt: 'Renovation interior by ALYK Building at Casuarina',
+    }}
+    body={[
+      "A renovation is shaped by what's already there. We work out what's worth keeping - structure, sightlines, light, the existing fabric that still has life in it - and design the build sequence around minimising disruption to the parts that stay.",
+      'Renovations also hold more unknowns than new builds. We name them clearly in the quote, set realistic allowances, and talk them through with you as they come up.',
+    ]}
+  />
+
+  <ProcessSteps
+    heading="How a renovation comes together"
+    leadIn="The same shape on every project - the detail changes with the home and the drawings."
+    columns={3}
+    steps={[
+      {
+        number: '01',
+        title: 'Site visit and walk-through',
+        description:
+          "We walk the home with you, look at what's there and what the bones can take, and talk through scope, materials and where you're at.",
+      },
+      {
+        number: '02',
+        title: 'Estimate against drawings',
+        description:
+          'Itemised pricing against the documentation, with allowances called out clearly and unknowns flagged upfront.',
+      },
+      {
+        number: '03',
+        title: 'Contract and pre-construction',
+        description:
+          'Contracts signed, key trades and suppliers locked in, demolition and make-safe sequenced before site work starts.',
+      },
+      {
+        number: '04',
+        title: 'Construction',
+        description:
+          "The build runs to the agreed plan, staged to minimise disruption to the parts of the home that stay, with regular site updates and variations written and signed before they're done.",
+      },
+      {
+        number: '05',
+        title: 'Handover and defects',
+        description:
+          'Walk-through with you on completion, snag list worked through, and the handover pack provided.',
+      },
+      {
+        number: '06',
+        title: 'Statutory builder warranty',
+        description:
+          "Statutory builder warranty in place from handover. We're contactable through the warranty period and beyond.",
+      },
+    ]}
+  />
+
+  <ProjectShowcase
+    heading="Featured renovations"
+    description="A selection of renovations and extensions we've delivered on the Tweed Coast."
+    projects={[
+      {
+        title: 'Casuarina',
+        tag: 'RENOVATION',
+        images: [
+          { src: casReno02, alt: 'Casuarina renovation exterior' },
+          { src: casReno05, alt: 'Casuarina renovation facade detail' },
+          { src: casReno10, alt: 'Casuarina renovation living area' },
+          { src: casReno13, alt: 'Casuarina renovation kitchen' },
+          { src: casReno18, alt: 'Casuarina renovation interior detail' },
+          { src: casReno21, alt: 'Casuarina renovation exterior at dusk' },
+        ],
+        href: '/projects/casuarina-renovation/',
+      },
+    ]}
+    cta={{ text: 'View all projects', href: '/projects/' }}
+  />
+
+  <ConsultationCTA
+    heading="Discuss a renovation"
+    body="Our team will respond to clarify any information we need, and let you know if we're the right fit."
+    cta={{ text: 'Get in touch', href: '/contact/' }}
+  />
+</PageLayout>
