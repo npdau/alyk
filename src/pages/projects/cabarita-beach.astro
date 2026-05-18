@@ -1,0 +1,58 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import HeroHome from '@/components/blocks/HeroHome.astro';
+import ProjectInfo from '@/components/blocks/ProjectInfo.astro';
+import ProjectGallery from '@/components/blocks/ProjectGallery.astro';
+import ProjectNav from '@/components/blocks/ProjectNav.astro';
+
+import heroImage from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-01.webp';
+
+const galleryModules = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/images/projects/cabarita-beach-i-build/*.webp',
+  { eager: true }
+);
+const galleryImages = Object.keys(galleryModules)
+  .sort()
+  .slice(1)
+  .map((key) => galleryModules[key].default);
+---
+
+<PageLayout
+  title="Cabarita Beach - New Build | ALYK Building"
+  description="A custom family home at Cabarita Beach, built around a recurring arched motif."
+  fullWidth
+  transparentNav
+>
+  <HeroHome
+    height="short"
+    image={{
+      src: heroImage,
+      alt: 'Cabarita Beach home built by ALYK Building',
+    }}
+  />
+
+  <ProjectInfo
+    title="Cabarita Beach"
+    subtitle="A custom family home built around a recurring arched motif."
+    description={[
+      'A new family home on a quiet coastal street at Cabarita Beach. The plan is built around a recurring arched motif that runs from the front elevation through to the interior thresholds, with the street face kept low and restrained and the rear opening to a private courtyard and pool.',
+      'Inside, the finishes stay calm: pale render, wide-board light timber floors, plaster walls, and limestone-look stone through the wet zones. Generous glazing brings light deep into the plan, and a custom tile detail picks up the arch motif through the stair.',
+    ]}
+    details={[
+      { label: 'Location', value: 'Cabarita Beach, Northern NSW' },
+      { label: 'Builder', value: 'ALYK Building' },
+      { label: 'Awards', value: 'Custom Home Building Award, Northern Region Winner' },
+      { label: 'Photography', value: 'Andy Macpherson, AM Studio' },
+    ]}
+    testimonial={{
+      quote:
+        'We chose ALYK to build our home as we have known Aaron and Yarran since they were young and they did their apprenticeships with an award-winning builder, known to us. The quality of their workmanship is exceptional, and they were very open to listening to our ideas and provided us with great input. They were very easy to communicate with and helped us to build the home we envisaged. We are very happy with the award-winning home they have built for us.',
+      name: 'Ellis & Rosemary',
+      location: 'Bogangar',
+    }}
+  />
+
+  <ProjectGallery images={galleryImages} alt="Cabarita Beach home by ALYK Building" />
+
+  <ProjectNav nextProject={{ title: 'Cabarita Beach II', href: '/projects/cabarita-beach-2/' }} />
+</PageLayout>

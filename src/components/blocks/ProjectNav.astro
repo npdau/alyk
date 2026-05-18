@@ -1,0 +1,41 @@
+---
+/**
+ * ProjectNav Block
+ *
+ * Bottom bar for project detail pages with a CTA and next-project link.
+ */
+import Section from '@/components/core/Section.astro';
+import Button from '@/components/core/Button.astro';
+
+interface Props {
+  nextProject?: { title: string; href: string };
+}
+
+const { nextProject } = Astro.props;
+---
+
+<Section spacing="md" background="muted">
+  <div class="flex flex-col items-center justify-between gap-6 sm:flex-row">
+    <Button href="/contact/" variant="primary" size="lg" pill arrow> Begin a project </Button>
+
+    {
+      nextProject && (
+        <a
+          href={nextProject.href}
+          class="group text-muted-foreground hover:text-foreground inline-flex items-center gap-2 border-0 text-sm font-medium no-underline transition-colors"
+        >
+          Next project: {nextProject.title}
+          <svg
+            class="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="M6 3l5 5-5 5" />
+          </svg>
+        </a>
+      )
+    }
+  </div>
+</Section>

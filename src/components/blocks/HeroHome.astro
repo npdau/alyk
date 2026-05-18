@@ -2,23 +2,39 @@
 /**
  * HeroHome Block
  *
- * Full-bleed hero with background image, headline overlay, and CTA.
- * Used only on the homepage.
+ * Full-bleed hero with background image. Headline/subheadline/CTA are
+ * optional - omit them all for a plain image hero (used on project
+ * detail pages).
  */
 import { Image } from 'astro:assets';
 import Button from '@/components/core/Button.astro';
 
 interface Props {
-  headline: string;
+  headline?: string;
   subheadline?: string;
   cta?: { text: string; href: string };
   image: { src: any; alt: string };
+  /**
+   * Hero height. Defaults to `default` (90vh) for landing-style heroes.
+   * Use `short` (60vh) for project detail pages where the hero is a
+   * plain image only and shouldn't push the page content too far down.
+   */
+  height?: 'default' | 'short';
 }
 
-const { headline, subheadline, cta, image } = Astro.props;
+const { headline, subheadline, cta, image, height = 'default' } = Astro.props;
+
+// When no headline is provided, treat as a plain image hero - no full
+// navy overlay, just a soft top gradient so the nav stays legible.
+const isPlain = !headline;
+
+const heightStyles = {
+  default: 'min-h-[90vh]',
+  short: 'min-h-[60vh]',
+};
 ---
 
-<section class="bg-navy-900 relative flex min-h-[90vh] items-end overflow-hidden">
+<section class:list={['bg-navy-900 relative flex items-end overflow-hidden', heightStyles[height]]}>
   <Image
     src={image.src}
     alt={image.alt}
@@ -29,11 +45,19 @@ const { headline, subheadline, cta, image } = Astro.props;
     inferSize
   />
 
-  <div
-    class="absolute inset-0"
-    style="background: linear-gradient(180deg, color-mix(in oklch, var(--color-navy-900) 60%, transparent) 0%, color-mix(in oklch, var(--color-navy-900) 10%, transparent) 30%, color-mix(in oklch, var(--color-navy-900) 88%, transparent) 100%);"
-  >
-  </div>
+  {
+    isPlain ? (
+      <div
+        class="absolute inset-x-0 top-0 h-32"
+        style="background: linear-gradient(180deg, color-mix(in oklch, var(--color-navy-900) 45%, transparent) 0%, transparent 100%);"
+      />
+    ) : (
+      <div
+        class="absolute inset-0"
+        style="background: linear-gradient(180deg, color-mix(in oklch, var(--color-navy-900) 60%, transparent) 0%, color-mix(in oklch, var(--color-navy-900) 10%, transparent) 30%, color-mix(in oklch, var(--color-navy-900) 88%, transparent) 100%);"
+      />
+    )
+  }
 
   <!-- Frame lines — equal 80px inset at xl+, step in gradually so they sit
        comfortably outside the nav content at every breakpoint. -->
@@ -53,38 +77,37 @@ const { headline, subheadline, cta, image } = Astro.props;
     </div>
   </div>
 
-  <!-- Hero content -->
-  <div class="relative z-10 w-full pt-32 pb-32 md:pb-40">
-    <div class="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 lg:px-16 xl:px-28 2xl:px-8">
-      <h1
-        class="max-w-2xl text-4xl font-semibold tracking-tight text-stone-50 sm:text-5xl lg:text-6xl"
-        style="line-height: 1.05; letter-spacing: -0.025em;"
-      >
-        {headline}
-      </h1>
-      {
-        subheadline && (
-          <p
-            class="mt-6 max-w-lg text-base text-balance text-stone-50/80 sm:text-lg"
-            style="color: rgba(250,250,249,0.75);"
+  {
+    headline && (
+      <div class="relative z-10 w-full pt-32 pb-32 md:pb-40">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 lg:px-16 xl:px-28 2xl:px-8">
+          <h1
+            class="max-w-2xl text-4xl font-semibold tracking-tight text-stone-50 sm:text-5xl lg:text-6xl"
+            style="line-height: 1.05; letter-spacing: -0.025em;"
           >
-            {subheadline}
-          </p>
-        )
-      }
-      {
-        cta ? (
-          <div class="mt-8">
-            <Button href={cta.href} variant="white" size="lg" pill arrow>
-              {cta.text}
-            </Button>
-          </div>
-        ) : (
-          // Reserve the CTA's vertical footprint so the headline lands at the
-          // same baseline whether or not a button is present.
-          <div class="mt-8 h-11" aria-hidden="true" />
-        )
-      }
-    </div>
-  </div>
+            {headline}
+          </h1>
+          {subheadline && (
+            <p
+              class="mt-6 max-w-lg text-base text-balance text-stone-50/80 sm:text-lg"
+              style="color: rgba(250,250,249,0.75);"
+            >
+              {subheadline}
+            </p>
+          )}
+          {cta ? (
+            <div class="mt-8">
+              <Button href={cta.href} variant="white" size="lg" pill arrow>
+                {cta.text}
+              </Button>
+            </div>
+          ) : (
+            // Reserve the CTA's vertical footprint so the headline lands at
+            // the same baseline whether or not a button is present.
+            <div class="mt-8 h-11" aria-hidden="true" />
+          )}
+        </div>
+      </div>
+    )
+  }
 </section>

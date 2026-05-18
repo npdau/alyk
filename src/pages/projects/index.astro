@@ -1,0 +1,115 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import HeroHome from '@/components/blocks/HeroHome.astro';
+import ProjectShowcase from '@/components/blocks/ProjectShowcase.astro';
+import ConsultationCTA from '@/components/blocks/ConsultationCTA.astro';
+
+import heroImage from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-01.webp';
+
+import cabI01 from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-01.webp';
+import cabI07 from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-07.webp';
+import cabI12 from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-12.webp';
+import cabI17 from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-17.webp';
+import cabI22 from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-22.webp';
+import cabI27 from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-27.webp';
+
+import cabII06 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-06.webp';
+import cabII12 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-12.webp';
+import cabII23 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-23.webp';
+import cabII26 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-26.webp';
+import cabII38 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-38.webp';
+import cabII50 from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-50.webp';
+
+import cas05 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-05.webp';
+import cas09 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-09.webp';
+import cas14 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-14.webp';
+import cas20 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-20.webp';
+import cas26 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-26.webp';
+import cas32 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-32.webp';
+
+import casReno02 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-02.webp';
+import casReno05 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-05.webp';
+import casReno10 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-10.webp';
+import casReno13 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-13.webp';
+import casReno18 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-18.webp';
+import casReno21 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-21.webp';
+---
+
+<PageLayout
+  title="Projects - Architectural Homes & Renovations | ALYK Building"
+  description="A selection of architectural homes and renovations built across the Tweed Coast by ALYK Building."
+  fullWidth
+  transparentNav
+>
+  <HeroHome
+    headline="Project showcase"
+    subheadline="A selection of architectural homes and renovations we've built across the Tweed Coast, drawn by architects we trust and built for the places they sit on."
+    image={{
+      src: heroImage,
+      alt: 'Architectural home built by ALYK Building on the Tweed Coast',
+    }}
+  />
+
+  <ProjectShowcase
+    projects={[
+      {
+        title: 'Cabarita Beach',
+        tag: 'NEW BUILD',
+        images: [
+          { src: cabI01, alt: 'Cabarita Beach exterior' },
+          { src: cabI07, alt: 'Cabarita Beach facade' },
+          { src: cabI12, alt: 'Cabarita Beach living area' },
+          { src: cabI17, alt: 'Cabarita Beach kitchen' },
+          { src: cabI22, alt: 'Cabarita Beach interior' },
+          { src: cabI27, alt: 'Cabarita Beach detail' },
+        ],
+        href: '/projects/cabarita-beach/',
+      },
+      {
+        title: 'Cabarita Beach II',
+        tag: 'NEW BUILD',
+        images: [
+          { src: cabII06, alt: 'Cabarita Beach II exterior' },
+          { src: cabII12, alt: 'Cabarita Beach II facade detail' },
+          { src: cabII23, alt: 'Cabarita Beach II living area' },
+          { src: cabII26, alt: 'Cabarita Beach II kitchen' },
+          { src: cabII38, alt: 'Cabarita Beach II interior detail' },
+          { src: cabII50, alt: 'Cabarita Beach II exterior at dusk' },
+        ],
+        href: '/projects/cabarita-beach-2/',
+      },
+      {
+        title: 'Casuarina',
+        tag: 'NEW BUILD',
+        images: [
+          { src: cas05, alt: 'Casuarina new build exterior' },
+          { src: cas09, alt: 'Casuarina new build facade' },
+          { src: cas14, alt: 'Casuarina new build living area' },
+          { src: cas20, alt: 'Casuarina new build kitchen' },
+          { src: cas26, alt: 'Casuarina new build interior' },
+          { src: cas32, alt: 'Casuarina new build detail' },
+        ],
+        href: '/projects/casuarina/',
+      },
+      {
+        title: 'Casuarina',
+        tag: 'RENOVATION',
+        images: [
+          { src: casReno02, alt: 'Casuarina renovation exterior' },
+          { src: casReno05, alt: 'Casuarina renovation facade' },
+          { src: casReno10, alt: 'Casuarina renovation living area' },
+          { src: casReno13, alt: 'Casuarina renovation kitchen' },
+          { src: casReno18, alt: 'Casuarina renovation interior' },
+          { src: casReno21, alt: 'Casuarina renovation detail' },
+        ],
+        href: '/projects/casuarina-reno/',
+      },
+    ]}
+  />
+
+  <ConsultationCTA
+    heading="Start a project of your own"
+    body="Our team will respond to clarify any information we need, and let you know if we're the right fit."
+    cta={{ text: 'Get in touch', href: '/contact/' }}
+  />
+</PageLayout>

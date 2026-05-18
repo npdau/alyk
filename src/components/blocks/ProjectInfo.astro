@@ -1,0 +1,158 @@
+---
+/**
+ * ProjectInfo Block
+ *
+ * Project detail page intro: title + short tagline on the left, key
+ * details panel on the right, description paragraphs below, and an
+ * optional collapsible client testimonial under the description.
+ */
+import Section from '@/components/core/Section.astro';
+import Card from '@/components/core/Card.astro';
+
+interface DetailItem {
+  label: string;
+  value: string;
+}
+
+interface Testimonial {
+  quote: string;
+  name: string;
+  location: string;
+}
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  description: string[];
+  details: DetailItem[];
+  testimonial?: Testimonial;
+  background?: 'default' | 'muted';
+}
+
+const { title, subtitle, description, details, testimonial, background = 'default' } = Astro.props;
+---
+
+<Section spacing="lg" background={background}>
+  <div class="grid gap-10 md:grid-cols-[1fr_auto] md:gap-16 lg:gap-24">
+    <div class="min-w-0">
+      <h1
+        class="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
+        style="line-height: 1.1; letter-spacing: -0.02em;"
+      >
+        {title}
+      </h1>
+      {
+        subtitle && (
+          <p class="project-subtitle text-foreground mt-4 max-w-xl text-lg font-medium sm:text-xl md:max-w-3xl">
+            {subtitle}
+          </p>
+        )
+      }
+
+      <div class="mt-8 space-y-4 text-sm leading-relaxed sm:text-base" style="line-height: 1.65;">
+        {description.map((p) => <p>{p}</p>)}
+      </div>
+
+      {
+        testimonial && (
+          <div
+            class="testimonial-toggle border-border mt-10 border-t border-b"
+            data-expanded="false"
+          >
+            <div class="flex items-center justify-between gap-4 py-4">
+              <span class="text-foreground text-sm font-medium">Client Testimonial</span>
+              <button
+                type="button"
+                class="testimonial-btn border-input text-muted-foreground hover:border-foreground hover:text-foreground flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all"
+                aria-expanded="false"
+                aria-label="Expand testimonial"
+              >
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <line x1="3" y1="8" x2="13" y2="8" />
+                  <line
+                    class="testimonial-vline transition-opacity duration-300"
+                    x1="8"
+                    y1="3"
+                    x2="8"
+                    y2="13"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div
+              class="testimonial-body overflow-hidden transition-[max-height] duration-500 ease-in-out"
+              style="max-height: 0;"
+            >
+              <blockquote class="pt-1 pb-6">
+                <p
+                  class="text-muted-foreground text-lg leading-relaxed italic sm:text-xl"
+                  style="line-height: 1.55;"
+                >
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
+                <p class="text-foreground mt-4 text-sm font-semibold">
+                  {testimonial.name}
+                  <span class="text-muted-foreground font-normal">, {testimonial.location}</span>
+                </p>
+              </blockquote>
+            </div>
+          </div>
+        )
+      }
+    </div>
+
+    <div class="md:w-72 lg:w-80">
+      <Card variant="elevated" padding="lg">
+        <dl class="space-y-4 text-sm">
+          {
+            details.map((item) => (
+              <div>
+                <dt class="text-foreground font-semibold">{item.label}</dt>
+                <dd class="text-muted-foreground mt-0.5">{item.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </Card>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .project-subtitle {
+    text-wrap: auto;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.testimonial-toggle').forEach((toggle) => {
+    const btn = toggle.querySelector('.testimonial-btn');
+    const body = toggle.querySelector('.testimonial-body') as HTMLElement;
+    const vline = toggle.querySelector('.testimonial-vline') as HTMLElement;
+
+    if (!btn || !body) return;
+
+    btn.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('data-expanded') === 'true';
+
+      if (expanded) {
+        body.style.maxHeight = '0px';
+        if (vline) vline.style.opacity = '1';
+        toggle.setAttribute('data-expanded', 'false');
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        if (vline) vline.style.opacity = '0';
+        toggle.setAttribute('data-expanded', 'true');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>

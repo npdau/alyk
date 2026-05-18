@@ -1,0 +1,38 @@
+---
+/**
+ * ProjectGallery Block
+ *
+ * Two-column masonry image grid for project detail pages. Uses CSS
+ * columns so images keep their natural aspect ratios and pack with no
+ * gaps. Single column on mobile.
+ */
+import { Image } from 'astro:assets';
+import Section from '@/components/core/Section.astro';
+
+interface Props {
+  images: ImageMetadata[];
+  alt: string;
+}
+
+const { images, alt } = Astro.props;
+---
+
+<Section spacing="lg" background="default" container="xl">
+  <div class="columns-1 gap-4 sm:columns-2 sm:gap-4">
+    {
+      images.map((img, i) => (
+        <div class="mb-4 break-inside-avoid">
+          <Image
+            src={img}
+            alt={`${alt} - ${i + 1}`}
+            class="block h-auto w-full object-cover align-bottom"
+            widths={[400, 600, 800, 1000]}
+            sizes="(min-width: 640px) 50vw, 100vw"
+            loading={i < 4 ? 'eager' : 'lazy'}
+            inferSize
+          />
+        </div>
+      ))
+    }
+  </div>
+</Section>

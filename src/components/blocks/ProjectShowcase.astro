@@ -23,7 +23,7 @@ interface Project {
 }
 
 interface Props {
-  heading: string;
+  heading?: string;
   description?: string;
   projects: Project[];
   cta?: { text: string; href: string };
@@ -40,23 +40,23 @@ const columnStyles = {
 ---
 
 <Section spacing="lg">
-  <div class="mb-10">
-    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-      {heading}
-    </h2>
-    <div class="md:flex md:items-end md:justify-between md:gap-6">
-      {description && <p class="mt-4 max-w-xl text-base leading-relaxed">{description}</p>}
-      {
-        cta && (
-          <div class="hidden shrink-0 md:block">
-            <Button href={cta.href} variant="white" size="lg" pill arrow>
-              {cta.text}
-            </Button>
-          </div>
-        )
-      }
-    </div>
-  </div>
+  {
+    (heading || description || cta) && (
+      <div class="mb-10">
+        {heading && <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{heading}</h2>}
+        <div class="md:flex md:items-end md:justify-between md:gap-6">
+          {description && <p class="mt-4 max-w-xl text-base leading-relaxed">{description}</p>}
+          {cta && (
+            <div class="hidden shrink-0 md:block">
+              <Button href={cta.href} variant="white" size="lg" pill arrow>
+                {cta.text}
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
 
   <div class:list={['grid gap-6 sm:gap-8', columnStyles[columns]]}>
     {

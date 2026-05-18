@@ -1,0 +1,52 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import HeroHome from '@/components/blocks/HeroHome.astro';
+import ProjectInfo from '@/components/blocks/ProjectInfo.astro';
+import ProjectGallery from '@/components/blocks/ProjectGallery.astro';
+import ProjectNav from '@/components/blocks/ProjectNav.astro';
+
+import heroImage from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-01.webp';
+
+const galleryModules = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/images/projects/casuarina-i-build/*.webp',
+  { eager: true }
+);
+const galleryImages = Object.keys(galleryModules)
+  .sort()
+  .slice(1)
+  .map((key) => galleryModules[key].default);
+---
+
+<PageLayout
+  title="Casuarina - New Build | ALYK Building"
+  description="A custom home at Casuarina by Jordan Pope at Impact Design, planned around a frameless corner opening to the deck."
+  fullWidth
+  transparentNav
+>
+  <HeroHome
+    height="short"
+    image={{
+      src: heroImage,
+      alt: 'Casuarina new build by ALYK Building',
+    }}
+  />
+
+  <ProjectInfo
+    title="Casuarina"
+    subtitle="A custom family home by Jordan Pope at Impact Design."
+    description={[
+      'A new family home at Casuarina, drawn by Jordan Pope of Impact Design. The plan opens to the rear through a frameless corner sliding door that retracts to open two walls of the living zone at once, taking the threshold between the interior and the deck out of the picture.',
+      'The exterior is wrapped in Linearboard cladding, with blind pelmets carrying through the home for a clean ceiling line and full shading control.',
+    ]}
+    details={[
+      { label: 'Location', value: 'Casuarina, Northern NSW' },
+      { label: 'Builder', value: 'ALYK Building' },
+      { label: 'Architect', value: 'Jordan Pope, Impact Design' },
+      { label: 'Photography', value: 'Andy Macpherson, AM Studio' },
+    ]}
+  />
+
+  <ProjectGallery images={galleryImages} alt="Casuarina new build by ALYK Building" />
+
+  <ProjectNav nextProject={{ title: 'Casuarina Renovation', href: '/projects/casuarina-reno/' }} />
+</PageLayout>

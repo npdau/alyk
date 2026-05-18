@@ -1,0 +1,58 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import HeroHome from '@/components/blocks/HeroHome.astro';
+import ProjectInfo from '@/components/blocks/ProjectInfo.astro';
+import ProjectGallery from '@/components/blocks/ProjectGallery.astro';
+import ProjectNav from '@/components/blocks/ProjectNav.astro';
+
+import heroImage from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-01.webp';
+
+const galleryModules = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/images/projects/cabarita-beach-ii-build/*.webp',
+  { eager: true }
+);
+const galleryImages = Object.keys(galleryModules)
+  .sort()
+  .slice(1)
+  .map((key) => galleryModules[key].default);
+---
+
+<PageLayout
+  title="Cabarita Beach II - New Build | ALYK Building"
+  description="A coastal home at Cabarita Beach, drawn by Nathan Brown Design."
+  fullWidth
+  transparentNav
+>
+  <HeroHome
+    height="short"
+    image={{
+      src: heroImage,
+      alt: 'Cabarita Beach II home built by ALYK Building',
+    }}
+  />
+
+  <ProjectInfo
+    title="Cabarita Beach II"
+    subtitle="A coastal home drawn by Nathan Brown Design."
+    description={[
+      'A custom home at Cabarita Beach designed by Nathan Brown Design. The exterior pairs James Hardie brushed concrete cladding with a Rockcote fine texture render system over blockwork.',
+      'Inside, limestone pavers and tiles run through the wet zones in natural stone, with a Painted Earth micro cement finish and Murobond Pentimento limewash through the walls.',
+    ]}
+    details={[
+      { label: 'Location', value: 'Cabarita Beach, Northern NSW' },
+      { label: 'Builder', value: 'ALYK Building' },
+      { label: 'Designer', value: 'Nathan Brown Design' },
+      { label: 'Photography', value: 'Andy Macpherson, AM Studio' },
+    ]}
+    testimonial={{
+      quote:
+        'Working with ALYK Builders has been an outstanding experience from start to finish. We chose ALYK because of the strong local reputation and values Aaron and Yaran built early in their careers, and throughout the entire process they more than lived up to that trust. Their attention to detail are exceptional, but what really stood out was the way they genuinely listened. They took the time to understand our vision, offered thoughtful ideas and practical guidance, and made us feel supported and involved at every stage of the build. Communication was always open, honest and responsive, which gave us a great deal of confidence throughout the project. Building a home can be stressful, but Aaron and Yaran approached everything with professionalism, care and pride in their work. The end result is a beautiful build that exceeded our expectations and reflects the quality ALYK is known for. We are incredibly grateful for the experience and would highly recommend ALYK Builders to anyone looking for a builder who combines high-quality build quality with genuine customer care.',
+      name: 'Kollen & Hayley',
+      location: 'Cabarita Beach',
+    }}
+  />
+
+  <ProjectGallery images={galleryImages} alt="Cabarita Beach II home by ALYK Building" />
+
+  <ProjectNav nextProject={{ title: 'Casuarina', href: '/projects/casuarina/' }} />
+</PageLayout>
