@@ -2,9 +2,10 @@
 /**
  * ProjectGallery Block
  *
- * Two-column masonry image grid for project detail pages. Uses CSS
- * columns so images keep their natural aspect ratios and pack with no
- * gaps. Single column on mobile.
+ * Two-column masonry grid for project detail pages. Uses greedy column
+ * balancing at build time - each image is placed into whichever column
+ * is currently shorter. This preserves reading order AND keeps columns
+ * balanced with no client-side JS. Single column on mobile.
  */
 import { Image } from 'astro:assets';
 import Section from '@/components/core/Section.astro';
@@ -15,24 +16,61 @@ interface Props {
 }
 
 const { images, alt } = Astro.props;
+
+type IndexedImage = { img: ImageMetadata; idx: number };
+const leftCol: IndexedImage[] = [];
+const rightCol: IndexedImage[] = [];
+let leftHeight = 0;
+let rightHeight = 0;
+
+for (let i = 0; i < images.length; i++) {
+  const img = images[i];
+  const normHeight = img.height / img.width;
+  if (leftHeight <= rightHeight) {
+    leftCol.push({ img, idx: i });
+    leftHeight += normHeight;
+  } else {
+    rightCol.push({ img, idx: i });
+    rightHeight += normHeight;
+  }
+}
 ---
 
-<Section spacing="lg" background="default" container="xl" class="!pt-8 md:!pt-10">
-  <div class="columns-1 gap-4 sm:columns-2 sm:gap-4">
-    {
-      images.map((img, i) => (
-        <div class="mb-4 break-inside-avoid overflow-hidden rounded-lg">
-          <Image
-            src={img}
-            alt={`${alt} - ${i + 1}`}
-            class="block h-auto w-full object-cover align-bottom"
-            widths={[400, 600, 800, 1000]}
-            sizes="(min-width: 640px) 50vw, 100vw"
-            loading={i < 4 ? 'eager' : 'lazy'}
-            inferSize
-          />
-        </div>
-      ))
-    }
+<Section spacing="lg" background="default" container="xl" class="!pt-0 md:!pt-2">
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div class="flex flex-col gap-4">
+      {
+        leftCol.map(({ img, idx }) => (
+          <div class="overflow-hidden rounded-lg">
+            <Image
+              src={img}
+              alt={`${alt} - ${idx + 1}`}
+              class="block h-auto w-full object-cover"
+              widths={[400, 600, 800, 1000]}
+              sizes="(min-width: 640px) 50vw, 100vw"
+              loading={idx < 4 ? 'eager' : 'lazy'}
+              inferSize
+            />
+          </div>
+        ))
+      }
+    </div>
+    <div class="flex flex-col gap-4">
+      {
+        rightCol.map(({ img, idx }) => (
+          <div class="overflow-hidden rounded-lg">
+            <Image
+              src={img}
+              alt={`${alt} - ${idx + 1}`}
+              class="block h-auto w-full object-cover"
+              widths={[400, 600, 800, 1000]}
+              sizes="(min-width: 640px) 50vw, 100vw"
+              loading={idx < 4 ? 'eager' : 'lazy'}
+              inferSize
+            />
+          </div>
+        ))
+      }
+    </div>
   </div>
 </Section>

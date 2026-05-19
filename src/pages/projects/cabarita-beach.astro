@@ -5,7 +5,7 @@ import ProjectInfo from '@/components/blocks/ProjectInfo.astro';
 import ProjectGallery from '@/components/blocks/ProjectGallery.astro';
 import ProjectNav from '@/components/blocks/ProjectNav.astro';
 
-import heroImage from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-01.webp';
+import heroImage from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-23.webp';
 
 const galleryModules = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/images/projects/cabarita-beach-i-build/*.webp',
@@ -40,13 +40,16 @@ const galleryImages = Object.keys(galleryModules)
     ]}
     details={[
       { label: 'Location', value: 'Cabarita Beach, Northern NSW' },
+      { label: 'Type', value: 'New Build' },
       { label: 'Builder', value: 'ALYK Building' },
-      { label: 'Awards', value: 'Custom Home Building Award, Northern Region Winner' },
       { label: 'Photography', value: 'Andy Macpherson, AM Studio' },
     ]}
     testimonial={{
-      quote:
-        'We chose ALYK to build our home as we have known Aaron and Yarran since they were young and they did their apprenticeships with an award-winning builder, known to us. The quality of their workmanship is exceptional, and they were very open to listening to our ideas and provided us with great input. They were very easy to communicate with and helped us to build the home we envisaged. We are very happy with the award-winning home they have built for us.',
+      quote: [
+        'We chose ALYK to build our home as we have known Aaron and Yarran since they were young and they did their apprenticeships with an award-winning builder, known to us.',
+        'The quality of their workmanship is exceptional, and they were very open to listening to our ideas and provided us with great input. They were very easy to communicate with and helped us to build the home we envisaged.',
+        'We are very happy with the award-winning home they have built for us.',
+      ],
       name: 'Ellis & Rosemary',
       location: 'Bogangar',
     }}

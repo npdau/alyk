@@ -2,9 +2,9 @@
 /**
  * ProjectInfo Block
  *
- * Project detail page intro: title + short tagline on the left, key
- * details panel on the right, description paragraphs below, and an
- * optional collapsible client testimonial under the description.
+ * Bento layout: title/subtitle/description on the left balanced against
+ * the details panel on the right, with a full-width collapsible
+ * testimonial beneath.
  */
 import Section from '@/components/core/Section.astro';
 import Card from '@/components/core/Card.astro';
@@ -15,7 +15,7 @@ interface DetailItem {
 }
 
 interface Testimonial {
-  quote: string;
+  quote: string[];
   name: string;
   location: string;
 }
@@ -33,18 +33,21 @@ const { title, subtitle, description, details, testimonial, background = 'defaul
 ---
 
 <Section spacing="lg" background={background}>
-  <h1
-    class="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
-    style="line-height: 1.1; letter-spacing: -0.02em;"
+  <div
+    class="testimonial-toggle grid items-center gap-10 md:grid-cols-[1fr_auto] md:gap-16 lg:gap-24"
+    data-expanded="false"
   >
-    {title}
-  </h1>
-
-  <div class="mt-4 grid gap-10 md:grid-cols-[1fr_auto] md:gap-16 lg:gap-24">
     <div class="min-w-0">
+      <h1
+        class="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
+        style="line-height: 1.1; letter-spacing: -0.02em;"
+      >
+        {title}
+      </h1>
+
       {
         subtitle && (
-          <p class="project-subtitle text-foreground text-lg font-medium sm:text-xl md:max-w-3xl">
+          <p class="project-subtitle text-foreground mt-4 text-lg font-medium sm:text-xl md:max-w-3xl">
             {subtitle}
           </p>
         )
@@ -53,60 +56,6 @@ const { title, subtitle, description, details, testimonial, background = 'defaul
       <div class="mt-8 space-y-4 text-sm leading-relaxed sm:text-base" style="line-height: 1.65;">
         {description.map((p) => <p>{p}</p>)}
       </div>
-
-      {
-        testimonial && (
-          <div
-            class="testimonial-toggle border-border mt-10 border-t border-b"
-            data-expanded="false"
-          >
-            <div class="flex items-center justify-between gap-4 py-4">
-              <span class="text-foreground text-sm font-medium">Client Testimonial</span>
-              <button
-                type="button"
-                class="testimonial-btn border-input text-muted-foreground hover:border-foreground hover:text-foreground flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all"
-                aria-expanded="false"
-                aria-label="Expand testimonial"
-              >
-                <svg
-                  class="h-4 w-4"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                >
-                  <line x1="3" y1="8" x2="13" y2="8" />
-                  <line
-                    class="testimonial-vline transition-opacity duration-300"
-                    x1="8"
-                    y1="3"
-                    x2="8"
-                    y2="13"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <div
-              class="testimonial-body overflow-hidden transition-[max-height] duration-500 ease-in-out"
-              style="max-height: 0;"
-            >
-              <blockquote class="pt-1 pb-6">
-                <p
-                  class="text-muted-foreground text-sm leading-relaxed italic sm:text-base"
-                  style="line-height: 1.65;"
-                >
-                  &ldquo;{testimonial.quote}&rdquo;
-                </p>
-                <p class="text-foreground mt-4 text-sm font-semibold">
-                  {testimonial.name}
-                  <span class="text-muted-foreground font-normal">, {testimonial.location}</span>
-                </p>
-              </blockquote>
-            </div>
-          </div>
-        )
-      }
     </div>
 
     <div class="md:w-72 lg:w-80">
@@ -121,9 +70,66 @@ const { title, subtitle, description, details, testimonial, background = 'defaul
             ))
           }
         </dl>
+
+        {
+          testimonial && (
+            <div class="bg-muted/50 -mx-8 mt-5 -mb-8 rounded-b-lg px-8 py-5">
+              <button
+                type="button"
+                class="testimonial-btn flex w-full items-center justify-between gap-3 transition-colors"
+                aria-expanded="false"
+                aria-label="Expand client feedback"
+              >
+                <span class="text-foreground text-sm font-semibold">Client feedback</span>
+                <span class="bg-card border-border inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border shadow-sm">
+                  <svg
+                    class="testimonial-icon text-foreground h-3.5 w-3.5 transition-transform duration-300"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <line x1="6" y1="2" x2="6" y2="10" />
+                    <line x1="2" y1="6" x2="10" y2="6" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          )
+        }
       </Card>
     </div>
   </div>
+
+  {
+    testimonial && (
+      <div
+        class="testimonial-body overflow-hidden transition-[max-height] duration-500 ease-in-out"
+        style="max-height: 0;"
+      >
+        <blockquote class="bg-muted relative mt-10 overflow-hidden rounded-lg px-8 py-8 sm:px-12 sm:py-10">
+          <span
+            class="pointer-events-none absolute top-4 left-6 font-serif text-[8rem] leading-none text-stone-200 select-none"
+            aria-hidden="true"
+          >
+            &ldquo;
+          </span>
+          <div
+            class="relative space-y-4 text-sm leading-relaxed sm:text-base"
+            style="line-height: 1.75;"
+          >
+            {testimonial.quote.map((p) => (
+              <p>{p}</p>
+            ))}
+          </div>
+          <p class="text-foreground relative mt-6 text-sm font-semibold">
+            {testimonial.name}
+            <span class="text-muted-foreground font-normal">, {testimonial.location}</span>
+          </p>
+        </blockquote>
+      </div>
+    )
+  }
 </Section>
 
 <style>
@@ -135,8 +141,10 @@ const { title, subtitle, description, details, testimonial, background = 'defaul
 <script>
   document.querySelectorAll('.testimonial-toggle').forEach((toggle) => {
     const btn = toggle.querySelector('.testimonial-btn');
-    const body = toggle.querySelector('.testimonial-body') as HTMLElement;
-    const vline = toggle.querySelector('.testimonial-vline') as HTMLElement;
+    const body = (toggle.nextElementSibling as HTMLElement)?.classList.contains('testimonial-body')
+      ? (toggle.nextElementSibling as HTMLElement)
+      : null;
+    const icon = toggle.querySelector('.testimonial-icon') as HTMLElement;
 
     if (!btn || !body) return;
 
@@ -145,12 +153,12 @@ const { title, subtitle, description, details, testimonial, background = 'defaul
 
       if (expanded) {
         body.style.maxHeight = '0px';
-        if (vline) vline.style.opacity = '1';
+        if (icon) icon.style.transform = '';
         toggle.setAttribute('data-expanded', 'false');
         btn.setAttribute('aria-expanded', 'false');
       } else {
         body.style.maxHeight = body.scrollHeight + 'px';
-        if (vline) vline.style.opacity = '0';
+        if (icon) icon.style.transform = 'rotate(45deg)';
         toggle.setAttribute('data-expanded', 'true');
         btn.setAttribute('aria-expanded', 'true');
       }
