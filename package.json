@@ -21,6 +21,7 @@
     "@astrojs/mdx": "^5.0.4",
     "@astrojs/react": "^5.0.4",
     "@astrojs/sitemap": "^3.7.2",
+    "@iconify-json/lucide": "^1.2.108",
     "astro": "^6.1.10",
     "astro-icon": "^1.1.5",
     "astro-seo": "^1.1.0",

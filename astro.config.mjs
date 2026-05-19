@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
+import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 import rehypeExternalLinks from 'rehype-external-links';
 
@@ -73,6 +74,9 @@ export default defineConfig({
 
     // MDX support for enhanced Markdown with JSX components
     mdx(),
+
+    // Lucide icons via astro-icon (uses @iconify-json/lucide)
+    icon(),
 
     // Sitemap generation
     // Automatically generates sitemap-index.xml at build time

@@ -62,7 +62,8 @@ When adding new UI:
 
 ## Dev Server
 
-- **Always** run `npx astro dev` with `required_permissions: ["all"]` to disable the sandbox — the sandbox blocks Vite's file watcher and prevents HMR/hot reload
+- **Always** run `npx astro dev` with `required_permissions: ["all"]` to disable the sandbox - the sandbox blocks Vite's file watcher and prevents HMR/hot reload, meaning changes won't show on the local site
+- **All shell commands** that touch the project (builds, installs, scripts) should also use `required_permissions: ["all"]` unless there's a specific reason not to
 - Only run one dev server at a time on port `4321`
 - Kill any existing server before starting a new one
 
@@ -74,3 +75,4 @@ When adding new UI:
 - Don't refactor unrelated code while fixing something else
 - Don't add dependencies without explicit approval
 - Don't over-engineer — minimal changes, ship fast
+- **Never `git push` unless explicitly asked** — commit only by default
