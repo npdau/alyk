@@ -107,26 +107,28 @@ const { title, subtitle, description, details, testimonial, background = 'defaul
         class="testimonial-body overflow-hidden transition-[max-height] duration-500 ease-in-out"
         style="max-height: 0;"
       >
-        <blockquote class="bg-muted relative mt-10 overflow-hidden rounded-lg px-8 py-8 sm:px-12 sm:py-10">
-          <span
-            class="pointer-events-none absolute top-4 left-6 font-serif text-[8rem] leading-none text-stone-200 select-none"
-            aria-hidden="true"
-          >
-            &ldquo;
-          </span>
-          <div
-            class="relative space-y-4 text-sm leading-relaxed sm:text-base"
-            style="line-height: 1.75;"
-          >
-            {testimonial.quote.map((p) => (
-              <p>{p}</p>
-            ))}
-          </div>
-          <p class="text-foreground relative mt-6 text-sm font-semibold">
-            {testimonial.name}
-            <span class="text-muted-foreground font-normal">, {testimonial.location}</span>
-          </p>
-        </blockquote>
+        <div class="px-1 pt-10 pb-4">
+          <blockquote class="bg-card relative rounded-lg px-8 py-8 shadow-md sm:px-12 sm:py-10">
+            <span
+              class="pointer-events-none absolute top-4 left-6 font-serif text-[8rem] leading-none text-stone-200 select-none"
+              aria-hidden="true"
+            >
+              &ldquo;
+            </span>
+            <div
+              class="relative space-y-4 text-sm leading-relaxed sm:text-base"
+              style="line-height: 1.75;"
+            >
+              {testimonial.quote.map((p) => (
+                <p>{p}</p>
+              ))}
+            </div>
+            <p class="text-foreground relative mt-6 text-sm font-semibold">
+              {testimonial.name}
+              <span class="text-muted-foreground font-normal">, {testimonial.location}</span>
+            </p>
+          </blockquote>
+        </div>
       </div>
     )
   }
