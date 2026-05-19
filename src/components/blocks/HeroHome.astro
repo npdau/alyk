@@ -20,9 +20,11 @@ interface Props {
    * plain image only and shouldn't push the page content too far down.
    */
   height?: 'default' | 'short';
+  /** Override image positioning classes (object-position, scale, etc.) */
+  imageClass?: string;
 }
 
-const { headline, subheadline, cta, image, height = 'default' } = Astro.props;
+const { headline, subheadline, cta, image, height = 'default', imageClass } = Astro.props;
 
 // When no headline is provided, treat as a plain image hero - no full
 // navy overlay, just a soft top gradient so the nav stays legible.
@@ -38,7 +40,10 @@ const heightStyles = {
   <Image
     src={image.src}
     alt={image.alt}
-    class="absolute inset-0 h-full w-full scale-125 object-cover object-[center_5%] md:scale-100 md:object-center"
+    class:list={[
+      'absolute inset-0 h-full w-full object-cover',
+      imageClass || 'scale-125 object-[center_5%] md:scale-100 md:object-center',
+    ]}
     widths={[800, 1200, 1800, 2400]}
     sizes="100vw"
     loading="eager"
@@ -53,7 +58,7 @@ const heightStyles = {
       />
     ) : (
       <div
-        class="absolute inset-0"
+        class="hero-overlay absolute inset-0"
         style="background: linear-gradient(180deg, color-mix(in oklch, var(--color-navy-900) 60%, transparent) 0%, color-mix(in oklch, var(--color-navy-900) 10%, transparent) 30%, color-mix(in oklch, var(--color-navy-900) 88%, transparent) 100%);"
       />
     )
@@ -79,7 +84,7 @@ const heightStyles = {
 
   {
     headline && (
-      <div class="relative z-10 w-full pb-20 md:pb-36">
+      <div class="relative z-10 w-full pb-28 md:pb-44">
         <div class="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 lg:px-16 xl:px-28 2xl:px-8">
           <h1
             class="max-w-2xl text-4xl font-semibold tracking-tight text-stone-50 sm:text-5xl lg:text-6xl"
@@ -107,3 +112,12 @@ const heightStyles = {
     )
   }
 </section>
+
+<style>
+  @media (min-width: 768px) {
+    .hero-overlay {
+      mask-image: linear-gradient(to bottom right, black 55%, transparent 95%);
+      -webkit-mask-image: linear-gradient(to bottom right, black 55%, transparent 95%);
+    }
+  }
+</style>
