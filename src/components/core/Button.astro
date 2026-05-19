@@ -104,14 +104,26 @@ const iconOnlySizeStyles = {
     >
       <slot />
       {arrow && (
-        <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
-          <svg class="h-3.5 w-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2.5"
-              d="M5 12h14M13 5l6 7-6 7"
-            />
+        <span
+          class:list={[
+            'ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full',
+            variant === 'primary'
+              ? 'bg-white/15 text-white'
+              : variant === 'outline'
+                ? 'bg-primary text-white'
+                : 'bg-primary text-white',
+          ]}
+        >
+          <svg
+            class="h-3.5 w-3.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
         </span>
       )}
@@ -132,14 +144,26 @@ const iconOnlySizeStyles = {
     >
       <slot />
       {arrow && (
-        <span class="bg-primary ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full">
-          <svg class="h-3.5 w-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2.5"
-              d="M5 12h14M13 5l6 7-6 7"
-            />
+        <span
+          class:list={[
+            'ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full',
+            variant === 'primary'
+              ? 'bg-white/15 text-white'
+              : variant === 'outline'
+                ? 'bg-primary text-white'
+                : 'bg-primary text-white',
+          ]}
+        >
+          <svg
+            class="h-3.5 w-3.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
         </span>
       )}

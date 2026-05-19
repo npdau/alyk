@@ -42,17 +42,9 @@ const { heading, eyebrow, leadIn, testimonials, background = 'default' } = Astro
       testimonials.map((t) =>
         t.placeholder ? (
           <figure class="border-border bg-card flex h-full flex-col rounded-lg border border-dashed p-8">
-            <svg
-              class="mb-6 h-8 w-8 text-stone-300"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-            </svg>
             <blockquote
               class="text-muted-foreground flex-1 text-base leading-relaxed"
-              style="font-style: italic; line-height: 1.6;"
+              style="line-height: 1.6;"
             >
               {t.quote}
             </blockquote>
@@ -63,14 +55,6 @@ const { heading, eyebrow, leadIn, testimonials, background = 'default' } = Astro
           </figure>
         ) : (
           <figure class="border-border bg-card flex h-full flex-col rounded-lg border p-8 shadow-sm">
-            <svg
-              class="mb-6 h-8 w-8 text-stone-300"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-            </svg>
             <blockquote
               class="text-foreground line-clamp-5 flex-1 text-base leading-relaxed"
               style="font-style: italic; line-height: 1.6;"
@@ -85,18 +69,9 @@ const { heading, eyebrow, leadIn, testimonials, background = 'default' } = Astro
               {t.projectHref && (
                 <a
                   href={t.projectHref}
-                  class="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-stone-500 transition-colors hover:text-stone-800"
+                  class="text-foreground hover:border-navy-700 hover:text-navy-700 border-b border-stone-300 text-sm font-medium no-underline transition-colors"
                 >
-                  Read more
-                  <svg
-                    class="h-3.5 w-3.5"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <path d="M3 8h10m0 0L9 4m4 4L9 12" />
-                  </svg>
+                  Read more &rarr;
                 </a>
               )}
             </div>
