@@ -22,9 +22,19 @@ interface Props {
   height?: 'default' | 'short';
   /** Override image positioning classes (object-position, scale, etc.) */
   imageClass?: string;
+  /** Overlay gradient strength - use 'light' for naturally dark images, 'strong' for busy/bright images */
+  overlay?: 'default' | 'light' | 'strong';
 }
 
-const { headline, subheadline, cta, image, height = 'default', imageClass } = Astro.props;
+const {
+  headline,
+  subheadline,
+  cta,
+  image,
+  height = 'default',
+  imageClass,
+  overlay = 'default',
+} = Astro.props;
 
 // When no headline is provided, treat as a plain image hero - no full
 // navy overlay, just a soft top gradient so the nav stays legible.
@@ -54,37 +64,42 @@ const heightStyles = {
     isPlain ? (
       <div
         class="absolute inset-x-0 top-0 h-44"
-        style="background: linear-gradient(180deg, color-mix(in oklch, var(--color-navy-900) 60%, transparent) 0%, color-mix(in oklch, var(--color-navy-900) 20%, transparent) 50%, transparent 100%);"
+        style="background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);"
       />
     ) : (
       <div
         class="hero-overlay absolute inset-0"
-        style="background: linear-gradient(180deg, color-mix(in oklch, var(--color-navy-900) 60%, transparent) 0%, color-mix(in oklch, var(--color-navy-900) 10%, transparent) 30%, color-mix(in oklch, var(--color-navy-900) 88%, transparent) 100%);"
+        style={
+          overlay === 'light'
+            ? 'background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.6) 100%);'
+            : overlay === 'strong'
+              ? 'background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 25%), linear-gradient(to top right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 35%, transparent 65%);'
+              : 'background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.7) 100%);'
+        }
       />
     )
   }
 
-  <!-- Frame lines — equal 80px inset at xl+, step in gradually so they sit
-       comfortably outside the nav content at every breakpoint. -->
+  <!-- Frame lines — top line always visible; side lines + chevron hidden on mobile -->
   <div class="pointer-events-none absolute inset-0 z-20" aria-hidden="true">
     <div
-      class="absolute top-0 bottom-0 left-3 w-px bg-white/50 sm:left-4 md:left-6 lg:left-10 xl:left-20"
+      class="absolute top-0 bottom-0 left-6 hidden w-px bg-white/25 lg:left-10 lg:block xl:left-20"
     >
     </div>
     <div
-      class="absolute top-0 right-3 bottom-0 w-px bg-white/50 sm:right-4 md:right-6 lg:right-10 xl:right-20"
+      class="absolute top-0 right-6 bottom-0 hidden w-px bg-white/25 lg:right-10 lg:block xl:right-20"
     >
     </div>
-    <div class="absolute top-24 right-0 left-0 h-px bg-white/50"></div>
+    <div class="absolute top-24 right-0 left-0 h-px bg-white/25"></div>
     <div
-      class="absolute right-0 bottom-3 left-0 h-px bg-white/50 sm:bottom-4 md:bottom-6 lg:bottom-10 xl:bottom-20"
+      class="absolute right-0 bottom-6 left-0 hidden h-px bg-white/25 lg:bottom-10 lg:block xl:bottom-20"
     >
     </div>
   </div>
 
   {
     headline && (
-      <div class="relative z-10 w-full pb-28 md:pb-44">
+      <div class="relative z-10 w-full pb-44 md:pb-56">
         <div class="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 lg:px-16 xl:px-28 2xl:px-8">
           <h1
             class="max-w-2xl text-4xl font-semibold tracking-tight text-stone-50 sm:text-5xl lg:text-6xl"
@@ -93,10 +108,7 @@ const heightStyles = {
             {headline}
           </h1>
           {subheadline && (
-            <p
-              class="mt-6 max-w-lg text-base text-balance text-stone-50/80 sm:text-lg"
-              style="color: rgba(250,250,249,0.75);"
-            >
+            <p class="mt-6 max-w-lg text-base text-balance text-stone-50 sm:text-lg">
               {subheadline}
             </p>
           )}
