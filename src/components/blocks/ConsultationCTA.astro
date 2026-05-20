@@ -14,12 +14,18 @@ interface Props {
   cta: { text: string; href: string };
   secondaryCta?: { text: string; href: string };
   framed?: boolean;
+  background?: 'default' | 'muted';
 }
 
-const { heading, cta, secondaryCta } = Astro.props;
+const { heading, cta, secondaryCta, background = 'muted' } = Astro.props;
+
+const bgStyles = {
+  default: 'bg-background',
+  muted: 'bg-muted',
+};
 ---
 
-<section class="bg-stone-200 py-16 md:py-20">
+<section class:list={[bgStyles[background], 'py-16 md:py-20']}>
   <div
     class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-8 px-6 sm:px-8 md:flex-row md:gap-12"
   >

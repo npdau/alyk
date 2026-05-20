@@ -1,0 +1,69 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import HeroHome from '@/components/blocks/HeroHome.astro';
+import SiteLinks from '@/components/blocks/SiteLinks.astro';
+
+import heroImage from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-11.webp';
+
+import homeImage from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-01.webp';
+import aboutImage from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-29.webp';
+import servicesImage from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-01.webp';
+import projectsImage from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-23.webp';
+import contactImage from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-27.webp';
+---
+
+<PageLayout
+  title="Page Not Found - ALYK Building"
+  description="The page you're looking for doesn't exist. Find your way back to ALYK Building."
+  fullWidth
+  transparentNav
+  noIndex
+>
+  <HeroHome
+    headline="Page not found"
+    subheadline="Use the navigation or links below"
+    image={{
+      src: heroImage,
+      alt: 'Architectural home built by ALYK Building',
+    }}
+    height="short"
+    overlay="light"
+  />
+
+  <SiteLinks
+    links={[
+      {
+        title: 'Home',
+        description:
+          'Architectural homes and renovations on the Tweed Coast by Aaron Lee and Yarran Kerr.',
+        href: '/',
+        image: { src: homeImage, alt: 'ALYK Building home' },
+      },
+      {
+        title: 'About',
+        description:
+          'The story behind ALYK - two Tweed Coast locals building for the place they live in.',
+        href: '/about/',
+        image: { src: aboutImage, alt: 'Aaron and Yarran, founders of ALYK Building' },
+      },
+      {
+        title: 'Services',
+        description: 'New architectural homes and major renovations, run by the same small team.',
+        href: '/services/',
+        image: { src: servicesImage, alt: 'Architectural home by ALYK Building' },
+      },
+      {
+        title: 'Projects',
+        description: 'A selection of completed builds and renovations on the Tweed Coast.',
+        href: '/projects/',
+        image: { src: projectsImage, alt: 'Completed ALYK Building project' },
+      },
+      {
+        title: 'Contact',
+        description: 'Get in touch with Aaron or Yarran to start a conversation about your build.',
+        href: '/contact/',
+        image: { src: contactImage, alt: 'ALYK Building project at Casuarina' },
+      },
+    ]}
+  />
+</PageLayout>

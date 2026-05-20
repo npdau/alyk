@@ -143,7 +143,7 @@ const currentPath = Astro.url.pathname;
             href={item.href}
             class:list={[
               'border-0 px-5 py-2.5 text-sm tracking-[0.01em] text-white no-underline transition-opacity',
-              currentPath === item.href
+              currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href))
                 ? 'font-semibold opacity-100'
                 : 'font-medium opacity-75 hover:opacity-100',
             ]}
@@ -196,7 +196,10 @@ const currentPath = Astro.url.pathname;
                   href={item.href}
                   class:list={[
                     'flex items-baseline justify-between border-0 py-4 no-underline transition-opacity',
-                    currentPath === item.href ? 'opacity-100' : 'opacity-90 hover:opacity-100',
+                    currentPath === item.href ||
+                    (item.href !== '/' && currentPath.startsWith(item.href))
+                      ? 'opacity-100'
+                      : 'opacity-90 hover:opacity-100',
                   ]}
                 >
                   <span class="font-heading text-2xl font-light tracking-tight text-white sm:text-3xl">

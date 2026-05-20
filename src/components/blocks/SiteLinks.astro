@@ -1,0 +1,62 @@
+---
+/**
+ * SiteLinks Block
+ *
+ * A grid of compact page cards, each with a hero image, page name,
+ * short description, and link. Used on the 404 page to guide lost
+ * visitors back to the main site sections.
+ */
+import { Image } from 'astro:assets';
+import Section from '@/components/core/Section.astro';
+
+interface SiteLink {
+  title: string;
+  description: string;
+  href: string;
+  image: { src: ImageMetadata; alt: string };
+}
+
+interface Props {
+  links: SiteLink[];
+  background?: 'default' | 'muted';
+}
+
+const { links, background = 'default' } = Astro.props;
+---
+
+<Section spacing="lg" background={background}>
+  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6">
+    {
+      links.map((link) => (
+        <div class="group bg-card relative flex flex-col overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+          <div class="relative aspect-[16/9] overflow-hidden">
+            <Image
+              src={link.image.src}
+              alt={link.image.alt}
+              class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              widths={[320, 480, 640]}
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              loading="lazy"
+              inferSize
+            />
+          </div>
+
+          <div class="flex flex-1 flex-col p-6 sm:p-7">
+            <h3 class="text-foreground text-lg font-semibold tracking-tight">{link.title}</h3>
+            <p class="text-muted-foreground mt-3 flex-1 text-sm leading-relaxed">
+              {link.description}
+            </p>
+            <p class="mt-5">
+              <a
+                href={link.href}
+                class="text-foreground hover:border-navy-700 hover:text-navy-700 border-b border-stone-300 text-sm font-medium no-underline transition-colors before:absolute before:inset-0 before:content-['']"
+              >
+                View page &rarr;
+              </a>
+            </p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Section>
