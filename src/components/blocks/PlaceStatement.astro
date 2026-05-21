@@ -28,7 +28,7 @@ const paragraphs = Array.isArray(description) ? description : [description];
   {
     image ? (
       <div class="grid items-center gap-12 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-16 lg:gap-20">
-        <div class="aspect-square overflow-hidden rounded-lg shadow-md">
+        <div class="reveal aspect-square overflow-hidden rounded-lg shadow-md">
           <Image
             src={image.src}
             alt={image.alt}
@@ -39,7 +39,7 @@ const paragraphs = Array.isArray(description) ? description : [description];
           />
         </div>
 
-        <div class="flex flex-col justify-center">
+        <div class="reveal flex flex-col justify-center">
           {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
           <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{place}</h2>
           <div
@@ -53,7 +53,7 @@ const paragraphs = Array.isArray(description) ? description : [description];
         </div>
       </div>
     ) : (
-      <div class="mx-auto max-w-2xl text-center">
+      <div class="reveal mx-auto max-w-2xl text-center">
         {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
         <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{place}</h2>
         <div class="mt-6 space-y-5 text-base leading-relaxed sm:text-lg" style="line-height: 1.55;">

@@ -37,9 +37,9 @@ const { title, subtitle, description, details, testimonial, background = 'defaul
     class="testimonial-toggle grid items-center gap-10 md:grid-cols-[1fr_auto] md:gap-16 lg:gap-24"
     data-expanded="false"
   >
-    <div class="min-w-0">
+    <div class="reveal min-w-0">
       <h1
-        class="reveal text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
+        class="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
         style="line-height: 1.1; letter-spacing: -0.02em;"
       >
         {title}
@@ -47,16 +47,13 @@ const { title, subtitle, description, details, testimonial, background = 'defaul
 
       {
         subtitle && (
-          <p class="reveal project-subtitle text-foreground mt-4 text-lg font-medium sm:text-xl md:max-w-3xl">
+          <p class="project-subtitle text-foreground mt-4 text-lg font-medium sm:text-xl md:max-w-3xl">
             {subtitle}
           </p>
         )
       }
 
-      <div
-        class="reveal mt-8 space-y-4 text-sm leading-relaxed sm:text-base"
-        style="line-height: 1.65;"
-      >
+      <div class="mt-8 space-y-4 text-sm leading-relaxed sm:text-base" style="line-height: 1.65;">
         {description.map((p) => <p>{p}</p>)}
       </div>
     </div>
