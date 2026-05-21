@@ -48,7 +48,7 @@ const { leadIn, services, background = 'default' } = Astro.props;
             <Image
               src={service.image.src}
               alt={service.image.alt}
-              class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              class="h-full w-full object-cover"
               widths={[400, 600, 800, 1000]}
               sizes="(min-width: 768px) 50vw, 100vw"
               loading="lazy"
