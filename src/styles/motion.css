@@ -1,0 +1,36 @@
+/*
+ * Motion - reveal classes + reduced-motion fallback
+ *
+ * Initial hidden states for `.reveal` elements. GSAP animates them to
+ * their resting state on scroll. The CSS-only fallback ensures content
+ * is visible if JS fails or prefers-reduced-motion is set.
+ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: opacity, transform;
+}
+
+.reveal.reveal-left {
+  transform: translateX(-24px);
+}
+
+.reveal.reveal-right {
+  transform: translateX(24px);
+}
+
+.reveal.reveal-scale {
+  transform: scale(0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.reveal-left,
+  .reveal.reveal-right,
+  .reveal.reveal-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
