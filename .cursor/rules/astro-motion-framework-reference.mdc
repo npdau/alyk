@@ -1,0 +1,270 @@
+---
+description: Full Astro Motion Framework reference — complete rationale, file structure, all patterns, resources, and Cursor workflow tips. Reference manually with @astro-motion-framework-reference.mdc when you need the full context.
+globs:
+alwaysApply: false
+---
+
+# Astro Motion Framework - Full Reference
+
+A simple, repeatable way to make Astro sites feel premium. For projects using Astro without React in the bulk of pages.
+
+## Why motion matters
+
+Motion is the single biggest "this looks expensive" lever on a website. Subtle reveal animations, considered hover states, content that arrives with intention - this is what separates a $20k site from a $2k site. Most Astro builds skip it because the obvious option (Framer Motion) doesn't fit, and rolling your own feels janky.
+
+This framework picks one library (GSAP), one architecture (three layers), and one set of class-based conventions.
+
+## The library: GSAP
+
+GreenSock Animation Platform. Industry standard for nearly two decades.
+
+- **Framework-agnostic** - works in vanilla `<script>` blocks inside `.astro` files. No React islands, no hydration boundary.
+- **Reliable on iOS** - handles Chrome iOS and Safari iOS scroll quirks that break DIY IntersectionObserver implementations.
+- **Free forever** - Webflow acquired GSAP in 2024 and made everything free, including SplitText, MorphSVG, DrawSVG, Flip, MotionPath. Use **3.13+** to get the all-free licence applied to plugins.
+- **~40KB gzipped** for core + ScrollTrigger.
+- **Massive ecosystem** - endless CodePen demos at gsap.com/showcase.
+
+**Framer Motion is React-only.** It would force `.astro` components into React islands and ship React + ReactDOM purely to animate. Not worth it for a project that doesn't otherwise use React.
+
+**Motion One** (~4KB) is valid for minimal needs but default to GSAP for anything beyond basic fades.
+
+## File structure
+
+```
+src/
+├── scripts/
+│   └── motion.js        ← all animation logic
+├── styles/
+│   ├── globals.css      ← project's global stylesheet (Tailwind entry, tokens)
+│   └── motion.css       ← reveal classes + reduced-motion handling
+└── layouts/
+    └── BaseLayout.astro ← loads GSAP + imports motion.js
+```
+
+Import `motion.css` from `globals.css` so it's part of the same CSS bundle.
+
+## Order of operations on existing projects
+
+Greenfield projects can skip ahead to the install. On any project that isn't greenfield, follow this sequence:
+
+1. **Audit** existing motion (Step 0 in main rule)
+2. **Cleanup** conflicting CSS animations as a discrete commit
+3. **Install** GSAP, scaffold files, wire into `BaseLayout` and `globals.css`
+4. **Layer 1 blanket pass** - apply `.reveal` to every eligible block in a single change
+5. **Layer 2 patterns** - apply per-component, one at a time
+6. **Layer 3 hero moments** - last, only when explicitly requested
+
+Critically: don't compress steps 4 and 5 into one chat. Ship the blanket reveal first; iterate on hover patterns separately. If some blocks fade in and others don't, the site looks half-finished.
+
+## Step 0 - Audit checklist
+
+On any existing project, before scaffolding, check for:
+
+1. **CSS hover animations on cards/buttons** that overlap with Layer 2 (`group-hover:scale-*`, `hover:translate-*`, `transition-transform duration-*` on cards)
+2. **Orphaned `@theme` animation tokens** - keyframes defined but never referenced
+3. **DIY `IntersectionObserver`** scroll reveals
+4. **Existing animation libraries** (Motion One, AOS, Framer Motion, anime.js)
+
+Report findings to the user before making changes. Cleanup is its own commit before installing GSAP.
+
+## Functional UI state - leave alone
+
+The framework governs **decorative motion** only. Functional UI state feedback is out of scope and must not be migrated or removed:
+
+- `transition-colors`, `transition-opacity`, `transition-shadow` on hover/focus/active
+- Focus rings (accessibility)
+- Accordion / disclosure expand-collapse
+- Modal / dialog / dropdown / popover open-close
+- Switch / toggle / checkbox state
+- Hamburger menu line-to-X transforms
+- Mobile menu staggered item reveals (bespoke component state)
+- Tiny indicator nudges (arrow `translate-x-0.5`, chevron rotate)
+
+State feedback = keep, decorative = migrate.
+
+## Three-layer architecture
+
+### Layer 1 - Base reveals
+
+Everything meaningful that scrolls into view fades up gently. One class, applied everywhere.
+
+```html
+<section class="reveal">...</section>
+<h2 class="reveal">...</h2>
+<img class="reveal" />
+```
+
+Implemented once using GSAP's `ScrollTrigger.batch()` in `motion.js`.
+
+### Layer 2 - Component patterns
+
+Reusable interactions per component type. Defined once in `motion.js`, applied via class.
+
+### Layer 3 - Hero moments
+
+One-off cinematic touches. Hand-written per instance.
+
+## The `.reveal` class - application rules
+
+**Apply to:**
+
+- Section containers
+- Headings (h1, h2, h3)
+- Paragraphs of body copy
+- Images and galleries
+- Cards (project, testimonial, service)
+- Stats and numbers
+- Quote blocks
+
+**Don't apply to:**
+
+- Nav bars and headers (already visible)
+- Footers
+- Background decorations
+- Anything inside a card that's already revealing
+
+### Per-block rubric (use during the Layer 1 blanket pass)
+
+- **Hero / intro blocks**: heading + sub + CTA, with incremental `reveal-delay-*` for cascade
+- **Single-section content blocks**: apply to the section root - one fade-up per block
+- **Grid / card blocks**: apply to each card, not the grid container - `ScrollTrigger.batch()` staggers automatically
+- **Image + text blocks**: image and text get separate `.reveal`
+- **Quote / stat / testimonial blocks**: apply to the element directly
+
+### Stagger variants
+
+```html
+<h1 class="reveal">Heading</h1>
+<p class="reveal reveal-delay-1">First paragraph</p>
+<p class="reveal reveal-delay-2">Second paragraph</p>
+<a class="reveal reveal-delay-3">CTA button</a>
+```
+
+Each `-delay-N` adds 150ms. Use `-1` through `-4` only.
+
+### Direction variants
+
+```html
+<div class="reveal reveal-left">Slides in from left</div>
+<div class="reveal reveal-right">Slides in from right</div>
+<div class="reveal reveal-scale">Scales up from 95%</div>
+```
+
+Default `.reveal` fades up from 24px below.
+
+## Pattern library (Layer 2)
+
+- **`.project-card`** (or `.feature-card`, `.service-card`) - image scales to 1.05, card lifts 8px with subtle shadow on hover
+- **`.btn-primary`** - scales to 1.03 with 0.2s ease on hover
+- **`.btn-pulse`** - continuous scale loop (1.0 → 1.05 → 1.0) on 2s repeat. One per page max.
+- **`.nav-link`** - underline draws left-to-right on hover
+- **`.logo-intro`** - first-load entrance with `back.out` ease. **Always store a flag in `sessionStorage`** so it doesn't replay on every page navigation.
+- **`.number-counter`** - count-up from 0 when scrolled into view
+
+Pick **one** card-pattern name per project (`.project-card` OR `.feature-card` OR `.service-card`) and stick with it - don't mix conventions.
+
+## Easing consistency
+
+Before defining GSAP eases, check the project's existing CSS for shared easing curves. Most polished projects already have a signature `cubic-bezier` used across UI transitions (buttons, links, focus, etc.). Mirror that curve in `motion.js` via `CustomEase` so decorative motion feels of-a-piece with the rest of the UI.
+
+Default to `power3.out` only if no existing convention exists.
+
+## iOS hover safety
+
+The Chrome iOS "double-tap" bug is a hover problem, not a library problem.
+
+```css
+@media (hover: hover) {
+  /* All hover styles go here */
+}
+```
+
+Use `:active` for mobile tap feedback. Add `touch-action: manipulation` to buttons/links.
+
+## Accessibility - `prefers-reduced-motion`
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+```
+
+```js
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!prefersReducedMotion) {
+  // initialise GSAP animations
+}
+```
+
+## Astro View Transitions
+
+If the project uses `<ViewTransitions />` from `astro:transitions`, GSAP and ScrollTrigger must be re-initialised on `astro:page-load` rather than `DOMContentLoaded`. Otherwise reveals stop firing after the first soft-navigation.
+
+```js
+document.addEventListener('astro:page-load', initMotion);
+
+document.addEventListener('astro:before-swap', () => {
+  ScrollTrigger.getAll().forEach((t) => t.kill());
+});
+```
+
+## Where to find proven patterns
+
+Don't write from scratch. Pull from:
+
+### Osmo Supply - `osmo.supply`
+
+Library of polished, copy-paste GSAP motion components. Freemium - most common patterns are free. First place to look for premium motion without iteration.
+
+Workflow: browse → find pattern → copy code → paste into Cursor → "apply this to my project cards / hero / nav."
+
+### Codrops - `tympanus.net/codrops`
+
+Long-running animation tutorial site. Search "GSAP reveal" or "scroll animation."
+
+### GSAP Showcase - `gsap.com/showcase`
+
+Official directory of production sites built with GSAP. Filter by effect type.
+
+### Reference video method
+
+If you can point to a site whose motion you like: screen-record scrolling on phone, feed to Cursor: *"Look at the animation patterns in this video. Implement equivalent motion using GSAP. Match timing and easing as closely as you can."*
+
+## Canonical first-use prompt
+
+Paste this after referencing `@astro-motion-framework-reference.mdc` to introduce the framework to a project:
+
+> *"Audit existing motion in this project per Step 0. Report findings, then in one pass: clean up conflicts, install GSAP, scaffold motion.js and motion.css, wire into BaseLayout and globals.css, and apply `.reveal` to every eligible block (Layer 1 blanket pass). Stop before any Layer 2 hover patterns - we'll do those one at a time."*
+
+## Cursor workflow tips
+
+**Do:**
+
+- Reference existing motion.js: *"Add a new pattern to motion.js following the existing structure"*
+- Point at Osmo/Codrops demos: *"Apply this pattern, keep implementation minimal, single file, no extra abstraction layers"*
+- Be specific about timing: *"0.8s duration, ease 'power3.out', stagger 0.1s"*
+
+**Don't:**
+
+- Use vague prompts like "make it look nice" - produces bland defaults
+- Scatter animation logic across components - keep it centralised in motion.js
+- Mix CSS transitions with GSAP for the same element - pick one
+- Start applying Layer 2 hovers before the Layer 1 blanket pass is shipped
+
+## TL;DR
+
+1. **Library**: GSAP 3.13+ (free, framework-agnostic, reliable on iOS)
+2. **File**: `src/scripts/motion.js` + `src/styles/motion.css`
+3. **Order**: audit → cleanup → install → blanket reveal → iterate Layer 2 → Layer 3 last
+4. **Three layers**: base reveals (`class="reveal"`), pattern interactions, hero moments
+5. **Don't touch**: functional UI state (focus, accordion, modals, switches, hamburger)
+6. **Hover safely**: `@media (hover: hover) { }`
+7. **Respect reduced motion**: wrap GSAP init in `matchMedia` check
+8. **View Transitions**: re-init on `astro:page-load`, kill ScrollTriggers on `astro:before-swap`
+9. **Match existing easing**: don't introduce a second easing language
+10. **Don't write from scratch**: pull patterns from Osmo Supply, Codrops, GSAP showcase
+11. **Reuse across projects**: copy `motion.js` and `motion.css` into every new Astro build
