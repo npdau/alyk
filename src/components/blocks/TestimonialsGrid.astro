@@ -29,7 +29,7 @@ const { heading, eyebrow, leadIn, testimonials, background = 'default' } = Astro
 ---
 
 <Section spacing="lg" background={background}>
-  <div class="mx-auto mb-12 max-w-2xl text-center">
+  <div class="reveal mx-auto mb-12 max-w-2xl text-center">
     {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
     <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
       {heading}
@@ -41,7 +41,7 @@ const { heading, eyebrow, leadIn, testimonials, background = 'default' } = Astro
     {
       testimonials.map((t) =>
         t.placeholder ? (
-          <figure class="border-border bg-card flex h-full flex-col rounded-lg border border-dashed p-8">
+          <figure class="reveal border-border bg-card flex h-full flex-col rounded-lg border border-dashed p-8">
             <blockquote
               class="text-muted-foreground flex-1 text-base leading-relaxed"
               style="line-height: 1.6;"
@@ -54,7 +54,7 @@ const { heading, eyebrow, leadIn, testimonials, background = 'default' } = Astro
             </figcaption>
           </figure>
         ) : (
-          <figure class="border-border bg-card flex h-full flex-col rounded-lg border p-8 shadow-sm">
+          <figure class="reveal border-border bg-card flex h-full flex-col rounded-lg border p-8 shadow-sm">
             <blockquote
               class="text-foreground line-clamp-5 flex-1 text-base leading-relaxed"
               style="font-style: italic; line-height: 1.6;"

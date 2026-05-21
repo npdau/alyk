@@ -32,7 +32,7 @@ const { leadIn, services, background = 'default' } = Astro.props;
   {
     leadIn && (
       <p
-        class="text-foreground mx-auto mb-12 max-w-3xl text-center text-base leading-relaxed sm:text-lg"
+        class="reveal text-foreground mx-auto mb-12 max-w-3xl text-center text-base leading-relaxed sm:text-lg"
         style="line-height: 1.55;"
       >
         {leadIn}
@@ -43,7 +43,7 @@ const { leadIn, services, background = 'default' } = Astro.props;
   <div class="grid gap-6 md:grid-cols-2 md:gap-8">
     {
       services.map((service) => (
-        <div class="service-card group bg-card relative flex flex-col overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+        <div class="reveal service-card group bg-card relative flex flex-col overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
           <div class="relative aspect-[4/3] overflow-hidden">
             <Image
               src={service.image.src}

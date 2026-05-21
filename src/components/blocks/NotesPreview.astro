@@ -25,7 +25,7 @@ const { heading, description, notes, cta } = Astro.props;
 ---
 
 <Section spacing="lg" background="muted">
-  <div class="mb-10">
+  <div class="reveal mb-10">
     <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
       {heading}
     </h2>
@@ -35,7 +35,7 @@ const { heading, description, notes, cta } = Astro.props;
   <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {
       notes.map((note) => (
-        <Card variant="outlined" padding="lg" class="bg-card">
+        <Card variant="outlined" padding="lg" class="reveal bg-card">
           <h3 class="text-base leading-snug font-semibold">{note.title}</h3>
           <p class="mt-2 text-sm leading-relaxed">{note.excerpt}</p>
           <p class="mt-4">

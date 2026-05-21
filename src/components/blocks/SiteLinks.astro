@@ -28,7 +28,7 @@ const { links, background = 'default' } = Astro.props;
   <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6">
     {
       links.map((link) => (
-        <div class="group bg-card relative flex flex-col overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+        <div class="reveal group bg-card relative flex flex-col overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
           <div class="relative aspect-[16/9] overflow-hidden">
             <Image
               src={link.image.src}

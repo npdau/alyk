@@ -36,7 +36,7 @@ const isPrimaryBg = background === 'primary';
   <div class="mx-auto max-w-2xl text-center">
     <h2
       class:list={[
-        'text-3xl font-bold tracking-tight sm:text-4xl',
+        'reveal text-3xl font-bold tracking-tight sm:text-4xl',
         isPrimaryBg && 'text-primary-foreground',
       ]}
     >
@@ -46,7 +46,7 @@ const isPrimaryBg = background === 'primary';
       description && (
         <p
           class:list={[
-            'mt-4 text-lg',
+            'reveal reveal-delay-1 mt-4 text-lg',
             isPrimaryBg ? 'text-primary-foreground/80' : 'text-muted-foreground',
           ]}
         >
@@ -54,7 +54,7 @@ const isPrimaryBg = background === 'primary';
         </p>
       )
     }
-    <div class="mt-8 flex flex-wrap justify-center gap-4">
+    <div class="reveal reveal-delay-2 mt-8 flex flex-wrap justify-center gap-4">
       <Button href={primaryCTA.href} size="lg" variant={isPrimaryBg ? 'secondary' : 'primary'}>
         {primaryCTA.text}
       </Button>
