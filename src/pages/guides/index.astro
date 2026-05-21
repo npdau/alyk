@@ -1,9 +1,8 @@
 ---
 /**
- * Blog Index Page
+ * Guides Index Page
  *
- * Lists all published blog posts.
- * Rename this folder to match your content type (guides, articles, news, etc.)
+ * Lists all published guides.
  */
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
@@ -11,34 +10,43 @@ import PageLayout from '@/layouts/PageLayout.astro';
 import Card from '@/components/core/Card.astro';
 import Badge from '@/components/core/Badge.astro';
 import { formatDate } from '@/lib/utils';
+import { getBreadcrumbSchema } from '@/lib/schema';
 
-// Get all non-draft posts, sorted by date (newest first)
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
+const guides = (await getCollection('guides'))
+  .filter((guide) => !guide.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Guides' },
+]);
 ---
 
-<PageLayout title="Blog" description="Latest articles, guides, and updates from our team.">
+<PageLayout
+  title="Guides | ALYK Building"
+  description="Practical guides on building and renovating on the Tweed Coast - from planning a custom home with an architect to navigating coastal site constraints."
+  schema={breadcrumb}
+>
   <div class="mb-12">
-    <h1 class="text-4xl font-bold">Blog</h1>
+    <h1 class="text-4xl font-bold">Guides</h1>
     <p class="text-muted-foreground mt-4 text-lg">
-      Latest articles, guides, and updates from our team.
+      Practical notes on building and renovating on the Tweed Coast.
     </p>
   </div>
 
   {
-    posts.length === 0 ? (
+    guides.length === 0 ? (
       <Card class="p-8 text-center">
-        <p class="text-muted-foreground">No posts yet. Check back soon!</p>
+        <p class="text-muted-foreground">No guides yet. Check back soon.</p>
       </Card>
     ) : (
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <a href={`/blog/${post.id}`} class="group block no-underline">
+        {guides.map((guide) => (
+          <a href={`/guides/${guide.id}/`} class="group block no-underline">
             <Card class="h-full transition-shadow hover:shadow-md">
-              {post.data.image && (
+              {guide.data.image && (
                 <Image
-                  src={post.data.image}
+                  src={guide.data.image}
                   alt=""
                   width={600}
                   height={338}
@@ -46,18 +54,18 @@ const posts = (await getCollection('blog'))
                 />
               )}
               <div class="space-y-3">
-                {post.data.tags && post.data.tags.length > 0 && (
+                {guide.data.tags && guide.data.tags.length > 0 && (
                   <div class="flex flex-wrap gap-2">
-                    {post.data.tags.slice(0, 3).map((tag) => (
+                    {guide.data.tags.slice(0, 3).map((tag) => (
                       <Badge variant="secondary">{tag}</Badge>
                     ))}
                   </div>
                 )}
                 <h2 class="group-hover:text-primary text-xl font-semibold transition-colors">
-                  {post.data.title}
+                  {guide.data.title}
                 </h2>
-                <p class="text-muted-foreground line-clamp-2">{post.data.description}</p>
-                <p class="text-muted-foreground text-sm">{formatDate(post.data.pubDate)}</p>
+                <p class="text-muted-foreground line-clamp-2">{guide.data.description}</p>
+                <p class="text-muted-foreground text-sm">{formatDate(guide.data.pubDate)}</p>
               </div>
             </Card>
           </a>

@@ -17,11 +17,27 @@ import casReno10 from '@/assets/images/projects/casuarina-i-renovation/casuarina
 import casReno13 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-13.webp';
 import casReno17 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-17.webp';
 import casReno21 from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-21.webp';
+import { getBreadcrumbSchema, getServiceSchema } from '@/lib/schema';
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services/' },
+  { label: 'Renovations' },
+]);
+
+const service = getServiceSchema(Astro.site!, {
+  name: 'Architectural Renovations & Extensions',
+  description:
+    'Major architectural renovations and extensions on existing Tweed Coast homes. The same detail and finish as a new build, applied to what is already there.',
+  path: '/services/renovations/',
+  serviceType: 'Home Renovation',
+});
 ---
 
 <PageLayout
-  title="Renovations and Extensions - Tweed Coast | ALYK Building"
-  description="Major renovations and extensions on existing Tweed Coast homes. Architectural-grade detail, applied to what's already there."
+  title="Renovations & Extensions, Tweed Coast | ALYK Building"
+  description="Major architectural renovations and extensions on existing Tweed Coast homes - the same detail and finish as a new build, applied to what's already there."
+  schema={[breadcrumb, service]}
   fullWidth
   transparentNav
 >

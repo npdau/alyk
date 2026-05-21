@@ -6,6 +6,7 @@ import ProjectGallery from '@/components/blocks/ProjectGallery.astro';
 import ProjectNav from '@/components/blocks/ProjectNav.astro';
 
 import heroImage from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-01.webp';
+import { getBreadcrumbSchema } from '@/lib/schema';
 
 const galleryModules = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/images/projects/casuarina-i-build/*.webp',
@@ -15,11 +16,18 @@ const galleryImages = Object.keys(galleryModules)
   .sort()
   .slice(1)
   .map((key) => galleryModules[key].default);
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '/projects/' },
+  { label: 'Casuarina' },
+]);
 ---
 
 <PageLayout
   title="Casuarina - New Build | ALYK Building"
-  description="A custom family home at Casuarina by Jordan Pope at Impact Design, opening its main living spaces straight onto the deck and pool."
+  description="A custom family home at Casuarina designed by Jordan Pope at Impact Design - opening its main living spaces straight onto the deck and pool."
+  schema={breadcrumb}
   fullWidth
   transparentNav
 >

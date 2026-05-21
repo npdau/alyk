@@ -6,6 +6,7 @@ import ProjectGallery from '@/components/blocks/ProjectGallery.astro';
 import ProjectNav from '@/components/blocks/ProjectNav.astro';
 
 import heroImage from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-01.webp';
+import { getBreadcrumbSchema } from '@/lib/schema';
 
 const galleryModules = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/images/projects/casuarina-i-renovation/*.webp',
@@ -15,11 +16,18 @@ const galleryImages = Object.keys(galleryModules)
   .sort()
   .slice(1)
   .map((key) => galleryModules[key].default);
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '/projects/' },
+  { label: 'Casuarina Renovation' },
+]);
 ---
 
 <PageLayout
-  title="Casuarina Renovation | ALYK Building"
-  description="A three-storey renovation at Casuarina by Create Architecture, doubling the original floor area and adding a new level above the existing footprint."
+  title="Casuarina - Renovation | ALYK Building"
+  description="A three-storey renovation at Casuarina by Create Architecture - doubling the original floor area and adding a new level above the existing footprint."
+  schema={breadcrumb}
   fullWidth
   transparentNav
 >

@@ -6,12 +6,17 @@
  * - Document structure (html, head, body)
  * - Global styles import
  * - SEO meta tags (via SEO component)
+ * - Structured data / JSON-LD (via Schema component)
  * - Accessibility (skip link)
  *
  * Don't use this directly - use PageLayout instead.
  */
 import '../styles/globals.css';
 import SEO from '@/components/seo/SEO.astro';
+import Schema from '@/components/seo/Schema.astro';
+import { getBusinessSchema } from '@/lib/schema';
+
+type SchemaObject = Record<string, unknown>;
 
 interface Props {
   /** Page title - appears in browser tab and search results */
@@ -24,15 +29,24 @@ interface Props {
   type?: 'website' | 'article';
   /** Hide page from search engines */
   noIndex?: boolean;
+  /** Additional schema.org JSON-LD to render alongside the global business schema */
+  schema?: SchemaObject | SchemaObject[];
 }
 
 const {
   title,
   description,
-  image = '/og-image.png',
+  image = '/og-image.jpg',
   type = 'website',
   noIndex = false,
+  schema,
 } = Astro.props;
+
+// Global business schema is included on every page. Per-page schemas are
+// merged in alongside it.
+const businessSchema = getBusinessSchema(Astro.site ?? Astro.url.origin);
+const pageSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+const allSchemas = [businessSchema, ...pageSchemas];
 ---
 
 <!doctype html>
@@ -44,6 +58,9 @@ const {
 
     <!-- SEO -->
     <SEO title={title} description={description} image={image} type={type} noindex={noIndex} />
+
+    <!-- Structured data (JSON-LD) -->
+    <Schema schema={allSchemas} />
 
     <!-- Fonts: Jost variable -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

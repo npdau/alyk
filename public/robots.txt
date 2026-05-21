@@ -2,5 +2,4 @@
 User-agent: *
 Allow: /
 
-# Update this with your actual domain
-Sitemap: https://example.com/sitemap-index.xml
+Sitemap: https://www.alykbuilding.com.au/sitemap-index.xml

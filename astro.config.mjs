@@ -13,8 +13,8 @@ export default defineConfig({
   // ============================================================
 
   // REQUIRED for sitemap generation and canonical URLs
-  // Update this to your actual domain before deploying
-  site: 'https://example.com',
+  // Must match the primary domain Netlify serves (including www if www is primary)
+  site: 'https://www.alykbuilding.com.au',
 
   // Only set this if deploying to a subdirectory (e.g., github.io/repo-name)
   // base: '/repo-name',

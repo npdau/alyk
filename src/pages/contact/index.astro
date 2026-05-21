@@ -6,11 +6,18 @@ import ConsultationCTA from '@/components/blocks/ConsultationCTA.astro';
 import Card from '@/components/core/Card.astro';
 
 import heroImage from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-27.webp';
+import { getBreadcrumbSchema } from '@/lib/schema';
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Contact' },
+]);
 ---
 
 <PageLayout
-  title="Contact ALYK Building - Architectural Builders, Tweed Coast"
-  description="Get in touch with ALYK Building. Let us know about your project and what you're hoping to do - we'd love to hear about it and talk through how we can help."
+  title="Contact ALYK Building | Tweed Coast Custom Builders"
+  description="Get in touch with ALYK Building - tell us about your project and what you're hoping to do, and we'll talk through how we can help bring it to life."
+  schema={breadcrumb}
   fullWidth
   transparentNav
 >
@@ -67,7 +74,7 @@ import heroImage from '@/assets/images/projects/casuarina-i-build/casuarina-i-bu
               Email
             </p>
             <a
-              href="mailto:alykbuilding.invoice@gmail.com"
+              href="mailto:alykbuilding@gmail.com"
               class="text-foreground hover:border-navy-700 hover:text-navy-700 inline-block border-b border-stone-300 text-base break-all no-underline transition-colors"
             >
               alykbuilding@gmail.com

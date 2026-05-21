@@ -1,0 +1,31 @@
+---
+/**
+ * Schema Component
+ *
+ * Renders Schema.org JSON-LD structured data. Accepts a single schema object
+ * or an array of schema objects - each renders as its own <script> tag.
+ *
+ * Used internally by BaseLayout. To add page-specific schemas, pass them via
+ * the PageLayout `schema` prop.
+ *
+ * Example:
+ *   <PageLayout schema={getBreadcrumbSchema(Astro.site, items)} ... />
+ *   <PageLayout schema={[breadcrumb, service]} ... />
+ */
+
+type SchemaObject = Record<string, unknown>;
+
+interface Props {
+  schema: SchemaObject | SchemaObject[];
+}
+
+const { schema } = Astro.props;
+const schemas = Array.isArray(schema) ? schema : [schema];
+
+// Escape </ to prevent script tag injection in JSON-LD payloads.
+function safeStringify(obj: SchemaObject): string {
+  return JSON.stringify(obj).replace(/<\/(script)/gi, '<\\/$1');
+}
+---
+
+{schemas.map((s) => <script is:inline type="application/ld+json" set:html={safeStringify(s)} />)}

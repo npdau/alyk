@@ -9,11 +9,18 @@ import ConsultationCTA from '@/components/blocks/ConsultationCTA.astro';
 import heroImage from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-01.webp';
 import buildsImage from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-04.webp';
 import renovationsImage from '@/assets/images/projects/casuarina-i-renovation/casuarina-i-renovation-01.webp';
+import { getBreadcrumbSchema } from '@/lib/schema';
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Services' },
+]);
 ---
 
 <PageLayout
-  title="Services - Architectural Homes & Renovations | ALYK Building"
-  description="ALYK Building specialise in architectural homes and major renovations on the Tweed Coast - new builds and renovations run side by side, by the same small team."
+  title="Services - New Builds & Renovations | ALYK Building"
+  description="ALYK Building takes on architectural new builds and major renovations on the Tweed Coast - both run side by side, by the same small team, on every project."
+  schema={breadcrumb}
   fullWidth
   transparentNav
 >

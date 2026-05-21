@@ -6,6 +6,7 @@ import ProjectGallery from '@/components/blocks/ProjectGallery.astro';
 import ProjectNav from '@/components/blocks/ProjectNav.astro';
 
 import heroImage from '@/assets/images/projects/cabarita-beach-ii-build/cabarita-beach-ii-build-01.webp';
+import { getBreadcrumbSchema } from '@/lib/schema';
 
 const galleryModules = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/images/projects/cabarita-beach-ii-build/*.webp',
@@ -15,11 +16,18 @@ const galleryImages = Object.keys(galleryModules)
   .sort()
   .slice(1)
   .map((key) => galleryModules[key].default);
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '/projects/' },
+  { label: 'Cabarita Beach II' },
+]);
 ---
 
 <PageLayout
   title="Cabarita Beach II - New Build | ALYK Building"
-  description="A custom family home at Cabarita Beach in white render with a recurring arched motif, designed by Nathan Brown Design and built by ALYK Building."
+  description="A custom family home at Cabarita Beach in white render with a recurring arched motif - designed by Nathan Brown Design, built by ALYK Building."
+  schema={breadcrumb}
   fullWidth
   transparentNav
 >

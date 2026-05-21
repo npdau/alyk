@@ -10,26 +10,26 @@ import { glob } from 'astro/loaders';
  * - CMSs, APIs, databases (custom loaders)
  *
  * Usage:
- * 1. Create markdown files in src/content/blog/
+ * 1. Create markdown files in src/content/guides/
  * 2. Run `pnpm dev` to generate types
- * 3. Query with getCollection('blog') or getEntry('blog', 'slug')
+ * 3. Query with getCollection('guides') or getEntry('guides', 'slug')
  *
  * Frontmatter example:
  * ---
- * title: "My Post Title"
+ * title: "My Guide Title"
  * description: "A brief description for SEO"
  * pubDate: 2024-01-15
  * author: "Your Name"
  * tags: ["astro", "tutorial"]
- * image: "/images/blog/my-post.jpg"
+ * image: "/images/guides/my-guide.jpg"
  * draft: true
  * ---
  */
 
-const blog = defineCollection({
+const guides = defineCollection({
   loader: glob({
     pattern: '**/*.{md,mdx}',
-    base: './src/content/blog',
+    base: './src/content/guides',
   }),
   schema: z.object({
     // Required
@@ -46,4 +46,4 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+export const collections = { guides };

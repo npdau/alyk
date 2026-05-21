@@ -1,11 +1,10 @@
 ---
 /**
- * Blog Post Page
+ * Guide Page
  *
- * Dynamic route for individual blog posts.
- * Rename this folder to match your content type (guides, articles, news, etc.)
+ * Dynamic route for individual guides.
  *
- * Note: The post title becomes the h1, so markdown content should NOT include
+ * Note: The guide title becomes the h1, so markdown content should NOT include
  * its own h1 heading. Start content with h2 (##) or below.
  */
 import { getCollection, render } from 'astro:content';
@@ -14,47 +13,59 @@ import PageLayout from '@/layouts/PageLayout.astro';
 import Breadcrumbs from '@/components/core/Breadcrumbs.astro';
 import Badge from '@/components/core/Badge.astro';
 import { formatDate } from '@/lib/utils';
+import { getBreadcrumbSchema } from '@/lib/schema';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
+  const guides = await getCollection('guides');
+  return guides.map((guide) => ({
+    params: { slug: guide.id },
+    props: { guide },
   }));
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { guide } = Astro.props;
+const { Content } = await render(guide);
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Guides', href: '/guides/' },
+  { label: guide.data.title },
+]);
 ---
 
-<PageLayout title={post.data.title} description={post.data.description} type="article">
+<PageLayout
+  title={guide.data.title}
+  description={guide.data.description}
+  type="article"
+  schema={breadcrumb}
+>
   <article class="mx-auto max-w-3xl">
     <!-- Header -->
     <header class="mb-8">
       {
-        post.data.tags && post.data.tags.length > 0 && (
+        guide.data.tags && guide.data.tags.length > 0 && (
           <div class="mb-4 flex flex-wrap gap-2">
-            {post.data.tags.map((tag) => (
+            {guide.data.tags.map((tag) => (
               <Badge variant="secondary">{tag}</Badge>
             ))}
           </div>
         )
       }
-      <h1 class="text-4xl font-bold md:text-5xl">{post.data.title}</h1>
+      <h1 class="text-4xl font-bold md:text-5xl">{guide.data.title}</h1>
       <p class="text-muted-foreground mt-4 text-lg">
-        {post.data.description}
+        {guide.data.description}
       </p>
       <div class="text-muted-foreground mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-        <span>By {post.data.author}</span>
+        <span>By {guide.data.author}</span>
         <span>·</span>
-        <time datetime={post.data.pubDate.toISOString()}>
-          {formatDate(post.data.pubDate)}
+        <time datetime={guide.data.pubDate.toISOString()}>
+          {formatDate(guide.data.pubDate)}
         </time>
         {
-          post.data.updatedDate && (
+          guide.data.updatedDate && (
             <>
               <span>·</span>
-              <span>Updated {formatDate(post.data.updatedDate)}</span>
+              <span>Updated {formatDate(guide.data.updatedDate)}</span>
             </>
           )
         }
@@ -63,9 +74,9 @@ const { Content } = await render(post);
 
     <!-- Featured Image -->
     {
-      post.data.image && (
+      guide.data.image && (
         <Image
-          src={post.data.image}
+          src={guide.data.image}
           alt=""
           width={1200}
           height={675}
@@ -78,8 +89,8 @@ const { Content } = await render(post);
     <Breadcrumbs
       items={[
         { label: 'Home', href: '/' },
-        { label: 'Blog', href: '/blog' },
-        { label: post.data.title },
+        { label: 'Guides', href: '/guides/' },
+        { label: guide.data.title },
       ]}
       class="mb-8"
     />

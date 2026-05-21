@@ -23,11 +23,27 @@ import cas14 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-
 import cas20 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-20.webp';
 import cas26 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-26.webp';
 import cas37 from '@/assets/images/projects/casuarina-i-build/casuarina-i-build-37.webp';
+import { getBreadcrumbSchema, getServiceSchema } from '@/lib/schema';
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services/' },
+  { label: 'New Builds' },
+]);
+
+const service = getServiceSchema(Astro.site!, {
+  name: 'New Architectural Home Builds',
+  description:
+    "Custom architectural home builds on Tweed Coast sites. ALYK Building works to your architect's drawings from initial detailing through to handover.",
+  path: '/services/builds/',
+  serviceType: 'Custom Home Construction',
+});
 ---
 
 <PageLayout
-  title="New Architectural Homes - Tweed Coast Builds | ALYK Building"
+  title="New Architectural Homes, Tweed Coast | ALYK Building"
   description="ALYK Building takes on custom architectural homes on Tweed Coast sites - built to your architect's drawings, made for the coast they sit on."
+  schema={[breadcrumb, service]}
   fullWidth
   transparentNav
 >

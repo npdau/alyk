@@ -6,6 +6,7 @@ import ProjectGallery from '@/components/blocks/ProjectGallery.astro';
 import ProjectNav from '@/components/blocks/ProjectNav.astro';
 
 import heroImage from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-23.webp';
+import { getBreadcrumbSchema } from '@/lib/schema';
 
 const galleryModules = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/images/projects/cabarita-beach-i-build/*.webp',
@@ -15,11 +16,18 @@ const galleryImages = Object.keys(galleryModules)
   .sort()
   .slice(1)
   .map((key) => galleryModules[key].default);
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '/projects/' },
+  { label: 'Cabarita Beach' },
+]);
 ---
 
 <PageLayout
   title="Cabarita Beach - New Build | ALYK Building"
   description="A contemporary coastal home at Cabarita Beach finished in dark vertical cladding with warm timber detailing - built by ALYK Building."
+  schema={breadcrumb}
   fullWidth
   transparentNav
 >

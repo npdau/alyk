@@ -13,11 +13,18 @@ import coastalPhoto from '@/assets/images/scenic/coastal-caba-1.webp';
 import logoFairTrade from '@/assets/images/memberships/fair-trade-mono.webp';
 import logoMasterBuilder from '@/assets/images/memberships/master-builder.webp';
 import logoInsurance from '@/assets/images/memberships/insurance-mono.webp';
+import { getBreadcrumbSchema } from '@/lib/schema';
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'About' },
+]);
 ---
 
 <PageLayout
-  title="About ALYK Building - Architectural Builders, Tweed Coast"
-  description="Aaron Lee and Yarran Kerr are two Tweed Coast locals running a custom building practice on the stretch of coast they know best - architectural homes and renovations from Fingal Head to New Brighton."
+  title="About ALYK Building | Tweed Coast Custom Builders"
+  description="Aaron Lee and Yarran Kerr - two Tweed Coast locals running a custom architectural building practice on the stretch of coast they grew up on, from Fingal Head to New Brighton."
+  schema={breadcrumb}
   fullWidth
   transparentNav
 >

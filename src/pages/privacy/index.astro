@@ -1,11 +1,18 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro';
 import Container from '@/components/core/Container.astro';
+import { getBreadcrumbSchema } from '@/lib/schema';
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Privacy Policy' },
+]);
 ---
 
 <PageLayout
-  title="Privacy Policy - ALYK Building"
-  description="How ALYK Building collects, uses, and protects your personal information."
+  title="Privacy Policy | ALYK Building"
+  description="How ALYK Building collects, uses, and protects your personal information when you visit our website or get in touch about a project."
+  schema={breadcrumb}
   fullWidth
   transparentNav
 >

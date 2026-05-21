@@ -5,6 +5,12 @@ import ProjectShowcase from '@/components/blocks/ProjectShowcase.astro';
 import ConsultationCTA from '@/components/blocks/ConsultationCTA.astro';
 
 import heroImage from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-23.webp';
+import { getBreadcrumbSchema } from '@/lib/schema';
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Projects' },
+]);
 
 import cabI01 from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-01.webp';
 import cabI07 from '@/assets/images/projects/cabarita-beach-i-build/cabarita-beach-i-build-07.webp';
@@ -36,8 +42,9 @@ import casReno21 from '@/assets/images/projects/casuarina-i-renovation/casuarina
 ---
 
 <PageLayout
-  title="Projects - Architectural Homes & Renovations | ALYK Building"
-  description="A selection of architectural homes and renovations built across the Tweed Coast by ALYK Building."
+  title="Projects - Recent Builds & Renovations | ALYK Building"
+  description="A selection of architectural homes and renovations built across the Tweed Coast by ALYK Building - each project includes the brief, the site, and the architect."
+  schema={breadcrumb}
   fullWidth
   transparentNav
 >

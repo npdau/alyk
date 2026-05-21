@@ -12,6 +12,8 @@ import TopNav from '@/components/blocks/TopNav.astro';
 import Footer from '@/components/blocks/Footer.astro';
 import Container from '@/components/core/Container.astro';
 
+type SchemaObject = Record<string, unknown>;
+
 interface Props {
   /** Page title (required for SEO) */
   title: string;
@@ -23,6 +25,8 @@ interface Props {
   type?: 'website' | 'article';
   /** Hide from search engines */
   noIndex?: boolean;
+  /** Page-specific schema.org JSON-LD (breadcrumbs, services, etc.) */
+  schema?: SchemaObject | SchemaObject[];
   /** Full-width layout (no container padding) */
   fullWidth?: boolean;
   /** Transparent header over hero imagery */

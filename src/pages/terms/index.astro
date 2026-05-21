@@ -1,11 +1,18 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro';
 import Container from '@/components/core/Container.astro';
+import { getBreadcrumbSchema } from '@/lib/schema';
+
+const breadcrumb = getBreadcrumbSchema(Astro.site!, [
+  { label: 'Home', href: '/' },
+  { label: 'Terms & Conditions' },
+]);
 ---
 
 <PageLayout
-  title="Terms & Conditions - ALYK Building"
-  description="Terms and conditions for using the ALYK Building website and engaging our services."
+  title="Terms & Conditions | ALYK Building"
+  description="Terms and conditions for using the ALYK Building website and engaging ALYK Building for new build or renovation work on the Tweed Coast."
+  schema={breadcrumb}
   fullWidth
   transparentNav
 >
