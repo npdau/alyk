@@ -27,7 +27,7 @@ const bgStyles = {
 
 <section class:list={[bgStyles[background], 'py-16 md:py-20']}>
   <div
-    class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-8 px-6 sm:px-8 md:flex-row md:gap-12"
+    class="reveal mx-auto flex max-w-5xl flex-col items-center justify-between gap-8 px-6 sm:px-8 md:flex-row md:gap-12"
   >
     <h2
       class="text-foreground text-center text-2xl font-semibold tracking-tight md:text-left md:text-3xl"
@@ -35,7 +35,14 @@ const bgStyles = {
       {heading}
     </h2>
     <div class="flex shrink-0 flex-wrap items-center gap-4">
-      <Button href={cta.href} variant="white" size="lg" pill arrow class="text-base">
+      <Button
+        href={cta.href}
+        variant="white"
+        size="lg"
+        pill
+        arrow
+        class="btn-cta-pulse btn-nav-cta text-base"
+      >
         {cta.text}
       </Button>
     </div>

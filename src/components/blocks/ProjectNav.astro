@@ -16,7 +16,16 @@ const { nextProject } = Astro.props;
 
 <Section spacing="md" background="muted">
   <div class="flex flex-col items-center justify-between gap-6 sm:flex-row">
-    <Button href="/contact/" variant="primary" size="lg" pill arrow> Begin a project </Button>
+    <Button
+      href="/contact/"
+      variant="primary"
+      size="lg"
+      pill
+      arrow
+      class="btn-cta-pulse btn-nav-cta"
+    >
+      Begin a project
+    </Button>
 
     {
       nextProject && (

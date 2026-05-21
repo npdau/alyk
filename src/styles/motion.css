@@ -24,6 +24,12 @@
   transform: scale(0.95);
 }
 
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
 /*
  * Hero image fades in on every page load so navigation between pages
  * doesn't snap to a hard image cut. GSAP handles the fade so duration
@@ -31,6 +37,56 @@
  */
 .hero-image {
   opacity: 0;
+}
+
+/*
+ * Layer 2 - Frame line draw
+ *
+ * The top hero frame line draws left-to-right on page load via GSAP.
+ * Side and bottom lines are static.
+ */
+.frame-line-top {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/*
+ * Layer 2 - Hover patterns
+ *
+ * Gated behind @media (hover: hover) to prevent the iOS Chrome
+ * double-tap bug and avoid sticky hover states on touch devices.
+ */
+@media (hover: hover) {
+  .service-card .service-card-image {
+    transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .service-card:hover .service-card-image {
+    transform: scale(1.05);
+  }
+
+  .project-card .swiper-slide img {
+    transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .project-card:hover .swiper-slide img {
+    transform: scale(1.05);
+  }
+
+  .btn-nav-cta {
+    transition:
+      transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .btn-nav-cta:hover {
+    transform: scale(1.03);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .btn-nav-cta[class*='bg-white']:hover {
+    background-color: white !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -42,5 +98,9 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .frame-line-top {
+    transform: none;
   }
 }

@@ -71,9 +71,14 @@ function animateReveals(elements) {
     duration: REVEAL_DURATION,
     ease: 'alyk',
     stagger: REVEAL_STAGGER,
-    // Only clear the perf hint - keep the inline transform so the
-    // final translate(0,0) keeps overriding the CSS .reveal rule.
-    clearProps: 'willChange',
+    onComplete() {
+      this.targets().forEach((el) => {
+        el.classList.add('is-revealed');
+        el.style.removeProperty('transform');
+        el.style.removeProperty('opacity');
+        el.style.removeProperty('will-change');
+      });
+    },
   });
 }
 
@@ -139,6 +144,54 @@ function initHeroImage() {
   });
 }
 
+function initFrameLines() {
+  const top = document.querySelector('.frame-line-top');
+  if (!top) return;
+
+  gsap.to(top, {
+    scaleX: 1,
+    duration: 1.2,
+    delay: 0.8,
+    ease: CustomEase.create('line-draw', '0.22, 0.8, 0.12, 1'),
+  });
+}
+
+function initCtaPulse() {
+  const buttons = gsap.utils.toArray('.btn-cta-pulse');
+  if (!buttons.length) return;
+
+  buttons.forEach((btn) => {
+    const circle = btn.querySelector('.btn-arrow-circle');
+    if (!circle) return;
+
+    ScrollTrigger.create({
+      trigger: btn,
+      start: 'top 88%',
+      once: true,
+      onEnter() {
+        const tween = gsap.fromTo(
+          circle,
+          { scale: 1 },
+          {
+            scale: 1.25,
+            duration: 0.3,
+            delay: 2,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: 1,
+          }
+        );
+
+        const kill = () => {
+          tween.progress(1).kill();
+          gsap.set(circle, { scale: 1 });
+        };
+        btn.addEventListener('mouseenter', kill, { once: true });
+      },
+    });
+  });
+}
+
 function init() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return;
@@ -146,6 +199,8 @@ function init() {
 
   initReveals();
   initHeroImage();
+  initFrameLines();
+  initCtaPulse();
 }
 
 if (document.readyState === 'loading') {

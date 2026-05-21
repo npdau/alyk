@@ -54,12 +54,18 @@ const { heading, eyebrow, leadIn, testimonials, background = 'default' } = Astro
             </figcaption>
           </figure>
         ) : (
-          <figure class="reveal border-border bg-card flex h-full flex-col rounded-lg border p-8 shadow-sm">
-            <blockquote
-              class="text-foreground line-clamp-5 flex-1 text-base leading-relaxed"
-              style="font-style: italic; line-height: 1.6;"
+          <figure class="reveal border-border bg-card relative flex h-full flex-col overflow-hidden rounded-lg border p-8 shadow-sm">
+            <span
+              class="pointer-events-none absolute top-2 left-4 font-serif text-[7rem] leading-none text-stone-100 select-none"
+              aria-hidden="true"
             >
-              &ldquo;{t.quote}&rdquo;
+              &ldquo;
+            </span>
+            <blockquote
+              class="text-muted-foreground relative line-clamp-5 flex-1 text-base leading-relaxed"
+              style="line-height: 1.6;"
+            >
+              {t.quote}
             </blockquote>
             <div class="mt-6 flex items-end justify-between gap-4">
               <figcaption class="text-foreground text-sm font-medium">

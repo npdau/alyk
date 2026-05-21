@@ -5,9 +5,9 @@
  * Two-column enquiry section: the form lives on the left in an elevated card
  * and direct contact details slot in on the right.
  *
- * Form submissions are wired through the page's action/method props. For ALYK
- * Building this currently posts to a placeholder; swap in a Formspree /
- * Netlify / serverless endpoint when going live.
+ * Submissions are handled by Netlify Forms - no backend needed. Netlify
+ * detects the form at deploy time via data-netlify="true" and routes
+ * submissions to the site dashboard under Forms > contact.
  */
 import Section from '@/components/core/Section.astro';
 import Card from '@/components/core/Card.astro';
@@ -22,14 +22,18 @@ interface Props {
   eyebrow?: string;
   /** Form heading shown inside the card. */
   heading?: string;
-  /** Form action URL (POST endpoint or mailto). */
-  action?: string;
-  /** Form method */
-  method?: 'GET' | 'POST';
+  /** Netlify form name - appears in the dashboard under Forms. */
+  formName?: string;
   /** Submit button label. */
   submitText?: string;
   /** Helper line shown directly under the submit button. */
   helper?: string;
+  /** Success eyebrow shown after submission. */
+  successEyebrow?: string;
+  /** Success heading shown after submission. */
+  successHeading?: string;
+  /** Success body text shown after submission. */
+  successBody?: string;
   /** Privacy note shown beneath the helper line. */
   privacyNote?: string;
   /** Privacy policy link target (opens inline in the privacy note). */
@@ -41,10 +45,12 @@ interface Props {
 const {
   eyebrow = 'Enquiries',
   heading = 'Get in touch',
-  action = '#',
-  method = 'POST',
+  formName = 'contact',
   submitText = 'Send',
-  helper = 'We reply within two business days.',
+  helper = 'We aim to reply within two business days.',
+  successEyebrow = 'Sent',
+  successHeading = "We've got your message",
+  successBody = 'Our team will be in touch within two business days.',
   privacyNote = "We only use your details to reply to your enquiry. We don't share them, and we don't add you to any list.",
   privacyHref = '/privacy/',
   background = 'default',
@@ -60,88 +66,119 @@ const projectTypes = [
 <Section spacing="lg" background={background}>
   <div class="grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
     <Card variant="elevated" padding="lg" class="reveal md:p-10">
-      {eyebrow && <p class="eyebrow mb-3">{eyebrow}</p>}
-      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
-        {heading}
-      </h2>
+      <div id="contact-form-wrap">
+        {eyebrow && <p class="eyebrow mb-3">{eyebrow}</p>}
+        <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {heading}
+        </h2>
 
-      <form action={action} method={method} class="mt-8 space-y-6">
-        <div class="grid gap-6 sm:grid-cols-2">
-          <div class="space-y-2">
-            <Label for="name" required>Your name</Label>
-            <Input name="name" placeholder="Jane Smith" autocomplete="name" required />
+        <form
+          name={formName}
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          class="mt-8 space-y-6"
+          id="contact-form"
+        >
+          <input type="hidden" name="form-name" value={formName} />
+          <p class="hidden">
+            <label>
+              Don't fill this out: <input name="bot-field" />
+            </label>
+          </p>
+
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div class="space-y-2">
+              <Label for="name" required>Your name</Label>
+              <Input name="name" placeholder="Jane Smith" autocomplete="name" required />
+            </div>
+            <div class="space-y-2">
+              <Label for="email" required>Email</Label>
+              <Input
+                name="email"
+                type="email"
+                placeholder="jane@example.com"
+                autocomplete="email"
+                required
+              />
+            </div>
           </div>
+
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div class="space-y-2">
+              <Label for="phone">Phone (optional)</Label>
+              <Input name="phone" type="tel" placeholder="04xx xxx xxx" autocomplete="tel" />
+            </div>
+            <div class="space-y-2">
+              <Label for="location" required>Project location</Label>
+              <Input
+                name="location"
+                placeholder="Suburb or town"
+                autocomplete="address-level2"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div class="space-y-2">
+              <Label for="projectType" required>Project type</Label>
+              <Select
+                name="projectType"
+                placeholder="Select one…"
+                options={projectTypes}
+                required
+              />
+            </div>
+            <div class="space-y-2">
+              <Label for="architect">Architect (if engaged)</Label>
+              <Input name="architect" placeholder='Practice name, or "Not yet"' />
+            </div>
+          </div>
+
           <div class="space-y-2">
-            <Label for="email" required>Email</Label>
-            <Input
-              name="email"
-              type="email"
-              placeholder="jane@example.com"
-              autocomplete="email"
+            <Label for="message" required>Message</Label>
+            <Textarea
+              name="message"
+              placeholder="Tell us about the project and what you're hoping to achieve."
+              rows={6}
               required
             />
           </div>
-        </div>
 
-        <div class="grid gap-6 sm:grid-cols-2">
-          <div class="space-y-2">
-            <Label for="phone">Phone (optional)</Label>
-            <Input name="phone" type="tel" placeholder="04xx xxx xxx" autocomplete="tel" />
+          <div class="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
+            <Button type="submit" variant="primary" size="lg" pill arrow class="sm:w-auto">
+              {submitText}
+            </Button>
+            {helper && <p class="text-muted-foreground text-sm">{helper}</p>}
           </div>
-          <div class="space-y-2">
-            <Label for="location" required>Project location</Label>
-            <Input
-              name="location"
-              placeholder="Suburb or town"
-              autocomplete="address-level2"
-              required
-            />
-          </div>
-        </div>
 
-        <div class="grid gap-6 sm:grid-cols-2">
-          <div class="space-y-2">
-            <Label for="projectType" required>Project type</Label>
-            <Select name="projectType" placeholder="Select one…" options={projectTypes} required />
-          </div>
-          <div class="space-y-2">
-            <Label for="architect">Architect (if engaged)</Label>
-            <Input name="architect" placeholder='Practice name, or "Not yet"' />
-          </div>
-        </div>
+          {
+            privacyNote && (
+              <p class="text-muted-foreground border-border mt-6 border-t pt-6 text-xs leading-relaxed">
+                {privacyNote}{' '}
+                <a
+                  href={privacyHref}
+                  class="text-foreground hover:border-navy-700 hover:text-navy-700 border-b border-stone-300 no-underline transition-colors"
+                >
+                  Read our privacy policy
+                </a>
+                .
+              </p>
+            )
+          }
+        </form>
+      </div>
 
-        <div class="space-y-2">
-          <Label for="message" required>Message</Label>
-          <Textarea
-            name="message"
-            placeholder="Tell us about the project and what you're hoping to achieve."
-            rows={6}
-            required
-          />
-        </div>
-
-        <div class="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
-          <Button type="submit" variant="primary" size="lg" pill arrow class="sm:w-auto">
-            {submitText}
-          </Button>
-          {helper && <p class="text-muted-foreground text-sm">{helper}</p>}
-        </div>
-
-        {
-          privacyNote && (
-            <p class="text-muted-foreground border-border mt-6 border-t pt-6 text-xs leading-relaxed">
-              {privacyNote}{' '}
-              <a
-                href={privacyHref}
-                class="text-foreground hover:border-navy-700 hover:text-navy-700 border-b border-stone-300 no-underline transition-colors"
-              >
-                Read our privacy policy
-              </a>
-              .
-            </p>
-          )
-        }
-      </form>
+      <div id="contact-success" class="hidden">
+        <p class="eyebrow mb-3">{successEyebrow}</p>
+        <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {successHeading}
+        </h2>
+        <p class="text-muted-foreground mt-6 text-base leading-relaxed text-balance sm:text-lg">
+          {successBody} If it's urgent or you haven't heard back, please give us a call directly.
+        </p>
+      </div>
     </Card>
 
     <aside class="lg:flex lg:flex-col">
@@ -149,3 +186,37 @@ const projectTypes = [
     </aside>
   </div>
 </Section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const formWrap = document.getElementById('contact-form-wrap');
+  const success = document.getElementById('contact-success');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+    }
+
+    try {
+      const data = new FormData(form);
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+      });
+
+      formWrap?.classList.add('hidden');
+      success?.classList.remove('hidden');
+    } catch {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Send';
+      }
+      alert('Something went wrong - please try again or call us directly.');
+    }
+  });
+</script>

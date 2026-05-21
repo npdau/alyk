@@ -24,6 +24,8 @@ interface Props {
   imageClass?: string;
   /** Overlay gradient strength - use 'light' for naturally dark images, 'strong' for busy/bright images */
   overlay?: 'default' | 'light' | 'strong';
+  /** Animate the top frame line drawing left-to-right on load */
+  animateFrameLine?: boolean;
 }
 
 const {
@@ -34,6 +36,7 @@ const {
   height = 'default',
   imageClass,
   overlay = 'default',
+  animateFrameLine = false,
 } = Astro.props;
 
 // When no headline is provided, treat as a plain image hero - no full
@@ -90,7 +93,13 @@ const heightStyles = {
       class="absolute top-0 right-6 bottom-0 hidden w-px bg-white/25 lg:right-10 lg:block xl:right-20"
     >
     </div>
-    <div class="absolute top-24 right-0 left-0 h-px bg-white/25"></div>
+    <div
+      class:list={[
+        'absolute top-24 right-0 left-0 h-px bg-white/25',
+        animateFrameLine && 'frame-line-top',
+      ]}
+    >
+    </div>
     <div
       class="absolute right-0 bottom-6 left-0 hidden h-px bg-white/25 lg:bottom-10 lg:block xl:bottom-20"
     >
