@@ -29,9 +29,11 @@ interface Props {
   cta?: { text: string; href: string };
   /** Number of columns at the largest breakpoint. Defaults to 2. */
   columns?: 2 | 3;
+  /** Background variant */
+  background?: 'default' | 'muted';
 }
 
-const { heading, description, projects, cta, columns = 2 } = Astro.props;
+const { heading, description, projects, cta, columns = 2, background = 'default' } = Astro.props;
 
 const columnStyles = {
   2: 'sm:grid-cols-2',
@@ -39,7 +41,7 @@ const columnStyles = {
 };
 ---
 
-<Section spacing="lg">
+<Section spacing="lg" background={background}>
   {
     (heading || description || cta) && (
       <div class="reveal mb-10">

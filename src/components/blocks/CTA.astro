@@ -46,7 +46,7 @@ const isPrimaryBg = background === 'primary';
       description && (
         <p
           class:list={[
-            'reveal reveal-delay-1 mt-4 text-lg',
+            'reveal mt-4 text-lg',
             isPrimaryBg ? 'text-primary-foreground/80' : 'text-muted-foreground',
           ]}
         >
@@ -54,7 +54,7 @@ const isPrimaryBg = background === 'primary';
         </p>
       )
     }
-    <div class="reveal reveal-delay-2 mt-8 flex flex-wrap justify-center gap-4">
+    <div class="reveal mt-8 flex flex-wrap justify-center gap-4">
       <Button href={primaryCTA.href} size="lg" variant={isPrimaryBg ? 'secondary' : 'primary'}>
         {primaryCTA.text}
       </Button>

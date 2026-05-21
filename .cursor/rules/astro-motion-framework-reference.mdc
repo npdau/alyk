@@ -1,6 +1,6 @@
 ---
-description: Full Astro Motion Framework reference — complete rationale, file structure, all patterns, resources, and Cursor workflow tips. Reference manually with @astro-motion-framework-reference.mdc when you need the full context.
-globs:
+description: Full Astro Motion Framework reference — complete rationale, file structure, all patterns, resources, and Cursor workflow tips. Auto-attaches when editing motion engine files; reference manually with @astro-motion-framework-reference.mdc otherwise.
+globs: src/scripts/motion.js, src/styles/motion.css, src/scripts/**/*motion*, src/styles/**/*motion*
 alwaysApply: false
 ---
 

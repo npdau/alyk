@@ -25,7 +25,7 @@ const { eyebrow, heading, leadIn, principles, background = 'muted' } = Astro.pro
 ---
 
 <Section spacing="lg" background={background}>
-  <div class="mb-12 max-w-2xl md:mb-16">
+  <div class="reveal mb-12 max-w-2xl md:mb-16">
     {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
     <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
       {heading}
@@ -45,7 +45,7 @@ const { eyebrow, heading, leadIn, principles, background = 'muted' } = Astro.pro
   <ul class="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4">
     {
       principles.map((principle, i) => (
-        <li class="border-border border-t pt-6">
+        <li class="reveal border-border border-t pt-6">
           <p class="text-muted-foreground mb-3 text-[0.6875rem] font-medium tracking-[0.18em] uppercase tabular-nums">
             0{i + 1}
           </p>

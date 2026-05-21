@@ -34,7 +34,7 @@ const columnStyles = {
 ---
 
 <Section spacing="lg" background={background}>
-  <div class="mb-10 max-w-2xl">
+  <div class="reveal mb-10 max-w-2xl">
     {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
     <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">
       {heading}
@@ -51,7 +51,7 @@ const columnStyles = {
   <div class:list={['grid gap-8 sm:grid-cols-2', columnStyles[columns]]}>
     {
       steps.map((step) => (
-        <div class="border-border border-t pt-6">
+        <div class="reveal border-border border-t pt-6">
           <p class="text-muted-foreground mb-3 text-[0.6875rem] font-medium tracking-[0.18em] uppercase tabular-nums">
             {step.number}
           </p>

@@ -1,34 +1,44 @@
 /*
- * Motion - reveal classes + reduced-motion fallback
+ * Motion - reveal classes + hero image fade + reduced-motion fallback
  *
  * Initial hidden states for `.reveal` elements. GSAP animates them to
- * their resting state on scroll. The CSS-only fallback ensures content
- * is visible if JS fails or prefers-reduced-motion is set.
+ * their resting state on scroll. The reduced-motion fallback ensures
+ * content is visible if JS fails or prefers-reduced-motion is set.
  */
 
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(32px);
   will-change: opacity, transform;
 }
 
 .reveal.reveal-left {
-  transform: translateX(-24px);
+  transform: translateX(-32px);
 }
 
 .reveal.reveal-right {
-  transform: translateX(24px);
+  transform: translateX(32px);
 }
 
 .reveal.reveal-scale {
   transform: scale(0.95);
 }
 
+/*
+ * Hero image fades in on every page load so navigation between pages
+ * doesn't snap to a hard image cut. GSAP handles the fade so duration
+ * and easing match the rest of the motion system.
+ */
+.hero-image {
+  opacity: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal.reveal-left,
   .reveal.reveal-right,
-  .reveal.reveal-scale {
+  .reveal.reveal-scale,
+  .hero-image {
     opacity: 1;
     transform: none;
     transition: none;

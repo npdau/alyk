@@ -47,21 +47,21 @@ const { title, subtitle, description, details, testimonial, background = 'defaul
 
       {
         subtitle && (
-          <p class="reveal reveal-delay-1 project-subtitle text-foreground mt-4 text-lg font-medium sm:text-xl md:max-w-3xl">
+          <p class="reveal project-subtitle text-foreground mt-4 text-lg font-medium sm:text-xl md:max-w-3xl">
             {subtitle}
           </p>
         )
       }
 
       <div
-        class="reveal reveal-delay-2 mt-8 space-y-4 text-sm leading-relaxed sm:text-base"
+        class="reveal mt-8 space-y-4 text-sm leading-relaxed sm:text-base"
         style="line-height: 1.65;"
       >
         {description.map((p) => <p>{p}</p>)}
       </div>
     </div>
 
-    <div class="reveal reveal-delay-3 md:w-72 lg:w-80">
+    <div class="reveal md:w-72 lg:w-80">
       <Card variant="elevated" padding="lg">
         <dl class="space-y-4 text-sm">
           {
